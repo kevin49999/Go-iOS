@@ -8,49 +8,45 @@
 
 import Foundation
 
+
+/// https://www.britgo.org/intro/intro2.html
+/// need concept of strings/groups and they're surrounding
+
 enum Player {
     case white
     case black
 }
 
-/// komi - set to 7.5 for person playing white with equal skill players
-/// https://www.britgo.org/intro/intro2.html
-/// can print in playground - do move, enter -
 class Game {
     
-    /// moves also generate actions though, in capturing, etc.
-    struct Move {
-        let position: Int
-        let player: Player
-        /// results []
-    }
-    
+    typealias Move = Board.PointState
     let board: Board
     var current: Player
-    var moves: [Move] /// use didSet to update board?
+    var whiteScore: Int = 0
+    var blackScore: Int = 0
     
-    init(board: Board, current: Player = .black, moves: [Move] = [Move]()) {
+    init(board: Board) {
         self.board = board
-        self.current = current
-        self.moves = moves
+        self.current = .black
     }
     
     func addStone(to position: Int) {
-        let move = Move(position: position, player: current)
-        moves.append(move)
         board.update(position: position, with: .taken(current))
         togglePlayer()
+        /// create new string/group relationships for added
+        /// check for captures/add point
+        /// check for game over
     }
     
     func undoLast() {
-        moves.removeLast()
-        /// update board
+        board.undoLast()
         togglePlayer()
     }
     
-    func description() -> String {
-        /// log! for print line playing
-        return ""
+    func printDescription() {
+        for (i, x) in board.states.enumerated() {
+            print(i,x)
+        }
     }
     
     private func togglePlayer() {
@@ -66,13 +62,20 @@ class Board {
         case nineteenXNineteen = 361 // 19x19 - 1
     }
     
+    struct Position {
+        enum State {
+            
+        }
+    }
     enum PointState {
         case taken(Player)
         case open
     }
     
     private let size: Size
-    private var states: [PointState] // bottom left start -> bottom right end
+    private(set) var states: [PointState] // bottom left start -> bottom right end
+    private var whiteStrings: [PointState] = [PointState]()
+    private var blackStrings: [PointState] = [PointState]()
     
     init(size: Size) {
         self.size = size
@@ -81,5 +84,11 @@ class Board {
     
     func update(position: Int, with state: PointState) {
         states[position] = state
+        /// check for captures, etc.
+        /// check for newly created strings, groups, etc.
+    }
+    
+    func undoLast() {
+        // not this simple, it's an array, but we need to change back the move that was done in UPDATE
     }
 }

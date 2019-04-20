@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="GoCell" id="EbK-ER-FPF" customClass="GoCell" customModule="Go" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="125" height="125"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                <rect key="frame" x="0.0" y="0.0" width="125" height="125"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AiF-7B-MK9" userLabel="Right Border View">
+                        <rect key="frame" x="124" y="0.0" width="1" height="125"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="1" id="jXf-5W-bQt"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q4p-Fe-fSh" userLabel="Top Border View">
+                        <rect key="frame" x="0.0" y="0.0" width="124" height="1"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="7i1-UU-Juc"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aEc-qG-eqG" userLabel="Left Border View">
+                        <rect key="frame" x="0.0" y="0.0" width="1" height="125"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="1" id="ivG-US-ez2"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xBt-pU-suy" userLabel="Top Border View">
+                        <rect key="frame" x="0.0" y="124" width="125" height="1"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="KK2-yj-hMz"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <color key="backgroundColor" red="0.97254901959999995" green="0.95686274510000002" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="Q4p-Fe-fSh" firstAttribute="leading" secondItem="EbK-ER-FPF" secondAttribute="leading" id="8DU-mu-WWZ"/>
+                <constraint firstItem="aEc-qG-eqG" firstAttribute="leading" secondItem="EbK-ER-FPF" secondAttribute="leading" id="9gs-7R-V8d"/>
+                <constraint firstAttribute="trailing" secondItem="AiF-7B-MK9" secondAttribute="trailing" id="OIG-jM-2e1"/>
+                <constraint firstAttribute="bottom" secondItem="AiF-7B-MK9" secondAttribute="bottom" id="PxI-Hz-uX8"/>
+                <constraint firstItem="Q4p-Fe-fSh" firstAttribute="top" secondItem="EbK-ER-FPF" secondAttribute="top" id="SWG-MJ-Bir"/>
+                <constraint firstItem="xBt-pU-suy" firstAttribute="leading" secondItem="EbK-ER-FPF" secondAttribute="leading" id="V9O-27-0pr"/>
+                <constraint firstItem="aEc-qG-eqG" firstAttribute="top" secondItem="EbK-ER-FPF" secondAttribute="top" id="hhd-GI-p2M"/>
+                <constraint firstAttribute="bottom" secondItem="aEc-qG-eqG" secondAttribute="bottom" id="j1D-fM-X3A"/>
+                <constraint firstItem="AiF-7B-MK9" firstAttribute="leading" secondItem="Q4p-Fe-fSh" secondAttribute="trailing" id="kei-Ya-GaN"/>
+                <constraint firstAttribute="trailing" secondItem="xBt-pU-suy" secondAttribute="trailing" id="lsh-Fz-wgA"/>
+                <constraint firstAttribute="bottom" secondItem="xBt-pU-suy" secondAttribute="bottom" id="nFh-bg-yZY"/>
+                <constraint firstItem="AiF-7B-MK9" firstAttribute="top" secondItem="EbK-ER-FPF" secondAttribute="top" id="xbn-gU-ezg"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="7GR-TM-tBX"/>
+            <size key="customSize" width="125" height="110"/>
+            <point key="canvasLocation" x="-290.39999999999998" y="30.134932533733135"/>
+        </collectionViewCell>
+    </objects>
+</document>
