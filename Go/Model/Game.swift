@@ -24,8 +24,11 @@ class Game {
     var current: Player
     var whiteScore: Int = 0
     var blackScore: Int = 0
+    var size: Int {
+        return board.size.rawValue
+    }
     
-    init(board: Board) {
+    init(board: Board = Board(size: .nineteenXNineteen)) {
         self.board = board
         self.current = .black
     }
@@ -57,22 +60,22 @@ class Game {
 class Board {
     
     enum Size: Int {
-        case nineXNine = 80 // 9x9 - 1
-        case thirteenXThirteen = 168 // 13x13 - 1
-        case nineteenXNineteen = 361 // 19x19 - 1
+        case nineXNine = 9
+        case thirteenXThirteen = 13
+        case nineteenXNineteen = 19
     }
     
-    struct Position {
-        enum State {
-            
-        }
-    }
+//    struct Position {
+//        enum State {
+//
+//        }
+//    }
     enum PointState {
         case taken(Player)
         case open
     }
     
-    private let size: Size
+    let size: Size
     private(set) var states: [PointState] // bottom left start -> bottom right end
     private var whiteStrings: [PointState] = [PointState]()
     private var blackStrings: [PointState] = [PointState]()

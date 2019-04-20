@@ -16,6 +16,9 @@
 		0AF46481225AF04900DE34EA /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46480225AF04900DE34EA /* Game.swift */; };
 		0AF46486226A79B900DE34EA /* GoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0AF46485226A79B900DE34EA /* GoCell.xib */; };
 		0AF46488226A7F7E00DE34EA /* GoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46487226A7F7E00DE34EA /* GoCell.swift */; };
+		0AF4648A226B8F9B00DE34EA /* StoryboardIdentifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46489226B8F9B00DE34EA /* StoryboardIdentifiable.swift */; };
+		0AF4648C226B8FB900DE34EA /* UICollectionView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF4648B226B8FB900DE34EA /* UICollectionView+.swift */; };
+		0AF4648E226B922400DE34EA /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF4648D226B922400DE34EA /* Styles.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +45,9 @@
 		0AF46480225AF04900DE34EA /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		0AF46485226A79B900DE34EA /* GoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GoCell.xib; sourceTree = "<group>"; };
 		0AF46487226A7F7E00DE34EA /* GoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoCell.swift; sourceTree = "<group>"; };
+		0AF46489226B8F9B00DE34EA /* StoryboardIdentifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryboardIdentifiable.swift; sourceTree = "<group>"; };
+		0AF4648B226B8FB900DE34EA /* UICollectionView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+.swift"; sourceTree = "<group>"; };
+		0AF4648D226B922400DE34EA /* Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +111,9 @@
 				0AF46462225AE50B00DE34EA /* GameBoardViewController.swift */,
 				0AF46487226A7F7E00DE34EA /* GoCell.swift */,
 				0AF46485226A79B900DE34EA /* GoCell.xib */,
+				0AF46489226B8F9B00DE34EA /* StoryboardIdentifiable.swift */,
+				0AF4648D226B922400DE34EA /* Styles.swift */,
+				0AF4648B226B8FB900DE34EA /* UICollectionView+.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -232,9 +241,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				0AF46463225AE50B00DE34EA /* GameBoardViewController.swift in Sources */,
+				0AF4648E226B922400DE34EA /* Styles.swift in Sources */,
 				0AF46488226A7F7E00DE34EA /* GoCell.swift in Sources */,
 				0AF46481225AF04900DE34EA /* Game.swift in Sources */,
 				0AF46461225AE50B00DE34EA /* AppDelegate.swift in Sources */,
+				0AF4648C226B8FB900DE34EA /* UICollectionView+.swift in Sources */,
+				0AF4648A226B8F9B00DE34EA /* StoryboardIdentifiable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

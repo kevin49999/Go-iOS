@@ -19,13 +19,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="vrr-Gh-4MH">
-                                <rect key="frame" x="32" y="178" width="311" height="311"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <rect key="frame" x="20" y="166" width="335" height="335"/>
+                                <color key="backgroundColor" red="0.97254901959999995" green="0.95686274510000002" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="vrr-Gh-4MH" secondAttribute="height" id="4C0-W7-pGx"/>
                                 </constraints>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="3js-96-w52">
-                                    <size key="itemSize" width="50" height="50"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="3js-96-w52">
+                                    <size key="itemSize" width="131" height="126"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -41,8 +41,8 @@
                         <constraints>
                             <constraint firstItem="vrr-Gh-4MH" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="3b3-SI-qDo"/>
                             <constraint firstItem="vrr-Gh-4MH" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="FFN-HM-IYX"/>
-                            <constraint firstItem="vrr-Gh-4MH" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="32" id="X4i-HO-4Aa"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="vrr-Gh-4MH" secondAttribute="trailing" constant="32" id="cRv-ak-5Jf"/>
+                            <constraint firstItem="vrr-Gh-4MH" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="X4i-HO-4Aa"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="vrr-Gh-4MH" secondAttribute="trailing" constant="20" id="cRv-ak-5Jf"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -52,6 +52,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="53.600000000000001" y="43.628185907046479"/>
         </scene>
     </scenes>
 </document>
