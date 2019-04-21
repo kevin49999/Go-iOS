@@ -12,7 +12,12 @@ class GameBoardViewController: UIViewController {
     
     // MARK: - Properties
     
-    private var game: Game = Game(board: Board(size: .nineXNine))
+    private var game: Game = Game(board: Board(size: .nineXNine)) {
+        didSet {
+            viewModelFactory = GoCellViewModelFactory(boardSize: self.game.board.size)
+            boardCollectionView.reloadData()
+        }
+    }
     private lazy var viewModelFactory: GoCellViewModelFactory = {
         return GoCellViewModelFactory(boardSize: self.game.board.size)
     }()
@@ -38,7 +43,15 @@ class GameBoardViewController: UIViewController {
     }
     
     @IBAction func tappedAction(_ sender: Any) {
-        //
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        /// sizes.. ++ can iterate through sizes I have rather than do manually - prop for string -> 5x5, 9x9, etc.
+        let new = UIAlertAction(title: NSLocalizedString("New 5x5", comment: ""), style: .destructive, handler: { [weak self] _ in
+            self?.game = Game(board: Board(size: .fiveXFive))
+        })
+        alertController.addAction(new)
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel)
+        alertController.addAction(cancel) /// add that alert extension with static AlertAction.cancel()
+        present(alertController, animated: true)
     }
     
     // MARK: - Trait Collection
@@ -48,7 +61,27 @@ class GameBoardViewController: UIViewController {
         let current = traitCollection.preferredContentSizeCategory.isAccessibilityCategory
         guard previous != current else { return }
         
-        /// Reload what you need/ want to
+        /// Reload what you need to
+    }
+}
+
+// MARK: - GameDelegate
+
+extension GameBoardViewController: GameDelegate {
+    func positionSelected(_ position: Int) {
+        boardCollectionView.reloadItems(at: [IndexPath(row: position, section: 0)])
+    }
+    
+    func switchedToPlayer(_ player: Player) {
+        navigationItem.title = NSLocalizedString("Go \(player.string)", comment: "")
+    }
+    
+    func undidLastMove() {
+        boardCollectionView.reloadData()
+    }
+    
+    func canUndoChanged(_ canUndo: Bool) {
+        undoBarButtonItem.isEnabled = canUndo
     }
 }
 
@@ -65,26 +98,6 @@ extension GameBoardViewController: UICollectionViewDataSource {
                                                 boardState: game.board.currentState[indexPath.row])
         cell.configure(with: viewModel)
         return cell
-    }
-}
-
-// MARK: - GameDelegate
-
-extension GameBoardViewController: GameDelegate {
-    func undidLastMove() {
-        boardCollectionView.reloadData()
-    }
-    
-    func positionSelected(_ position: Int) {
-        boardCollectionView.reloadItems(at: [IndexPath(row: position, section: 0)])
-    }
-    
-    func switchedToPlayer(_ player: Player) {
-        navigationItem.title = NSLocalizedString("Go \(player.string)", comment: "")
-    }
-    
-    func canUndoChanged(_ canUndo: Bool) {
-        undoBarButtonItem.isEnabled = canUndo
     }
 }
 

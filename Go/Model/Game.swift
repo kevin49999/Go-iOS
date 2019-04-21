@@ -9,9 +9,9 @@
 import Foundation
 
 protocol GameDelegate: class {
-    func undidLastMove()
     func positionSelected(_ position: Int)
     func switchedToPlayer(_ player: Player)
+    func undidLastMove()
     func canUndoChanged(_ canUndo: Bool)
 }
 
