@@ -8,19 +8,34 @@
 
 import UIKit
 
-/// support rotation, iPad testing heavy, title w/ "Go 🎍" localized (japanese, chinese, etc.)
-/// black 2pt border, Special dot in center for certain cells (absolute middle, and the 4 middles of quadrants)
-
 class GameBoardViewController: UIViewController {
     
+    // MARK: - Properties
+    
     private var game: Game = Game(board: Board(size: .nineXNine))
+    private lazy var viewModelFactory: GoCellViewModelFactory = {
+        return GoCellViewModelFactory(boardSize: self.game.board.size)
+    }()
     
     @IBOutlet weak private var boardCollectionView: UICollectionView!
+    
+    // MARK: - View Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.title = NSLocalizedString("Go 🎍", comment: "")
         boardCollectionView.register(UINib(nibName: "GoCell", bundle: nil), forCellWithReuseIdentifier: GoCell.storyboardIdentifier)
+    }
+    
+    // MARK: - Trait Collection
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        let previous = previousTraitCollection?.preferredContentSizeCategory.isAccessibilityCategory
+        let current = traitCollection.preferredContentSizeCategory.isAccessibilityCategory
+        guard previous != current else { return }
+        
+        /// reload what you need to
     }
 }
 
@@ -33,8 +48,9 @@ extension GameBoardViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: GoCell = collectionView.dequeueReusableCell(for: indexPath)
-        let state = game.board.states[indexPath.row]
-        cell.configure(for: state)
+        let viewModel = viewModelFactory.create(position: indexPath.row,
+                                                boardState: game.board.states[indexPath.row])
+        cell.configure(with: viewModel)
         return cell
     }
 }
@@ -50,7 +66,7 @@ extension GameBoardViewController: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
-        //print("highlighted: \(indexPath.row)") /// works for touchdown but not release, but not hold touch to next
+        // print("highlighted: \(indexPath.row)") /// works for touchdown but not release, but not hold touch to next
     }
 }
 

@@ -15,9 +15,9 @@ enum Player {
     var color: UIColor {
         switch self {
         case .white:
-            return .white
+            return .white /// add to Styles - offWhite
         case .black:
-            return .black
+            return .black /// same, but offBlack
         }
     }
 }
