@@ -52,8 +52,30 @@ struct GoCellViewModelFactory {
             borderStyle = .default
         }
         
-        /// TODO: showCenterDot
-        let viewModel = GoCellViewModel(showCenterDot: false,
+        /// TODO: Finish logic, breaks down on nineteenXNineteen board, may have to assume 5x5, 9x9 each have 2x2 squares in corner and thirteen and nineteen ahve 2x2 squares in corner
+        
+        let showCenterDot: Bool
+        let middle = (cells - 1)/2
+        let topLeft = middle / 2
+        let topRight = topLeft + ((rows - 1) / 2)
+        let bottomRight = middle * 3/2
+        let bottomLeft = bottomRight - ((rows - 1) / 2)
+        switch position {
+        case topLeft:
+            showCenterDot = true
+        case middle:
+            showCenterDot = true
+        case topRight:
+            showCenterDot = true
+        case bottomLeft:
+            showCenterDot = true
+        case bottomRight:
+            showCenterDot = true
+        default:
+            showCenterDot = false
+        }
+        
+        let viewModel = GoCellViewModel(showCenterDot: showCenterDot,
                                         showStone: showStone,
                                         stoneString: stoneString,
                                         borderStyle: borderStyle)

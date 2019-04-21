@@ -42,12 +42,6 @@ class Game {
         togglePlayer()
     }
     
-    func printDescription() {
-        for (i, x) in board.states.enumerated() {
-            print(i,x)
-        }
-    }
-    
     private func togglePlayer() {
         current = (current == .black) ? .white : .black
     }

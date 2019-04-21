@@ -12,7 +12,7 @@ class GoCell: UICollectionViewCell {
     
     typealias ViewModel = GoCellViewModel
     
-    @IBOutlet weak private var stoneLabel: UILabel!
+    @IBOutlet weak private var stoneLabel: UILabel! /// should scale to fill nearly full cell, almost no space between stone and edge
     @IBOutlet weak private var centerDotView: UIView!
     @IBOutlet weak private var topVerticalLine: UIView!
     @IBOutlet weak private var topVerticalLineSize: NSLayoutConstraint!
@@ -38,55 +38,67 @@ class GoCell: UICollectionViewCell {
             topVerticalLine.isHidden = true
             bottomVerticalLine.isHidden = false
             bottomVerticalLineSize.constant = 2
+            
             leftHorizontalLine.isHidden = true
             rightHorizontalLine.isHidden = false
             rightHorizontalLineSize.constant = 2
+            
             centerPixelWidth.constant = 2
             centerPixelHeight.constant = 2
         case .topRight:
             topVerticalLine.isHidden = true
             bottomVerticalLine.isHidden = false
             bottomVerticalLineSize.constant = 2
+            
             leftHorizontalLine.isHidden = false
             leftHorizontalLineSize.constant = 2
             rightHorizontalLine.isHidden = true
+            
             centerPixelWidth.constant = 2
             centerPixelHeight.constant = 2
         case .bottomLeft:
             topVerticalLine.isHidden = false
             topVerticalLineSize.constant = 2
             bottomVerticalLine.isHidden = true
+            
             leftHorizontalLine.isHidden = true
             rightHorizontalLine.isHidden = false
             rightHorizontalLineSize.constant = 2
+            
             centerPixelWidth.constant = 2
             centerPixelHeight.constant = 2
         case .bottomRight:
             topVerticalLine.isHidden = false
             topVerticalLineSize.constant = 2
             bottomVerticalLine.isHidden = true
+            
             leftHorizontalLine.isHidden = false
             leftHorizontalLineSize.constant = 2
             rightHorizontalLine.isHidden = true
+            
             centerPixelWidth.constant = 2
             centerPixelHeight.constant = 2
         case .bottom:
             topVerticalLine.isHidden = false
             topVerticalLineSize.constant = 1
             bottomVerticalLine.isHidden = true
+            
             leftHorizontalLine.isHidden = false
             leftHorizontalLineSize.constant = 2
             rightHorizontalLine.isHidden = false
             rightHorizontalLineSize.constant = 2
+            
             centerPixelWidth.constant = 2
             centerPixelHeight.constant = 2
         case .top:
             topVerticalLine.isHidden = true
             bottomVerticalLine.isHidden = false
             bottomVerticalLineSize.constant = 1
+            
             leftHorizontalLine.isHidden = false
             leftHorizontalLineSize.constant = 2
             rightHorizontalLine.isHidden = false
+            
             rightHorizontalLineSize.constant = 2
             centerPixelWidth.constant = 2
             centerPixelHeight.constant = 2
@@ -95,9 +107,11 @@ class GoCell: UICollectionViewCell {
             topVerticalLineSize.constant = 2
             bottomVerticalLine.isHidden = false
             bottomVerticalLineSize.constant = 2
+            
             leftHorizontalLine.isHidden = true
             rightHorizontalLine.isHidden = false
             rightHorizontalLineSize.constant = 1
+            
             centerPixelWidth.constant = 2
             centerPixelHeight.constant = 2
         case .right:
@@ -105,9 +119,11 @@ class GoCell: UICollectionViewCell {
             topVerticalLineSize.constant = 2
             bottomVerticalLine.isHidden = false
             bottomVerticalLineSize.constant = 2
+            
             leftHorizontalLine.isHidden = false
             leftHorizontalLineSize.constant = 1
             rightHorizontalLine.isHidden = true
+            
             centerPixelWidth.constant = 2
             centerPixelHeight.constant = 2
         case .default:
@@ -115,10 +131,12 @@ class GoCell: UICollectionViewCell {
             topVerticalLineSize.constant = 1
             bottomVerticalLine.isHidden = false
             bottomVerticalLineSize.constant = 1
+            
             leftHorizontalLine.isHidden = false
             leftHorizontalLineSize.constant = 1
             rightHorizontalLine.isHidden = false
             rightHorizontalLineSize.constant = 1
+            
             centerPixelWidth.constant = 1
             centerPixelHeight.constant = 1
         }

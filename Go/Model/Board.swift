@@ -11,7 +11,8 @@ import Foundation
 class Board {
     
     enum Size: Int {
-        case nineXNine = 9 /// should do 5x5 too
+        case fiveXFive = 5
+        case nineXNine = 9
         case thirteenXThirteen = 13
         case nineteenXNineteen = 19
     }

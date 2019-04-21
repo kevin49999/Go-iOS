@@ -56,15 +56,15 @@
                         </constraints>
                     </view>
                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="apt-5h-Bkl" userLabel="Center Dot View">
-                        <rect key="frame" x="22" y="22" width="16" height="16"/>
+                        <rect key="frame" x="27" y="27" width="6" height="6"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="16" id="eeD-5f-FKl"/>
-                            <constraint firstAttribute="width" constant="16" id="n0h-Xd-f8G"/>
+                            <constraint firstAttribute="height" constant="6" id="eeD-5f-FKl"/>
+                            <constraint firstAttribute="width" constant="6" id="n0h-Xd-f8G"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                <real key="value" value="8"/>
+                                <real key="value" value="3"/>
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
