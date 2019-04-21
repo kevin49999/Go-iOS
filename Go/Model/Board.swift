@@ -23,23 +23,29 @@ class Board {
     }
     
     let size: Size
-    private(set) var states: [PointState] // top left -> bottom right
+    private(set) var currentState: [PointState] // top left -> bottom right
+    private(set) var pastStates: [[PointState]]
     private var whiteStrings: [PointState] = [PointState]() // TODO:
     private var blackStrings: [PointState] = [PointState]() // ""
     
     init(size: Size) {
         self.size = size
-        self.states = [PointState](repeating: .open,
+        self.currentState = [PointState](repeating: .open,
                                    count: size.rawValue * size.rawValue)
+        self.pastStates = [[PointState]]()
     }
     
     func update(position: Int, with state: PointState) {
-        states[position] = state
+        pastStates.append(self.currentState)
+        currentState[position] = state
         /// check for captures, etc.
         /// check for newly created strings, etc.
     }
     
     func undoLast() {
-        // not this simple, it's an array, but we need to change back the move that was done in UPDATE - may need array of moves [[PointState]] where we append
+        guard !pastStates.isEmpty else {
+            return
+        }
+        self.currentState = pastStates.removeLast()
     }
 }

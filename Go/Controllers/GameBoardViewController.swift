@@ -17,6 +17,7 @@ class GameBoardViewController: UIViewController {
         return GoCellViewModelFactory(boardSize: self.game.board.size)
     }()
     
+    @IBOutlet weak private var undoBarButtonItem: UIBarButtonItem!
     @IBOutlet weak private var boardCollectionView: UICollectionView!
     
     // MARK: - View Lifecycle
@@ -25,7 +26,19 @@ class GameBoardViewController: UIViewController {
         super.viewDidLoad()
         
         navigationItem.title = NSLocalizedString("Go ⚫️", comment: "")
+        undoBarButtonItem.isEnabled = false
+        game.delegate = self
         boardCollectionView.register(UINib(nibName: "GoCell", bundle: nil), forCellWithReuseIdentifier: GoCell.storyboardIdentifier)
+    }
+    
+    // MARK: - IBAction
+    
+    @IBAction func tappedUndo(_ sender: Any) {
+        game.undoLast()
+    }
+    
+    @IBAction func tappedAction(_ sender: Any) {
+        //
     }
     
     // MARK: - Trait Collection
@@ -49,9 +62,29 @@ extension GameBoardViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: GoCell = collectionView.dequeueReusableCell(for: indexPath)
         let viewModel = viewModelFactory.create(position: indexPath.row,
-                                                boardState: game.board.states[indexPath.row])
+                                                boardState: game.board.currentState[indexPath.row])
         cell.configure(with: viewModel)
         return cell
+    }
+}
+
+// MARK: - GameDelegate
+
+extension GameBoardViewController: GameDelegate {
+    func undidLastMove() {
+        boardCollectionView.reloadData()
+    }
+    
+    func positionSelected(_ position: Int) {
+        boardCollectionView.reloadItems(at: [IndexPath(row: position, section: 0)])
+    }
+    
+    func switchedToPlayer(_ player: Player) {
+        navigationItem.title = NSLocalizedString("Go \(player.string)", comment: "")
+    }
+    
+    func canUndoChanged(_ canUndo: Bool) {
+        undoBarButtonItem.isEnabled = canUndo
     }
 }
 
@@ -62,7 +95,6 @@ extension GameBoardViewController: UICollectionViewDelegate {
         // handle, later - add dragging from cell to cell with haptic when drag from one to the next, don't set the stone until release, use simple select for building game - show 0.5 alpha when dragging for stone, filled in when release
         print(indexPath.row)
         game.positionSelected(indexPath.row)
-        collectionView.reloadItems(at: [indexPath])
     }
     
     func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {

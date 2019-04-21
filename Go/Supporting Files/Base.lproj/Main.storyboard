@@ -63,11 +63,22 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="Go" id="apy-4b-8xf">
-                        <barButtonItem key="leftBarButtonItem" systemItem="reply" id="3Jc-NA-MpC"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="Ilt-2I-kV9"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="reply" id="3Jc-NA-MpC">
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="tappedUndo:" destination="BYZ-38-t0r" id="EGS-CL-jog"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="Ilt-2I-kV9">
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="tappedAction:" destination="BYZ-38-t0r" id="EmI-cE-A4l"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="boardCollectionView" destination="vrr-Gh-4MH" id="8dQ-xm-j8J"/>
+                        <outlet property="undoBarButtonItem" destination="3Jc-NA-MpC" id="bda-GT-Ap2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
