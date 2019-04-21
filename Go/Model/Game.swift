@@ -8,18 +8,10 @@
 
 import Foundation
 
-
 /// https://www.britgo.org/intro/intro2.html
-/// need concept of strings/groups and they're surrounding
-
-enum Player {
-    case white
-    case black
-}
-
+/// need concept of strings/groups and their surroundings
 class Game {
     
-    typealias Move = Board.PointState
     let board: Board
     var current: Player
     var whiteScore: Int = 0
@@ -33,7 +25,11 @@ class Game {
         self.current = .black
     }
     
-    func addStone(to position: Int) {
+    func positionSelected(_ position: Int) {
+        guard case .open = board.states[position] else {
+            return
+        }
+        
         board.update(position: position, with: .taken(current))
         togglePlayer()
         /// create new string/group relationships for added
@@ -54,44 +50,5 @@ class Game {
     
     private func togglePlayer() {
         current = (current == .black) ? .white : .black
-    }
-}
-
-class Board {
-    
-    enum Size: Int {
-        case nineXNine = 9
-        case thirteenXThirteen = 13
-        case nineteenXNineteen = 19
-    }
-    
-//    struct Position {
-//        enum State {
-//
-//        }
-//    }
-    enum PointState {
-        case taken(Player)
-        case open
-    }
-    
-    let size: Size
-    private(set) var states: [PointState] // bottom left start -> bottom right end
-    private var whiteStrings: [PointState] = [PointState]()
-    private var blackStrings: [PointState] = [PointState]()
-    
-    init(size: Size) {
-        self.size = size
-        self.states = [PointState](repeating: .open, count: size.rawValue)
-    }
-    
-    func update(position: Int, with state: PointState) {
-        states[position] = state
-        /// check for captures, etc.
-        /// check for newly created strings, groups, etc.
-    }
-    
-    func undoLast() {
-        // not this simple, it's an array, but we need to change back the move that was done in UPDATE
     }
 }

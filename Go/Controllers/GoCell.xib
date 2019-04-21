@@ -13,40 +13,53 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="GoCell" id="EbK-ER-FPF" customClass="GoCell" customModule="Go" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="125" height="125"/>
+            <rect key="frame" x="0.0" y="0.0" width="57" height="63"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                <rect key="frame" x="0.0" y="0.0" width="125" height="125"/>
+                <rect key="frame" x="0.0" y="0.0" width="57" height="63"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q4p-Fe-fSh" userLabel="Top Border View">
-                        <rect key="frame" x="62" y="-1" width="1" height="127"/>
+                        <rect key="frame" x="28" y="-1" width="1" height="65"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="1" id="3AC-K8-x4z"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xBt-pU-suy" userLabel="Horizontal Line">
-                        <rect key="frame" x="-1" y="62" width="127" height="1"/>
+                        <rect key="frame" x="-1" y="31" width="59" height="1"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="1" id="KK2-yj-hMz"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rXb-5G-Ibp" userLabel="Stone View">
+                        <rect key="frame" x="5" y="8" width="47" height="47"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="rXb-5G-Ibp" secondAttribute="height" multiplier="1:1" id="rAl-z8-hio"/>
                         </constraints>
                     </view>
                 </subviews>
             </view>
             <color key="backgroundColor" red="0.97254901959999995" green="0.95686274510000002" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="rXb-5G-Ibp" firstAttribute="centerY" secondItem="EbK-ER-FPF" secondAttribute="centerY" id="0dg-Sm-qHV"/>
                 <constraint firstItem="xBt-pU-suy" firstAttribute="centerY" secondItem="EbK-ER-FPF" secondAttribute="centerY" id="150-UN-EcF"/>
                 <constraint firstAttribute="bottom" secondItem="Q4p-Fe-fSh" secondAttribute="bottom" constant="-1" id="9G0-fs-2mr"/>
+                <constraint firstItem="rXb-5G-Ibp" firstAttribute="height" secondItem="7GR-TM-tBX" secondAttribute="height" multiplier="3/4" id="OZa-b4-m8j"/>
+                <constraint firstItem="rXb-5G-Ibp" firstAttribute="centerX" secondItem="EbK-ER-FPF" secondAttribute="centerX" id="SNF-QF-veY"/>
                 <constraint firstItem="xBt-pU-suy" firstAttribute="leading" secondItem="EbK-ER-FPF" secondAttribute="leading" constant="-1" id="V9O-27-0pr"/>
                 <constraint firstItem="Q4p-Fe-fSh" firstAttribute="top" secondItem="EbK-ER-FPF" secondAttribute="top" constant="-1" id="YQf-tt-kAr"/>
                 <constraint firstItem="Q4p-Fe-fSh" firstAttribute="centerX" secondItem="EbK-ER-FPF" secondAttribute="centerX" id="j2d-jM-DJh"/>
                 <constraint firstAttribute="trailing" secondItem="xBt-pU-suy" secondAttribute="trailing" constant="-1" id="lsh-Fz-wgA"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="7GR-TM-tBX"/>
-            <size key="customSize" width="125" height="110"/>
-            <point key="canvasLocation" x="-290.39999999999998" y="30.134932533733135"/>
+            <size key="customSize" width="57" height="48"/>
+            <connections>
+                <outlet property="stoneView" destination="rXb-5G-Ibp" id="Ep9-co-x9D"/>
+            </connections>
+            <point key="canvasLocation" x="-344.80000000000001" y="2.2488755622188905"/>
         </collectionViewCell>
     </objects>
 </document>

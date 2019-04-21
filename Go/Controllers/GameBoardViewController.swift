@@ -13,7 +13,7 @@ import UIKit
 
 class GameBoardViewController: UIViewController {
     
-    private var game: Game = Game()
+    private var game: Game = Game(board: Board(size: .nineXNine))
     
     @IBOutlet weak private var boardCollectionView: UICollectionView!
     
@@ -33,7 +33,8 @@ extension GameBoardViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: GoCell = collectionView.dequeueReusableCell(for: indexPath)
-        // config
+        let state = game.board.states[indexPath.row]
+        cell.configure(for: state)
         return cell
     }
 }
@@ -44,6 +45,8 @@ extension GameBoardViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // handle, later - add dragging from cell to cell with haptic when drag from one to the next, don't set the stone until release, use simple select for building game - show 0.5 alpha when dragging for stone, filled in when release
         print(indexPath.row)
+        game.positionSelected(indexPath.row)
+        collectionView.reloadItems(at: [indexPath])
     }
     
     func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
