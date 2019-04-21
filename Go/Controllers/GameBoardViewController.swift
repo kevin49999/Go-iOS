@@ -24,7 +24,7 @@ class GameBoardViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = NSLocalizedString("Go 🎍", comment: "")
+        navigationItem.title = NSLocalizedString("Go ⚫️", comment: "")
         boardCollectionView.register(UINib(nibName: "GoCell", bundle: nil), forCellWithReuseIdentifier: GoCell.storyboardIdentifier)
     }
     
@@ -35,7 +35,7 @@ class GameBoardViewController: UIViewController {
         let current = traitCollection.preferredContentSizeCategory.isAccessibilityCategory
         guard previous != current else { return }
         
-        /// reload what you need to
+        /// Reload what you need/ want to
     }
 }
 

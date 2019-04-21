@@ -20,14 +20,14 @@ struct GoCellViewModelFactory {
     
     func create(position: Int, boardState: Board.PointState) -> GoCellViewModel {
         let showStone: Bool
-        let stoneColor: UIColor?
+        let stoneString: String?
         switch boardState {
         case .taken(let player):
             showStone = true
-            stoneColor = player.color
+            stoneString = player.string
         case .open:
             showStone = false
-            stoneColor = nil
+            stoneString = nil
         }
         
         let borderStyle: GoCellViewModel.BorderStyle
@@ -55,7 +55,7 @@ struct GoCellViewModelFactory {
         /// TODO: showCenterDot
         let viewModel = GoCellViewModel(showCenterDot: false,
                                         showStone: showStone,
-                                        stoneColor: stoneColor,
+                                        stoneString: stoneString,
                                         borderStyle: borderStyle)
         return viewModel
     }

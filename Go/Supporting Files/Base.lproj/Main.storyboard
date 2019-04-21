@@ -26,7 +26,7 @@
             </objects>
             <point key="canvasLocation" x="-897" y="44"/>
         </scene>
-        <!--Game Board View Controller-->
+        <!--Go-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController storyboardIdentifier="GameBoardViewController" id="BYZ-38-t0r" customClass="GameBoardViewController" customModule="Go" customModuleProvider="target" sceneMemberID="viewController">
@@ -35,7 +35,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="vrr-Gh-4MH">
-                                <rect key="frame" x="20" y="166" width="335" height="335"/>
+                                <rect key="frame" x="8" y="154" width="359" height="359"/>
                                 <color key="backgroundColor" red="0.97254901959999995" green="0.95686274510000002" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="vrr-Gh-4MH" secondAttribute="height" id="4C0-W7-pGx"/>
@@ -57,12 +57,15 @@
                         <constraints>
                             <constraint firstItem="vrr-Gh-4MH" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="3b3-SI-qDo"/>
                             <constraint firstItem="vrr-Gh-4MH" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="FFN-HM-IYX"/>
-                            <constraint firstItem="vrr-Gh-4MH" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="X4i-HO-4Aa"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="vrr-Gh-4MH" secondAttribute="trailing" constant="20" id="cRv-ak-5Jf"/>
+                            <constraint firstItem="vrr-Gh-4MH" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="X4i-HO-4Aa"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="vrr-Gh-4MH" secondAttribute="trailing" constant="8" id="cRv-ak-5Jf"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" id="apy-4b-8xf"/>
+                    <navigationItem key="navigationItem" title="Go" id="apy-4b-8xf">
+                        <barButtonItem key="leftBarButtonItem" systemItem="reply" id="3Jc-NA-MpC"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="Ilt-2I-kV9"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="boardCollectionView" destination="vrr-Gh-4MH" id="8dQ-xm-j8J"/>
                     </connections>

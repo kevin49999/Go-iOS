@@ -12,12 +12,12 @@ enum Player {
     case white
     case black
     
-    var color: UIColor {
+    var string: String {
         switch self {
         case .white:
-            return .white /// add to Styles - offWhite
+            return "⚪️"
         case .black:
-            return .black /// same, but offBlack
+            return "⚫️"
         }
     }
 }

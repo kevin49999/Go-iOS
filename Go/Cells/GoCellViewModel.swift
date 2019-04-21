@@ -10,7 +10,7 @@ import UIKit
 
 struct GoCellViewModel {
     let showStone: Bool
-    let stoneColor: UIColor?
+    let stoneString: String?
     let showCenterDot: Bool
     let centerDotColor: UIColor = .black
     let borderStyle: BorderStyle
@@ -29,12 +29,12 @@ struct GoCellViewModel {
     
     init(showCenterDot: Bool = false,
          showStone: Bool = false,
-         stoneColor: UIColor? = nil,
+         stoneString: String? = nil,
          borderStyle: BorderStyle = .default) {
         
         self.showCenterDot = showCenterDot
         self.showStone = showStone
-        self.stoneColor = stoneColor
+        self.stoneString = stoneString
         self.borderStyle = borderStyle
     }
 }
