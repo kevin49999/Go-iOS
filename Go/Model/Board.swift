@@ -24,8 +24,8 @@ class Board {
     
     let size: Size
     private(set) var currentState: [PointState] // top left -> bottom right
-    private(set) var pastStates: [[PointState]]
-    private var whiteStrings: [PointState] = [PointState]() // TODO:
+    private(set) var pastStates: [[PointState]] /// should this even be on Board? or game..
+    private var whiteStrings: [PointState] = [PointState]() // TODO: hmm, either here or on game..
     private var blackStrings: [PointState] = [PointState]() // ""
     
     init(size: Size) {
@@ -38,8 +38,6 @@ class Board {
     func update(position: Int, with state: PointState) {
         pastStates.append(self.currentState)
         currentState[position] = state
-        /// check for captures, etc.
-        /// check for newly created strings, etc.
     }
     
     func undoLast() {

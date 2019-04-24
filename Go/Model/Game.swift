@@ -16,21 +16,44 @@ protocol GameDelegate: class {
 }
 
 /// https://www.britgo.org/intro/intro2.html
+/// http://cjlarose.com/2014/01/09/react-board-game-tutorial.html - good ref!
 /// need concept of strings/groups and their surroundings
+/// need end game concept (PASSING stones aka skipping your turn - 2 stones on bottom that are disabled/enabled until turned on, one person plays, undos passed stone
+/// need blocking of self capture -> emoji with flashing tint?? like waveman sprite animation.. (do alpha fading fast 0.5, 1.0, 0.5, 1.0)
+/// need redo move as well? er
+
+/// LATER
+/// add mention of atari?
+/// need handicap placement of stones automatically
+
 class Game {
     
     weak var delegate: GameDelegate?
     
     let board: Board
-    var current: Player
     var whiteScore: Int = 0
     var blackScore: Int = 0
+    
     var size: Int {
         return board.size.rawValue
     }
-    private var canUndo: Bool = false
     
-    init(board: Board = Board(size: .thirteenXThirteen)) {
+    var current: Player {
+        didSet {
+            delegate?.switchedToPlayer(current)
+        }
+    }
+    
+    private var canUndo: Bool = false {
+        didSet {
+            guard oldValue != canUndo else {
+                return
+            }
+            delegate?.canUndoChanged(canUndo)
+        }
+    }
+    
+    init(board: Board) {
         self.board = board
         self.current = .black
     }
@@ -42,28 +65,30 @@ class Game {
         
         board.update(position: position, with: .taken(current))
         togglePlayer()
+        
         /// create new string/group relationships for added
-        /// check for captures/add point
-        /// check for game over
-        if canUndo == false {
-            canUndo = true
-            delegate?.canUndoChanged(canUndo)
-        }
+        
+        /// check for captures w/ concept of liberties - IF group has no liberties, it's captured
+        
+        canUndo = true
         delegate?.positionSelected(position)
     }
     
     func undoLast() {
+        guard !board.pastStates.isEmpty else {
+            assertionFailure()
+            return
+        }
+        
         board.undoLast()
         togglePlayer()
+        delegate?.undidLastMove()
         if board.pastStates.isEmpty {
             canUndo = false
-            delegate?.canUndoChanged(false)
         }
-        delegate?.undidLastMove()
     }
     
     private func togglePlayer() {
         current = (current == .black) ? .white : .black
-        delegate?.switchedToPlayer(current)
     }
 }

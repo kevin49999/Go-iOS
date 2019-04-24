@@ -14,6 +14,7 @@ class GameBoardViewController: UIViewController {
     
     private var game: Game = Game(board: Board(size: .nineXNine)) {
         didSet {
+            game.delegate = self
             viewModelFactory = GoCellViewModelFactory(boardSize: self.game.board.size)
             boardCollectionView.reloadData()
         }
@@ -21,6 +22,8 @@ class GameBoardViewController: UIViewController {
     private lazy var viewModelFactory: GoCellViewModelFactory = {
         return GoCellViewModelFactory(boardSize: self.game.board.size)
     }()
+    
+    // MARK: - IBOutlet
     
     @IBOutlet weak private var undoBarButtonItem: UIBarButtonItem!
     @IBOutlet weak private var boardCollectionView: UICollectionView!
