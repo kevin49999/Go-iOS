@@ -79,6 +79,11 @@ extension GameBoardViewController: GoDelegate {
         navigationItem.title = NSLocalizedString("Go \(player.string)", comment: "")
     }
     
+    func playerAttemptedSuicide(_ player: Player) {
+        print("suicide attempted: \(player)")
+        /// show in UI! FLASH player colored stone + SKULLLLL
+    }
+    
     func undidLastMove() {
         boardCollectionView.reloadData()
     }

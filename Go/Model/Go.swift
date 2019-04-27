@@ -11,6 +11,7 @@ import Foundation
 protocol GoDelegate: class {
     func positionSelected(_ position: Int)
     func switchedToPlayer(_ player: Player)
+    func playerAttemptedSuicide(_ player: Player)
     func undidLastMove()
     func canUndoChanged(_ canUndo: Bool)
 }
@@ -21,12 +22,17 @@ protocol GoDelegate: class {
 /// need end game concept (PASSING stones aka skipping your turn - 2 stones on bottom that are disabled/enabled until turned on, one person plays, undos passed stone
 /// need blocking of self capture -> emoji with flashing tint?? like waveman sprite animation.. (do alpha fading fast 0.5, 1.0, 0.5, 1.0)
 /// need redo move as well? er
-
-/// LATER
+/// add support for move documentation, A1 - XX
+/// idea - init Game with mock positions
 /// add mention of atari?
 /// need handicap placement of stones automatically
 
 class Go {
+    
+    struct Group {
+        let positions: [Int]
+        let liberties: Int
+    }
     
     weak var delegate: GoDelegate?
     
@@ -36,9 +42,9 @@ class Go {
     }
     private var whiteScore: Int = 0
     private var blackScore: Int = 0
-    private var current: Player {
+    private var currentPlayer: Player {
         didSet {
-            delegate?.switchedToPlayer(current)
+            delegate?.switchedToPlayer(currentPlayer)
         }
     }
     private var canUndo: Bool = false {
@@ -52,7 +58,7 @@ class Go {
     
     init(board: Board) {
         self.board = board
-        self.current = .black
+        self.currentPlayer = .black
     }
     
     func positionSelected(_ position: Int) {
@@ -60,13 +66,19 @@ class Go {
             return
         }
         
-        board.update(position: position, with: .taken(current))
+        board.update(position: position, with: .taken(currentPlayer))
         
-        getGroup(startingAt: position)
-        // ++really get all groups fanning out from this position, white and black
-        // check for captures w/ concept of liberties - IF group has no liberties, it's captured
+        if let currentPlayerGroup = getGroup(startingAt: position),
+            currentPlayerGroup.liberties == 0 {
+            delegate?.playerAttemptedSuicide(currentPlayer)
+            undoLast() /// want slight delay..
+            return
+        }
+        
+        // get neighbor groups
+        // check for captures
+        
         delegate?.positionSelected(position)
-        
         togglePlayer()
         canUndo = true
     }
@@ -83,6 +95,43 @@ class Go {
         if board.pastStates.isEmpty {
             canUndo = false
         }
+    }
+    
+    private func getGroup(startingAt position: Int) -> Group? {
+        guard case let .taken(startingPlayer) = board.currentState[position] else {
+            return nil
+        }
+        
+        var queue: [Int] = [position]
+        var positions: [Int] = []
+        var visited = [Int: Bool]()
+        var liberties = 0
+        
+        while !queue.isEmpty {
+            guard let stone = queue.popLast() else {
+                assertionFailure()
+                break
+            }
+            
+            if visited[stone] == true {
+                continue
+            }
+            
+            let neighbors = getNeighborsFor(position: stone)
+            neighbors.forEach {
+                switch board.currentState[$0] {
+                case .taken(let player):
+                    if player == startingPlayer {
+                        queue.append($0)
+                    }
+                case .open:
+                    liberties += 1
+                }
+            }
+            positions.append(stone)
+            visited[stone] = true
+        }
+        return Group(positions: positions, liberties: liberties)
     }
     
     // can reuse this logic for that borderStyle stuff.. can calc based on what's returned here
@@ -115,44 +164,7 @@ class Go {
         return [left, right, top, bottom].compactMap({ $0 })
     }
     
-    private func getGroup(startingAt position: Int) {
-        var queue: [Int] = [position]
-        var group: [Int] = []
-        var visited = [Int: Bool]()
-        var liberties = 0
-        
-        while !queue.isEmpty {
-            guard let stone = queue.popLast() else {
-                assertionFailure()
-                break
-            }
-            
-            if visited[stone] == true {
-                continue
-            }
-            
-            let neighbors = getNeighborsFor(position: stone)
-            neighbors.forEach {
-                switch board.currentState[$0] {
-                case .taken(let player):
-                    if player == current { /// don't check current, check current color at the starting position
-                        queue.append($0)
-                    }
-                case .open:
-                    liberties += 1
-                }
-            }
-            
-            group.append(stone)
-            visited[stone] = true
-        }
-        
-        print("group: \(group)")
-        print("liberties: \(liberties)")
-        // -> return
-    }
-    
     private func togglePlayer() {
-        current = (current == .black) ? .white : .black
+        currentPlayer = (currentPlayer == .black) ? .white : .black
     }
 }
