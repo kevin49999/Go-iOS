@@ -1,5 +1,5 @@
 //
-//  Game.swift
+//  Go.swift
 //  Go
 //
 //  Created by Kevin Johnson on 4/7/19.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol GameDelegate: class {
+protocol GoDelegate: class {
     func positionSelected(_ position: Int)
     func switchedToPlayer(_ player: Player)
     func undidLastMove()
@@ -26,9 +26,9 @@ protocol GameDelegate: class {
 /// add mention of atari?
 /// need handicap placement of stones automatically
 
-class Game {
+class Go {
     
-    weak var delegate: GameDelegate?
+    weak var delegate: GoDelegate?
     
     let board: Board
     var size: Int {

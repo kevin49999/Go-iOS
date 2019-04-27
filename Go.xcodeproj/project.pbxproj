@@ -16,7 +16,7 @@
 		0AF46468225AE50F00DE34EA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0AF46467225AE50F00DE34EA /* Assets.xcassets */; };
 		0AF4646B225AE50F00DE34EA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AF46469225AE50F00DE34EA /* LaunchScreen.storyboard */; };
 		0AF46476225AE50F00DE34EA /* GoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46475225AE50F00DE34EA /* GoTests.swift */; };
-		0AF46481225AF04900DE34EA /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46480225AF04900DE34EA /* Game.swift */; };
+		0AF46481225AF04900DE34EA /* Go.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46480225AF04900DE34EA /* Go.swift */; };
 		0AF46486226A79B900DE34EA /* GoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0AF46485226A79B900DE34EA /* GoCell.xib */; };
 		0AF46488226A7F7E00DE34EA /* GoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46487226A7F7E00DE34EA /* GoCell.swift */; };
 		0AF4648A226B8F9B00DE34EA /* StoryboardIdentifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46489226B8F9B00DE34EA /* StoryboardIdentifiable.swift */; };
@@ -51,7 +51,7 @@
 		0AF46471225AE50F00DE34EA /* GoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0AF46475225AE50F00DE34EA /* GoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoTests.swift; sourceTree = "<group>"; };
 		0AF46477225AE50F00DE34EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0AF46480225AF04900DE34EA /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		0AF46480225AF04900DE34EA /* Go.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Go.swift; sourceTree = "<group>"; };
 		0AF46485226A79B900DE34EA /* GoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GoCell.xib; sourceTree = "<group>"; };
 		0AF46487226A7F7E00DE34EA /* GoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoCell.swift; sourceTree = "<group>"; };
 		0AF46489226B8F9B00DE34EA /* StoryboardIdentifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryboardIdentifiable.swift; sourceTree = "<group>"; };
@@ -161,7 +161,7 @@
 			isa = PBXGroup;
 			children = (
 				0AF46491226C01F800DE34EA /* Board.swift */,
-				0AF46480225AF04900DE34EA /* Game.swift */,
+				0AF46480225AF04900DE34EA /* Go.swift */,
 				0AF4648F226C01E200DE34EA /* Player.swift */,
 			);
 			path = Model;
@@ -294,7 +294,7 @@
 				0AF4648E226B922400DE34EA /* Styles.swift in Sources */,
 				0A21BFBE226C144D004C54B9 /* GoCellViewModel.swift in Sources */,
 				0AF46488226A7F7E00DE34EA /* GoCell.swift in Sources */,
-				0AF46481225AF04900DE34EA /* Game.swift in Sources */,
+				0AF46481225AF04900DE34EA /* Go.swift in Sources */,
 				0AF46490226C01E200DE34EA /* Player.swift in Sources */,
 				0AF46461225AE50B00DE34EA /* AppDelegate.swift in Sources */,
 				0AF46494226C05A600DE34EA /* Fonts.swift in Sources */,
