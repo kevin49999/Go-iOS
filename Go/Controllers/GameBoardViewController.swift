@@ -68,20 +68,11 @@ class GameBoardViewController: UIViewController {
     }
 }
 
-// MARK: - GameDelegate
+// MARK: - GoDelegate
 
 extension GameBoardViewController: GoDelegate {
     func positionSelected(_ position: Int) {
         boardCollectionView.reloadItems(at: [IndexPath(row: position, section: 0)])
-    }
-    
-    func switchedToPlayer(_ player: Player) {
-        navigationItem.title = NSLocalizedString("Go \(player.string)", comment: "")
-    }
-    
-    func playerAttemptedSuicide(_ player: Player) {
-        print("suicide attempted: \(player)")
-        /// show in UI! FLASH player colored stone + SKULLLLL
     }
     
     func undidLastMove() {
@@ -90,6 +81,20 @@ extension GameBoardViewController: GoDelegate {
     
     func canUndoChanged(_ canUndo: Bool) {
         undoBarButtonItem.isEnabled = canUndo
+    }
+    
+    func switchedToPlayer(_ player: Player) {
+        navigationItem.title = NSLocalizedString("Go \(player.string)", comment: "")
+    }
+    
+    func playerAttemptedSuicide(_ player: Player) {
+        print("suicide attempted: \(player)")
+        /// lock UI for half second + show in UI! FLASH player colored stone + SKULLLLL
+    }
+    
+    func atariForPlayer(_ player: Player) {
+        print("atari for player: \(player)")
+        /// ""
     }
 }
 
@@ -114,7 +119,7 @@ extension GameBoardViewController: UICollectionViewDataSource {
 extension GameBoardViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // handle, later - add dragging from cell to cell with haptic when drag from one to the next, don't set the stone until release, use simple select for building game - show 0.5 alpha when dragging for stone, filled in when release
-        print(indexPath.row)
+        ///print(indexPath.row)
         game.positionSelected(indexPath.row)
     }
     

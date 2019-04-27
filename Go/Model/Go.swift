@@ -8,38 +8,42 @@
 
 import Foundation
 
+// https://www.britgo.org/intro/intro2.html
+// http://cjlarose.com/2014/01/09/react-board-game-tutorial.html 🙏
+// need end game concept, passing twice == game over
+// need handicap placement of stones automatically
+
+// Later:
+// need redo move as well?
+// add support for move documentation, A1 - XX
+// idea - init Game with mock positions
+
 protocol GoDelegate: class {
     func positionSelected(_ position: Int)
-    func switchedToPlayer(_ player: Player)
-    func playerAttemptedSuicide(_ player: Player)
     func undidLastMove()
     func canUndoChanged(_ canUndo: Bool)
+    func switchedToPlayer(_ player: Player)
+    func playerAttemptedSuicide(_ player: Player)
+    func atariForPlayer(_ player: Player)
 }
-
-/// https://www.britgo.org/intro/intro2.html
-/// http://cjlarose.com/2014/01/09/react-board-game-tutorial.html - MUCH needed ref!
-/// need concept of strings/groups and their surroundings
-/// need end game concept (PASSING stones aka skipping your turn - 2 stones on bottom that are disabled/enabled until turned on, one person plays, undos passed stone
-/// need blocking of self capture -> emoji with flashing tint?? like waveman sprite animation.. (do alpha fading fast 0.5, 1.0, 0.5, 1.0)
-/// need redo move as well? er
-/// add support for move documentation, A1 - XX
-/// idea - init Game with mock positions
-/// add mention of atari?
-/// need handicap placement of stones automatically
 
 class Go {
     
+    // MARK: - Group
+    
     struct Group {
+        let player: Player
         let positions: [Int]
         let liberties: Int
     }
     
-    weak var delegate: GoDelegate?
+    // MARK: - Properties
     
-    let board: Board
+    weak var delegate: GoDelegate?
     var size: Int {
         return board.size.rawValue
     }
+    let board: Board
     private var whiteScore: Int = 0
     private var blackScore: Int = 0
     private var currentPlayer: Player {
@@ -56,27 +60,55 @@ class Go {
         }
     }
     
+    // MARK: - Init
+    
     init(board: Board) {
         self.board = board
         self.currentPlayer = .black
     }
+    
+    /// MARK: - Move Handling
     
     func positionSelected(_ position: Int) {
         guard case .open = board.currentState[position] else {
             return
         }
         
-        board.update(position: position, with: .taken(currentPlayer))
-        
-        if let currentPlayerGroup = getGroup(startingAt: position),
-            currentPlayerGroup.liberties == 0 {
-            delegate?.playerAttemptedSuicide(currentPlayer) /// lock UI here for half secod
-            board.undoLast() /// want slight delay.. want to see that position selected for half second!
+        board.update(position: position, with: .taken(currentPlayer)) /// mark w/ try? not every position valid
+        guard let currentPlayerGroup = getGroup(startingAt: position) else {
+            assertionFailure()
             return
         }
         
-        // get neighbor groups
-        // check for captures
+        /// current player logic - split func
+        switch currentPlayerGroup.liberties {
+        case 0:
+            delegate?.playerAttemptedSuicide(currentPlayer)
+            board.undoLast() /// delay
+            delegate?.undidLastMove() /// -> bind to board.state changes
+            return
+        case 1:
+            delegate?.atariForPlayer(currentPlayer)
+        default:
+            break
+        }
+
+        /// other groups - split func
+        let neighbors = getNeighborsFor(position: position)
+        let otherPlayerGroups: [Group] = neighbors
+            .compactMap({ getGroup(startingAt: $0) })
+            .filter({ $0.player != currentPlayer })
+            /// make sure no duplicates?
+        for group in otherPlayerGroups {
+            switch group.liberties {
+            case 0:
+                handleGroupCaptured(group)
+            case 1:
+                delegate?.atariForPlayer(group.player)
+            default:
+                continue
+            }
+        }
         
         delegate?.positionSelected(position)
         togglePlayer()
@@ -96,6 +128,8 @@ class Go {
             canUndo = false
         }
     }
+    
+    // MARK: - Group Logic
     
     private func getGroup(startingAt position: Int) -> Group? {
         guard case let .taken(startingPlayer) = board.currentState[position] else {
@@ -131,7 +165,10 @@ class Go {
             positions.append(stone)
             visited[stone] = true
         }
-        return Group(positions: positions, liberties: liberties)
+        
+        return Group(player: startingPlayer,
+                     positions: positions,
+                     liberties: liberties)
     }
     
     // can reuse this logic for that borderStyle stuff.. can calc based on what's returned here
@@ -139,7 +176,7 @@ class Go {
         let rows = size
         let endIndex = rows * rows - 1
         guard position < endIndex else {
-            assertionFailure("Out of bounds")
+            assertionFailure("Position: \(position) out of bounds")
             return []
         }
         
@@ -160,9 +197,15 @@ class Go {
         if position < rows * (rows - 1) {
             bottom = position + board.size.rawValue
         }
-        //print("l: \(left), r: \(right), t: \(top), b: \(bottom)")
         return [left, right, top, bottom].compactMap({ $0 })
     }
+    
+    private func handleGroupCaptured(_ group: Group) {
+        /// need to set those positions to open ++ increment score opposite of group
+        print("captured!")
+    }
+    
+    // MARK: - Toggle Player
     
     private func togglePlayer() {
         currentPlayer = (currentPlayer == .black) ? .white : .black
