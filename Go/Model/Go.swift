@@ -70,8 +70,8 @@ class Go {
         
         if let currentPlayerGroup = getGroup(startingAt: position),
             currentPlayerGroup.liberties == 0 {
-            delegate?.playerAttemptedSuicide(currentPlayer)
-            undoLast() /// want slight delay..
+            delegate?.playerAttemptedSuicide(currentPlayer) /// lock UI here for half secod
+            board.undoLast() /// want slight delay.. want to see that position selected for half second!
             return
         }
         
