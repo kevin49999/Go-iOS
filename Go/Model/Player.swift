@@ -9,15 +9,19 @@
 import UIKit
 
 enum Player {
-    case white
     case black
+    case white
+    
+    var opposite: Player {
+        return (self == .black) ? .white : .black
+    }
     
     var string: String {
         switch self {
-        case .white:
-            return "⚪️"
         case .black:
             return "⚫️"
+        case .white:
+            return "⚪️"
         }
     }
 }

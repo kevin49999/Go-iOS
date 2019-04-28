@@ -75,6 +75,12 @@ extension GameBoardViewController: GoDelegate {
         boardCollectionView.reloadItems(at: [IndexPath(row: position, section: 0)])
     }
     
+    func positionsCaptured(_ positions: [Int]) {
+        /// decide if want to indicate in UI at time of
+        let indexPaths: [IndexPath] = positions.map({ IndexPath(row: $0, section: 0) })
+        boardCollectionView.reloadItems(at: indexPaths)
+    }
+    
     func undidLastMove() {
         boardCollectionView.reloadData()
     }

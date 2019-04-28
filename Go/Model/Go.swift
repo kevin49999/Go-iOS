@@ -10,7 +10,7 @@ import Foundation
 
 // https://www.britgo.org/intro/intro2.html
 // http://cjlarose.com/2014/01/09/react-board-game-tutorial.html 🙏
-// need end game concept, passing twice == game over
+// need end game concept, passing twice == game over (then need to sum current points from capture + remaining group liberties
 // need handicap placement of stones automatically
 
 // Later:
@@ -20,8 +20,11 @@ import Foundation
 
 protocol GoDelegate: class {
     func positionSelected(_ position: Int)
+    func positionsCaptured(_ positions: [Int])
+    
     func undidLastMove()
     func canUndoChanged(_ canUndo: Bool)
+    
     func switchedToPlayer(_ player: Player)
     func playerAttemptedSuicide(_ player: Player)
     func atariForPlayer(_ player: Player)
@@ -44,8 +47,8 @@ class Go {
         return board.size.rawValue
     }
     let board: Board
-    private var whiteScore: Int = 0
-    private var blackScore: Int = 0
+    private var blackCaptures: Int = 0
+    private var whiteCaptures: Int = 0
     private var currentPlayer: Player {
         didSet {
             delegate?.switchedToPlayer(currentPlayer)
@@ -199,13 +202,24 @@ class Go {
     }
     
     private func handleGroupCaptured(_ group: Group) {
-        /// need to set those positions to open ++ increment score opposite of group
-        print("captured!")
+        let points = group.positions.count
+        let playerScoring = group.player.opposite
+        switch playerScoring {
+        case .black:
+            blackCaptures += points
+        case .white:
+            whiteCaptures += points
+        }
+    
+        group.positions.forEach {
+            board.update(position: $0, with: .open)
+        }
+        delegate?.positionsCaptured(group.positions)
     }
     
     // MARK: - Toggle Player
     
     private func togglePlayer() {
-        currentPlayer = (currentPlayer == .black) ? .white : .black
+        currentPlayer = currentPlayer.opposite
     }
 }
