@@ -15,8 +15,8 @@ import Foundation
 
 // Later:
 // need redo move as well?
-// add support for move documentation, A1 - XX
-// idea - init Game with mock positions
+// add support for move documentation, A1, B7, etc. etc.
+// idea - init Game with mock positions (good for testing too)
 
 protocol GoDelegate: class {
     func positionSelected(_ position: Int)
@@ -31,7 +31,7 @@ class Go {
     
     // MARK: - Group
     
-    struct Group {
+    struct Group: Hashable {
         let player: Player
         let positions: [Int]
         let liberties: Int
@@ -95,10 +95,8 @@ class Go {
 
         /// other groups - split func
         let neighbors = getNeighborsFor(position: position)
-        let otherPlayerGroups: [Group] = neighbors
-            .compactMap({ getGroup(startingAt: $0) })
-            .filter({ $0.player != currentPlayer })
-            /// make sure no duplicates?
+        let otherPlayerGroups: Set<Group> = Set(neighbors.compactMap { getGroup(startingAt: $0) })
+            .filter( { $0.player != currentPlayer })
         for group in otherPlayerGroups {
             switch group.liberties {
             case 0:
