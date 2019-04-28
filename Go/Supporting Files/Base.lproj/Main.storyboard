@@ -52,13 +52,22 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="c35-Mu-mJW"/>
                                 </connections>
                             </collectionView>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Action!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RV2-mQ-4yE">
+                                <rect key="frame" x="20" y="126.5" width="335" height="19.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.97254901960784312" green="0.95686274509803926" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="vrr-Gh-4MH" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="3b3-SI-qDo"/>
                             <constraint firstItem="vrr-Gh-4MH" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="FFN-HM-IYX"/>
                             <constraint firstItem="vrr-Gh-4MH" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="X4i-HO-4Aa"/>
+                            <constraint firstItem="vrr-Gh-4MH" firstAttribute="top" secondItem="RV2-mQ-4yE" secondAttribute="bottom" constant="8" symbolic="YES" id="aXB-gT-2eN"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="vrr-Gh-4MH" secondAttribute="trailing" constant="8" id="cRv-ak-5Jf"/>
+                            <constraint firstItem="RV2-mQ-4yE" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="hTA-8B-gLz"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="RV2-mQ-4yE" secondAttribute="trailing" constant="20" id="iPC-aK-TmS"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -77,6 +86,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="actionLabel" destination="RV2-mQ-4yE" id="Ho3-8y-OO9"/>
                         <outlet property="boardCollectionView" destination="vrr-Gh-4MH" id="8dQ-xm-j8J"/>
                         <outlet property="undoBarButtonItem" destination="3Jc-NA-MpC" id="bda-GT-Ap2"/>
                     </connections>

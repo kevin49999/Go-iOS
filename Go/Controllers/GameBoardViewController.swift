@@ -27,6 +27,7 @@ class GameBoardViewController: UIViewController {
     
     @IBOutlet weak private var undoBarButtonItem: UIBarButtonItem!
     @IBOutlet weak private var boardCollectionView: UICollectionView!
+    @IBOutlet weak var actionLabel: UILabel!
     
     // MARK: - View Lifecycle
     
@@ -37,6 +38,8 @@ class GameBoardViewController: UIViewController {
         undoBarButtonItem.isEnabled = false
         game.delegate = self
         boardCollectionView.register(UINib(nibName: "GoCell", bundle: nil), forCellWithReuseIdentifier: GoCell.storyboardIdentifier)
+        actionLabel.font = Fonts.System.ofSize(24.0, weight: .semibold, textStyle: .callout)
+        actionLabel.adjustsFontForContentSizeCategory = true
     }
     
     // MARK: - IBAction
@@ -47,13 +50,13 @@ class GameBoardViewController: UIViewController {
     
     @IBAction func tappedAction(_ sender: Any) {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        /// sizes.. ++ can iterate through sizes I have rather than do manually - prop for string -> 5x5, 9x9, etc.
+        /// TOOD: sizes.. ++ can iterate through sizes I have rather than do manually - prop for string -> 5x5, 9x9, etc.
         let new = UIAlertAction(title: NSLocalizedString("New 5x5", comment: ""), style: .destructive, handler: { [weak self] _ in
             self?.game = Go(board: Board(size: .fiveXFive))
         })
         alertController.addAction(new)
         let cancel = UIAlertAction(title: "Cancel", style: .cancel)
-        alertController.addAction(cancel) /// add that alert extension with static AlertAction.cancel()
+        alertController.addAction(cancel) /// add that alert extension with static AlertAction.cancel() from GitHawk
         present(alertController, animated: true)
     }
     
@@ -94,13 +97,29 @@ extension GameBoardViewController: GoDelegate {
     }
     
     func playerAttemptedSuicide(_ player: Player) {
-        print("suicide attempted: \(player)")
-        /// lock UI for half second + show in UI! FLASH player colored stone + SKULLLLL
+        UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
+        actionLabel.text = NSLocalizedString("☠️", comment: "")
+        actionLabel.alpha = 0.0
+        UIView.animate(withDuration: 1.2,
+                       delay: 0.0,
+                       options: [.curveEaseInOut],
+                       animations: {
+                        self.actionLabel.alpha = 1.0
+                        self.actionLabel.alpha = 0.0 },
+                       completion: nil)
     }
     
     func atariForPlayer(_ player: Player) {
-        print("atari for player: \(player)")
-        /// ""
+        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+        actionLabel.text = NSLocalizedString("🎯", comment: "")
+        actionLabel.alpha = 0.0
+        UIView.animate(withDuration: 1.2,
+                       delay: 0.0,
+                       options: [.curveEaseInOut],
+                       animations: {
+                        self.actionLabel.alpha = 1.0
+                        self.actionLabel.alpha = 0.0 },
+                       completion: nil)
     }
 }
 
@@ -124,13 +143,10 @@ extension GameBoardViewController: UICollectionViewDataSource {
 
 extension GameBoardViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // handle, later - add dragging from cell to cell with haptic when drag from one to the next, don't set the stone until release, use simple select for building game - show 0.5 alpha when dragging for stone, filled in when release
+        // TODO: handle, later - add dragging from cell to cell with haptic when drag from one to the next, don't set the stone until release, use simple select for building game - show 0.5 alpha when dragging for stone, filled in when release
         ///print(indexPath.row)
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
         game.positionSelected(indexPath.row)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
-        // print("highlighted: \(indexPath.row)") /// works for touchdown but not release, but not hold touch to next
     }
 }
 

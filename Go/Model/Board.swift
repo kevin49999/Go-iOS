@@ -24,9 +24,7 @@ class Board {
     
     let size: Size
     private(set) var currentState: [PointState] // top left -> bottom right
-    private(set) var pastStates: [[PointState]] /// should this even be on Board? or game..
-    private var whiteStrings: [PointState] = [PointState]() // TODO: hmm, either here or on game..
-    private var blackStrings: [PointState] = [PointState]() // ""
+    private(set) var pastStates: [[PointState]]
     
     init(size: Size) {
         self.size = size
@@ -38,6 +36,10 @@ class Board {
     func update(position: Int, with state: PointState) {
         pastStates.append(self.currentState)
         currentState[position] = state
+    }
+    
+    func positionsCaptured(_ positions: [Int]) {
+        positions.forEach { currentState[$0] = .open }
     }
     
     func undoLast() {

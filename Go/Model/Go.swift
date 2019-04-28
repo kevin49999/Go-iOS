@@ -21,10 +21,8 @@ import Foundation
 protocol GoDelegate: class {
     func positionSelected(_ position: Int)
     func positionsCaptured(_ positions: [Int])
-    
     func undidLastMove()
     func canUndoChanged(_ canUndo: Bool)
-    
     func switchedToPlayer(_ player: Player)
     func playerAttemptedSuicide(_ player: Player)
     func atariForPlayer(_ player: Player)
@@ -77,18 +75,18 @@ class Go {
             return
         }
         
-        board.update(position: position, with: .taken(currentPlayer)) /// mark w/ try? not every position valid
+        board.update(position: position, with: .taken(currentPlayer))
         guard let currentPlayerGroup = getGroup(startingAt: position) else {
             assertionFailure()
             return
         }
         
-        /// current player logic - split func
+        /// current player group
         switch currentPlayerGroup.liberties {
         case 0:
             delegate?.playerAttemptedSuicide(currentPlayer)
-            board.undoLast() /// delay
-            delegate?.undidLastMove() /// -> bind to board.state changes
+            board.undoLast()
+            delegate?.undidLastMove()
             return
         case 1:
             delegate?.atariForPlayer(currentPlayer)
@@ -96,7 +94,7 @@ class Go {
             break
         }
 
-        /// other groups - split func
+        // other player neighborin groups
         let neighbors = getNeighborsFor(position: position)
         let otherPlayerGroups: Set<Group> = Set(neighbors.compactMap { getGroup(startingAt: $0) })
             .filter( { $0.player != currentPlayer })
@@ -171,8 +169,7 @@ class Go {
                      positions: positions,
                      liberties: liberties)
     }
-    
-    // can reuse this logic for that borderStyle stuff.. can calc based on what's returned here
+
     private func getNeighborsFor(position: Int) -> [Int] {
         let rows = size
         let endIndex = rows * rows - 1
@@ -210,10 +207,7 @@ class Go {
         case .white:
             whiteCaptures += points
         }
-    
-        group.positions.forEach {
-            board.update(position: $0, with: .open)
-        }
+        board.positionsCaptured(group.positions)
         delegate?.positionsCaptured(group.positions)
     }
     

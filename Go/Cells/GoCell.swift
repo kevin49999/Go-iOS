@@ -12,7 +12,7 @@ class GoCell: UICollectionViewCell {
     
     typealias ViewModel = GoCellViewModel
     
-    @IBOutlet weak private var stoneLabel: UILabel! /// should scale to fill nearly full cell, almost no space between stone and edge
+    @IBOutlet weak private var stoneLabel: UILabel! /// TODO: should scale to fill nearly full cell, almost no space between stone and edge
     @IBOutlet weak private var centerDotView: UIView!
     @IBOutlet weak private var topVerticalLine: UIView!
     @IBOutlet weak private var topVerticalLineSize: NSLayoutConstraint!

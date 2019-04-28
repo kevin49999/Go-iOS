@@ -53,7 +53,6 @@ struct GoCellViewModelFactory {
         }
         
         /// TODO: Finish logic, breaks down on nineteenXNineteen board, may have to assume 5x5, 9x9 each have 2x2 squares in corner and thirteen and nineteen ahve 2x2 squares in corner
-        
         let showCenterDot: Bool
         let middle = (cells - 1)/2
         let topLeft = middle / 2
