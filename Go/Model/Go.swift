@@ -173,7 +173,7 @@ class Go {
     private func getNeighborsFor(position: Int) -> [Int] {
         let rows = size
         let endIndex = rows * rows - 1
-        guard position < endIndex else {
+        guard position <= endIndex else {
             assertionFailure("Position: \(position) out of bounds")
             return []
         }
