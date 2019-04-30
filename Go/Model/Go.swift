@@ -38,17 +38,26 @@ class Go {
         let liberties: Int
     }
     
-    // MARK: - Properties
+    // MARK: - Public Properties
     
     weak var delegate: GoDelegate?
-    var size: Int {
-        return board.size.rawValue
+    var rows: Int {
+        return board.size.rows
     }
-    let board: Board
+    var cells: Int {
+        return board.size.cells
+    }
+    
+    // MARK: - Private Properties
+    
+    let board: Board /// again, make private and move state here..
     private var blackCaptures: Int = 0
     private var whiteCaptures: Int = 0
     private var currentPlayer: Player {
         didSet {
+            guard oldValue != currentPlayer else {
+                return
+            }
             delegate?.switchedToPlayer(currentPlayer)
         }
     }
@@ -63,16 +72,16 @@ class Go {
     
     // MARK: - Init
     
-    init(board: Board) {
+    init(board: Board, currentPlayer: Player = .black) {
         self.board = board
-        self.currentPlayer = .black
+        self.currentPlayer = currentPlayer
     }
     
     /// MARK: - Move Handling
     
     func positionSelected(_ position: Int) {
         guard case .open = board.currentState[position] else {
-            return
+            return /// THROW
         }
         
         board.update(position: position, with: .taken(currentPlayer))
@@ -82,19 +91,14 @@ class Go {
         }
         
         /// current player group
-        switch currentPlayerGroup.liberties {
-        case 0:
+        if currentPlayerGroup.liberties == 0 {
             delegate?.playerAttemptedSuicide(currentPlayer)
             board.undoLast()
             delegate?.undidLastMove()
             return
-        case 1:
-            delegate?.atariForPlayer(currentPlayer)
-        default:
-            break
         }
 
-        // other player neighborin groups
+        // other player neighboring groups (may need to get diagonals as well, certain situations where atari can occur where want to know these as well..
         let neighbors = getNeighborsFor(position: position)
         let otherPlayerGroups: Set<Group> = Set(neighbors.compactMap { getGroup(startingAt: $0) })
             .filter( { $0.player != currentPlayer })
@@ -129,7 +133,7 @@ class Go {
     }
     
     // MARK: - Group Logic
-    
+    /// second arg, assuming player = ? to test before updating actual state
     private func getGroup(startingAt position: Int) -> Group? {
         guard case let .taken(startingPlayer) = board.currentState[position] else {
             return nil
@@ -171,8 +175,7 @@ class Go {
     }
 
     private func getNeighborsFor(position: Int) -> [Int] {
-        let rows = size
-        let endIndex = rows * rows - 1
+        let endIndex = cells - 1
         guard position <= endIndex else {
             assertionFailure("Position: \(position) out of bounds")
             return []
@@ -190,10 +193,10 @@ class Go {
             right = position + 1
         }
         if position >= rows {
-            top = position - board.size.rawValue
+            top = position - rows
         }
         if position < rows * (rows - 1) {
-            bottom = position + board.size.rawValue
+            bottom = position + rows
         }
         return [left, right, top, bottom].compactMap({ $0 })
     }

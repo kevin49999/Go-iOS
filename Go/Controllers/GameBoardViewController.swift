@@ -127,7 +127,7 @@ extension GameBoardViewController: GoDelegate {
 
 extension GameBoardViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return game.size * game.size
+        return game.cells
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -145,7 +145,7 @@ extension GameBoardViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // TODO: handle, later - add dragging from cell to cell with haptic when drag from one to the next, don't set the stone until release, use simple select for building game - show 0.5 alpha when dragging for stone, filled in when release
         ///print(indexPath.row)
-        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        UIImpactFeedbackGenerator(style: .light).impactOccurred() /// TODO: no impact until selected!!
         game.positionSelected(indexPath.row)
     }
 }
@@ -154,7 +154,7 @@ extension GameBoardViewController: UICollectionViewDelegate {
 
 extension GameBoardViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let side = collectionView.frame.width / CGFloat(game.size)
+        let side = collectionView.frame.width / CGFloat(game.rows)
         return CGSize(width: side, height: side)
     }
 }

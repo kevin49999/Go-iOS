@@ -15,6 +15,13 @@ class Board {
         case nineXNine = 9
         case thirteenXThirteen = 13
         case nineteenXNineteen = 19
+        
+        var rows: Int {
+            return rawValue
+        }
+        var cells: Int {
+            return rawValue * rawValue
+        }
     }
     
     enum PointState {
@@ -23,13 +30,14 @@ class Board {
     }
     
     let size: Size
+    /// TODO: move state to Go.swift? game should know about state
     private(set) var currentState: [PointState] // top left -> bottom right
     private(set) var pastStates: [[PointState]]
     
     init(size: Size) {
         self.size = size
         self.currentState = [PointState](repeating: .open,
-                                   count: size.rawValue * size.rawValue)
+                                         count: size.rawValue * size.rawValue)
         self.pastStates = [[PointState]]()
     }
     
