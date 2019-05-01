@@ -30,15 +30,18 @@ protocol GoDelegate: class {
 
 class Go {
     
-    // MARK: - Group
-    
     struct Group: Hashable {
         let player: Player
         let positions: [Int]
         let liberties: Int
     }
     
-    // MARK: - Public Properties
+    enum PlayingError: Error {
+        case positionTaken
+        case impossiblePosition
+    }
+    
+    // MARK: -  Properties
     
     weak var delegate: GoDelegate?
     var rows: Int {
@@ -47,9 +50,6 @@ class Go {
     var cells: Int {
         return board.size.cells
     }
-    
-    // MARK: - Private Properties
-    
     let board: Board /// again, make private and move state here..
     private var blackCaptures: Int = 0
     private var whiteCaptures: Int = 0
@@ -79,28 +79,26 @@ class Go {
     
     /// MARK: - Move Handling
     
-    func positionSelected(_ position: Int) {
+    func playPosition(_ position: Int) throws {
         guard case .open = board.currentState[position] else {
-            return /// THROW
+            throw PlayingError.positionTaken
         }
         
-        board.update(position: position, with: .taken(currentPlayer))
-        guard let currentPlayerGroup = getGroup(startingAt: position) else {
-            assertionFailure()
-            return
+        guard let currentPlayerGroup = getGroup(startingAt: position, player: currentPlayer) else {
+            throw PlayingError.impossiblePosition
         }
         
-        /// current player group
+        // current player
         if currentPlayerGroup.liberties == 0 {
-            delegate?.playerAttemptedSuicide(currentPlayer)
-            board.undoLast()
-            delegate?.undidLastMove()
+            delegate?.playerAttemptedSuicide(currentPlayer) // could also throw for for this..
             return
         }
+        board.update(position: position, with: .taken(currentPlayer))
+        delegate?.positionSelected(position)
 
-        // other player neighboring groups (may need to get diagonals as well, certain situations where atari can occur where want to know these as well..
+        // impact on other player groups
         let neighbors = getNeighborsFor(position: position)
-        let otherPlayerGroups: Set<Group> = Set(neighbors.compactMap { getGroup(startingAt: $0) })
+        let otherPlayerGroups: Set<Group> = Set(neighbors.compactMap { getGroupUsingBoardState(startingAt: $0) })
             .filter( { $0.player != currentPlayer })
         for group in otherPlayerGroups {
             switch group.liberties {
@@ -113,7 +111,6 @@ class Go {
             }
         }
         
-        delegate?.positionSelected(position)
         togglePlayer()
         canUndo = true
     }
@@ -133,12 +130,15 @@ class Go {
     }
     
     // MARK: - Group Logic
-    /// second arg, assuming player = ? to test before updating actual state
-    private func getGroup(startingAt position: Int) -> Group? {
-        guard case let .taken(startingPlayer) = board.currentState[position] else {
+    
+    private func getGroupUsingBoardState(startingAt position: Int) -> Group? {
+        guard case let .taken(player) = board.currentState[position] else {
             return nil
         }
-        
+        return getGroup(startingAt: position, player: player)
+    }
+    
+    private func getGroup(startingAt position: Int, player: Player) -> Group? {
         var queue: [Int] = [position]
         var positions: [Int] = []
         var visited = [Int: Bool]()
@@ -155,11 +155,11 @@ class Go {
             }
             
             let neighbors = getNeighborsFor(position: stone)
-            neighbors.forEach {
-                switch board.currentState[$0] {
-                case .taken(let player):
-                    if player == startingPlayer {
-                        queue.append($0)
+            for neighbor in neighbors {
+                switch board.currentState[neighbor] {
+                case .taken(let takenPlayer):
+                    if takenPlayer == player {
+                        queue.append(neighbor)
                     }
                 case .open:
                     liberties += 1
@@ -169,7 +169,7 @@ class Go {
             visited[stone] = true
         }
         
-        return Group(player: startingPlayer,
+        return Group(player: player,
                      positions: positions,
                      liberties: liberties)
     }

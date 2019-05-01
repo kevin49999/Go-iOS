@@ -9,11 +9,6 @@
 import UIKit
 
 struct GoCellViewModel {
-    let showStone: Bool
-    let stoneString: String?
-    let showCenterDot: Bool
-    let centerDotColor: UIColor = .black
-    let borderStyle: BorderStyle
     
     enum BorderStyle {
         case topLeft
@@ -26,6 +21,12 @@ struct GoCellViewModel {
         case right
         case `default`
     }
+    
+    let showStone: Bool
+    let stoneString: String?
+    let showCenterDot: Bool
+    let centerDotColor: UIColor = .black
+    let borderStyle: BorderStyle
     
     init(showCenterDot: Bool = false,
          showStone: Bool = false,

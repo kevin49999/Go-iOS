@@ -27,7 +27,7 @@ class GameBoardViewController: UIViewController {
     
     @IBOutlet weak private var undoBarButtonItem: UIBarButtonItem!
     @IBOutlet weak private var boardCollectionView: UICollectionView!
-    @IBOutlet weak var actionLabel: UILabel!
+    @IBOutlet weak private var actionLabel: UILabel!
     
     // MARK: - View Lifecycle
     
@@ -35,7 +35,6 @@ class GameBoardViewController: UIViewController {
         super.viewDidLoad()
         
         navigationItem.title = NSLocalizedString("Go ⚫️", comment: "")
-        undoBarButtonItem.isEnabled = false
         game.delegate = self
         boardCollectionView.register(UINib(nibName: "GoCell", bundle: nil), forCellWithReuseIdentifier: GoCell.storyboardIdentifier)
         actionLabel.font = Fonts.System.ofSize(24.0, weight: .semibold, textStyle: .callout)
@@ -67,7 +66,7 @@ class GameBoardViewController: UIViewController {
         let current = traitCollection.preferredContentSizeCategory.isAccessibilityCategory
         guard previous != current else { return }
         
-        /// Reload what you need to
+        // TODO: Reload what you need to..
     }
 }
 
@@ -79,12 +78,13 @@ extension GameBoardViewController: GoDelegate {
     }
     
     func positionsCaptured(_ positions: [Int]) {
-        /// decide if want to indicate in UI at time of
+        // TODO: decide if want to indicate in UI at time of
         let indexPaths: [IndexPath] = positions.map({ IndexPath(row: $0, section: 0) })
         boardCollectionView.reloadItems(at: indexPaths)
     }
     
     func undidLastMove() {
+        /// come back and try to only load impacted index paths - diff and find what changes -> reload those only
         boardCollectionView.reloadData()
     }
     
@@ -144,9 +144,12 @@ extension GameBoardViewController: UICollectionViewDataSource {
 extension GameBoardViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // TODO: handle, later - add dragging from cell to cell with haptic when drag from one to the next, don't set the stone until release, use simple select for building game - show 0.5 alpha when dragging for stone, filled in when release
-        ///print(indexPath.row)
-        UIImpactFeedbackGenerator(style: .light).impactOccurred() /// TODO: no impact until selected!!
-        game.positionSelected(indexPath.row)
+        do {
+            try game.playPosition(indexPath.row)
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        } catch {
+            // "fail" silently
+        }
     }
 }
 
