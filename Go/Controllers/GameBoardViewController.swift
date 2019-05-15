@@ -49,13 +49,14 @@ class GameBoardViewController: UIViewController {
     
     @IBAction func tappedAction(_ sender: Any) {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        /// TOOD: sizes.. ++ can iterate through sizes I have rather than do manually - prop for string -> 5x5, 9x9, etc.
-        let new = UIAlertAction(title: NSLocalizedString("New 5x5", comment: ""), style: .destructive, handler: { [weak self] _ in
-            self?.game = Go(board: Board(size: .fiveXFive))
-        })
-        alertController.addAction(new)
+        for size in Board.Size.allCases {
+            let new = UIAlertAction(title: NSLocalizedString(size.description, comment: ""), style: .default, handler: { [weak self] _ in
+                self?.game = Go(board: Board(size: size))
+            })
+            alertController.addAction(new)
+        }
         let cancel = UIAlertAction(title: "Cancel", style: .cancel)
-        alertController.addAction(cancel) /// add that alert extension with static AlertAction.cancel() from GitHawk
+        alertController.addAction(cancel)
         present(alertController, animated: true)
     }
     
