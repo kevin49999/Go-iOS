@@ -35,30 +35,8 @@ class Board {
     }
     
     let size: Size
-    /// TODO: move state to Go.swift? game should know about state
-    private(set) var currentState: [PointState] // top left -> bottom right
-    private(set) var pastStates: [[PointState]]
     
     init(size: Size) {
         self.size = size
-        self.currentState = [PointState](repeating: .open,
-                                         count: size.rawValue * size.rawValue)
-        self.pastStates = [[PointState]]()
-    }
-    
-    func update(position: Int, with state: PointState) {
-        pastStates.append(self.currentState)
-        currentState[position] = state
-    }
-    
-    func positionsCaptured(_ positions: [Int]) {
-        positions.forEach { currentState[$0] = .open }
-    }
-    
-    func undoLast() {
-        guard !pastStates.isEmpty else {
-            return
-        }
-        self.currentState = pastStates.removeLast()
     }
 }
