@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -68,9 +68,9 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="⚫️" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d2A-44-mlF">
-                        <rect key="frame" x="9.5" y="8.5" width="41" height="43"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="36"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="⚫️" textAlignment="center" lineBreakMode="tailTruncation" minimumScaleFactor="0.10000000000000001" translatesAutoresizingMaskIntoConstraints="NO" id="d2A-44-mlF">
+                        <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="100"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -82,19 +82,21 @@
                 <constraint firstItem="6XL-WN-AHT" firstAttribute="top" secondItem="s0n-zt-vkE" secondAttribute="bottom" id="3CZ-hb-a4g"/>
                 <constraint firstItem="laA-OI-mqZ" firstAttribute="centerY" secondItem="EbK-ER-FPF" secondAttribute="centerY" id="6GT-Jy-hWf"/>
                 <constraint firstAttribute="trailing" secondItem="Xco-ot-lv2" secondAttribute="trailing" constant="-1" id="DXQ-8o-zWd"/>
+                <constraint firstItem="d2A-44-mlF" firstAttribute="top" secondItem="EbK-ER-FPF" secondAttribute="top" id="Ipr-OQ-eYe"/>
                 <constraint firstItem="s0n-zt-vkE" firstAttribute="top" secondItem="Q4p-Fe-fSh" secondAttribute="bottom" id="JeN-QK-D6d"/>
                 <constraint firstItem="Xco-ot-lv2" firstAttribute="leading" secondItem="s0n-zt-vkE" secondAttribute="trailing" id="Mv1-MA-YxK"/>
+                <constraint firstAttribute="trailing" secondItem="d2A-44-mlF" secondAttribute="trailing" id="Q5g-X8-p1f"/>
                 <constraint firstItem="s0n-zt-vkE" firstAttribute="leading" secondItem="laA-OI-mqZ" secondAttribute="trailing" id="TCD-kL-qk5"/>
-                <constraint firstItem="d2A-44-mlF" firstAttribute="centerY" secondItem="EbK-ER-FPF" secondAttribute="centerY" id="TFN-Fl-aFC"/>
+                <constraint firstItem="d2A-44-mlF" firstAttribute="leading" secondItem="EbK-ER-FPF" secondAttribute="leading" id="U7d-Tz-o45"/>
                 <constraint firstItem="Q4p-Fe-fSh" firstAttribute="top" secondItem="EbK-ER-FPF" secondAttribute="top" constant="-1" id="YQf-tt-kAr"/>
                 <constraint firstItem="apt-5h-Bkl" firstAttribute="centerX" secondItem="EbK-ER-FPF" secondAttribute="centerX" id="a6K-Mw-A3Z"/>
+                <constraint firstAttribute="bottom" secondItem="d2A-44-mlF" secondAttribute="bottom" id="aIY-mV-QEI"/>
                 <constraint firstItem="laA-OI-mqZ" firstAttribute="leading" secondItem="EbK-ER-FPF" secondAttribute="leading" constant="-1" id="c2s-rk-PYr"/>
                 <constraint firstItem="Q4p-Fe-fSh" firstAttribute="centerX" secondItem="EbK-ER-FPF" secondAttribute="centerX" id="cir-eJ-yRn"/>
                 <constraint firstItem="s0n-zt-vkE" firstAttribute="centerX" secondItem="EbK-ER-FPF" secondAttribute="centerX" id="els-pe-LTV"/>
                 <constraint firstItem="apt-5h-Bkl" firstAttribute="centerY" secondItem="EbK-ER-FPF" secondAttribute="centerY" id="jPy-ev-laQ"/>
                 <constraint firstItem="Xco-ot-lv2" firstAttribute="centerY" secondItem="EbK-ER-FPF" secondAttribute="centerY" id="mOi-Mw-dcu"/>
                 <constraint firstItem="6XL-WN-AHT" firstAttribute="centerX" secondItem="EbK-ER-FPF" secondAttribute="centerX" id="tNT-Di-GKS"/>
-                <constraint firstItem="d2A-44-mlF" firstAttribute="centerX" secondItem="EbK-ER-FPF" secondAttribute="centerX" id="w3n-wr-CTE"/>
                 <constraint firstAttribute="bottom" secondItem="6XL-WN-AHT" secondAttribute="bottom" constant="-1" id="wua-1v-XIj"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="7GR-TM-tBX"/>

@@ -12,7 +12,7 @@ class GoCell: UICollectionViewCell {
     
     typealias ViewModel = GoCellViewModel
     
-    @IBOutlet weak private var stoneLabel: UILabel! /// TODO: should scale to fill nearly full cell, almost no space between stone and edge
+    @IBOutlet weak private var stoneLabel: UILabel!
     @IBOutlet weak private var centerDotView: UIView!
     @IBOutlet weak private var topVerticalLine: UIView!
     @IBOutlet weak private var topVerticalLineSize: NSLayoutConstraint!
@@ -37,108 +37,108 @@ class GoCell: UICollectionViewCell {
         case .topLeft:
             topVerticalLine.isHidden = true
             bottomVerticalLine.isHidden = false
-            bottomVerticalLineSize.constant = 2
+            bottomVerticalLineSize.constant = Styles.Sizing.boldBorder
             
             leftHorizontalLine.isHidden = true
             rightHorizontalLine.isHidden = false
-            rightHorizontalLineSize.constant = 2
+            rightHorizontalLineSize.constant = Styles.Sizing.boldBorder
             
-            centerPixelWidth.constant = 2
-            centerPixelHeight.constant = 2
+            centerPixelWidth.constant = Styles.Sizing.boldBorder
+            centerPixelHeight.constant = Styles.Sizing.boldBorder
         case .topRight:
             topVerticalLine.isHidden = true
             bottomVerticalLine.isHidden = false
-            bottomVerticalLineSize.constant = 2
+            bottomVerticalLineSize.constant = Styles.Sizing.boldBorder
             
             leftHorizontalLine.isHidden = false
-            leftHorizontalLineSize.constant = 2
+            leftHorizontalLineSize.constant = Styles.Sizing.boldBorder
             rightHorizontalLine.isHidden = true
             
-            centerPixelWidth.constant = 2
-            centerPixelHeight.constant = 2
+            centerPixelWidth.constant = Styles.Sizing.boldBorder
+            centerPixelHeight.constant = Styles.Sizing.boldBorder
         case .bottomLeft:
             topVerticalLine.isHidden = false
-            topVerticalLineSize.constant = 2
+            topVerticalLineSize.constant = Styles.Sizing.boldBorder
             bottomVerticalLine.isHidden = true
             
             leftHorizontalLine.isHidden = true
             rightHorizontalLine.isHidden = false
-            rightHorizontalLineSize.constant = 2
+            rightHorizontalLineSize.constant = Styles.Sizing.boldBorder
             
-            centerPixelWidth.constant = 2
-            centerPixelHeight.constant = 2
+            centerPixelWidth.constant = Styles.Sizing.boldBorder
+            centerPixelHeight.constant = Styles.Sizing.boldBorder
         case .bottomRight:
             topVerticalLine.isHidden = false
-            topVerticalLineSize.constant = 2
+            topVerticalLineSize.constant = Styles.Sizing.boldBorder
             bottomVerticalLine.isHidden = true
             
             leftHorizontalLine.isHidden = false
-            leftHorizontalLineSize.constant = 2
+            leftHorizontalLineSize.constant = Styles.Sizing.boldBorder
             rightHorizontalLine.isHidden = true
             
-            centerPixelWidth.constant = 2
-            centerPixelHeight.constant = 2
+            centerPixelWidth.constant = Styles.Sizing.boldBorder
+            centerPixelHeight.constant = Styles.Sizing.boldBorder
         case .bottom:
             topVerticalLine.isHidden = false
-            topVerticalLineSize.constant = 1
+            topVerticalLineSize.constant = Styles.Sizing.defaultBorder
             bottomVerticalLine.isHidden = true
             
             leftHorizontalLine.isHidden = false
-            leftHorizontalLineSize.constant = 2
+            leftHorizontalLineSize.constant = Styles.Sizing.boldBorder
             rightHorizontalLine.isHidden = false
-            rightHorizontalLineSize.constant = 2
+            rightHorizontalLineSize.constant = Styles.Sizing.boldBorder
             
-            centerPixelWidth.constant = 2
-            centerPixelHeight.constant = 2
+            centerPixelWidth.constant = Styles.Sizing.boldBorder
+            centerPixelHeight.constant = Styles.Sizing.boldBorder
         case .top:
             topVerticalLine.isHidden = true
             bottomVerticalLine.isHidden = false
-            bottomVerticalLineSize.constant = 1
+            bottomVerticalLineSize.constant = Styles.Sizing.defaultBorder
             
             leftHorizontalLine.isHidden = false
-            leftHorizontalLineSize.constant = 2
+            leftHorizontalLineSize.constant = Styles.Sizing.boldBorder
             rightHorizontalLine.isHidden = false
             
-            rightHorizontalLineSize.constant = 2
-            centerPixelWidth.constant = 2
-            centerPixelHeight.constant = 2
+            rightHorizontalLineSize.constant = Styles.Sizing.boldBorder
+            centerPixelWidth.constant = Styles.Sizing.boldBorder
+            centerPixelHeight.constant = Styles.Sizing.boldBorder
         case .left:
             topVerticalLine.isHidden = false
-            topVerticalLineSize.constant = 2
+            topVerticalLineSize.constant = Styles.Sizing.boldBorder
             bottomVerticalLine.isHidden = false
-            bottomVerticalLineSize.constant = 2
+            bottomVerticalLineSize.constant = Styles.Sizing.boldBorder
             
             leftHorizontalLine.isHidden = true
             rightHorizontalLine.isHidden = false
-            rightHorizontalLineSize.constant = 1
+            rightHorizontalLineSize.constant = Styles.Sizing.defaultBorder
             
-            centerPixelWidth.constant = 2
-            centerPixelHeight.constant = 2
+            centerPixelWidth.constant = Styles.Sizing.boldBorder
+            centerPixelHeight.constant = Styles.Sizing.boldBorder
         case .right:
             topVerticalLine.isHidden = false
-            topVerticalLineSize.constant = 2
+            topVerticalLineSize.constant = Styles.Sizing.boldBorder
             bottomVerticalLine.isHidden = false
-            bottomVerticalLineSize.constant = 2
+            bottomVerticalLineSize.constant = Styles.Sizing.boldBorder
             
             leftHorizontalLine.isHidden = false
-            leftHorizontalLineSize.constant = 1
+            leftHorizontalLineSize.constant = Styles.Sizing.defaultBorder
             rightHorizontalLine.isHidden = true
             
-            centerPixelWidth.constant = 2
-            centerPixelHeight.constant = 2
+            centerPixelWidth.constant = Styles.Sizing.boldBorder
+            centerPixelHeight.constant = Styles.Sizing.boldBorder
         case .default:
             topVerticalLine.isHidden = false
-            topVerticalLineSize.constant = 1
+            topVerticalLineSize.constant = Styles.Sizing.defaultBorder
             bottomVerticalLine.isHidden = false
-            bottomVerticalLineSize.constant = 1
+            bottomVerticalLineSize.constant = Styles.Sizing.defaultBorder
             
             leftHorizontalLine.isHidden = false
-            leftHorizontalLineSize.constant = 1
+            leftHorizontalLineSize.constant = Styles.Sizing.defaultBorder
             rightHorizontalLine.isHidden = false
-            rightHorizontalLineSize.constant = 1
+            rightHorizontalLineSize.constant = Styles.Sizing.defaultBorder
             
-            centerPixelWidth.constant = 1
-            centerPixelHeight.constant = 1
+            centerPixelWidth.constant = Styles.Sizing.defaultBorder
+            centerPixelHeight.constant = Styles.Sizing.defaultBorder
         }
     }
 }
