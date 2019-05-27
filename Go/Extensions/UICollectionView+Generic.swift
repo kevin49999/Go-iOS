@@ -1,5 +1,5 @@
 //
-//  UICollectionView+.swift
+//  UICollectionView+Generic.swift
 //  Go
 //
 //  Created by Kevin Johnson on 4/20/19.
@@ -14,5 +14,9 @@ extension UICollectionView {
             fatalError("Could not find collectionview cell with identifier: \(T.storyboardIdentifier)")
         }
         return cell
+    }
+    
+    func register<T: UICollectionViewCell>(cell: T.Type) {
+        register(UINib(nibName: T.storyboardIdentifier, bundle: nil), forCellWithReuseIdentifier: T.storyboardIdentifier)
     }
 }

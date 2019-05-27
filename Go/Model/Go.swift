@@ -12,7 +12,7 @@ import Foundation
 // http://cjlarose.com/2014/01/09/react-board-game-tutorial.html 🙏
 
 // need end game concept, passing twice == game over (then need to sum current points from capture + remaining group liberties
-// need handicap placement of stones automatically
+// need handicap placement of stones automatically - also, while 5 handicaps possibly for smaller board, there are 9 handicap stones for the larger boards
 
 // Later:
 // need redo move as well?
@@ -25,8 +25,7 @@ protocol GoDelegate: class {
     func undidLastMove()
     func canUndoChanged(_ canUndo: Bool)
     func switchedToPlayer(_ player: Player)
-    func playerAttemptedSuicide(_ player: Player)
-    func atariForPlayer(_ player: Player)
+    func atariForPlayer()
 }
 
 class Go {
@@ -38,6 +37,8 @@ class Go {
     }
     
     enum PlayingError: Error {
+        case attemptedSuicide
+        case enemyCaptured
         case positionTaken
         case impossiblePosition
     }
@@ -86,18 +87,24 @@ class Go {
     /// MARK: - Move Handling
     
     func playPosition(_ position: Int) throws {
-        guard case .open = currentState[position] else {
-            throw PlayingError.positionTaken
-        }
-        
         guard let currentPlayerGroup = getGroup(startingAt: position, player: currentPlayer) else {
             throw PlayingError.impossiblePosition
         }
         
+        switch currentState[position] {
+        case .taken:
+            throw PlayingError.positionTaken
+        case .open:
+            break
+        case .captured(let capturedBy):
+            if capturedBy == currentPlayer.opposite {
+                throw PlayingError.enemyCaptured
+            }
+        }
+        
         // current player
         if currentPlayerGroup.liberties == 0 {
-            delegate?.playerAttemptedSuicide(currentPlayer) // could also throw for for this..
-            return
+            throw PlayingError.attemptedSuicide
         }
         update(position: position, with: .taken(currentPlayer))
         
@@ -110,7 +117,7 @@ class Go {
             case 0:
                 handleGroupCaptured(group)
             case 1:
-                delegate?.atariForPlayer(group.player)
+                delegate?.atariForPlayer()
             default:
                 continue
             }
@@ -168,15 +175,17 @@ class Go {
                     }
                 case .open:
                     liberties += 1
+                case .captured(let capturedBy):
+                    if capturedBy == player {
+                        liberties += 1 /// hmm 🤔🤔🤔
+                    }
                 }
             }
             positions.append(stone)
             visited[stone] = true
         }
         
-        return Group(player: player,
-                     positions: positions,
-                     liberties: liberties)
+        return Group(player: player, positions: positions, liberties: liberties)
     }
     
     private func getNeighborsFor(position: Int) -> [Int] {
@@ -231,7 +240,9 @@ class Go {
     }
     
     private func groupCaptured(_ group: Group) {
-        group.positions.forEach { currentState[$0] = .open }
+        group.positions.forEach {
+            currentState[$0] = .captured(by: group.player.opposite)
+        }
         delegate?.positionsCaptured(group.positions)
     }
 }

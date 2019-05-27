@@ -25,7 +25,7 @@ struct GoCellViewModelFactory {
         case .taken(let player):
             showStone = true
             stoneString = player.string
-        case .open:
+        case .open, .captured:
             showStone = false
             stoneString = nil
         }

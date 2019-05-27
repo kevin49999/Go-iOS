@@ -1,5 +1,5 @@
 //
-//  UIView+.swift
+//  UIView+IBInspectable.swift
 //  Go
 //
 //  Created by Kevin Johnson on 4/20/19.

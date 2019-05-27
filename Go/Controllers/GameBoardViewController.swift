@@ -12,15 +12,17 @@ class GameBoardViewController: UIViewController {
     
     // MARK: - Properties
     
-    private var game: Go = Go(board: Board(size: .nineXNine)) {
+    private var game: Go! {
         didSet {
-            game.delegate = self
-            viewModelFactory = GoCellViewModelFactory(boardSize: self.game.board.size)
+            navigationItem.title = NSLocalizedString("Go ⚫️", comment: "")
+            viewModelFactory = GoCellViewModelFactory(boardSize: game.board.size)
+            undoBarButtonItem.isEnabled = false
             boardCollectionView.reloadData()
+            game.delegate = self
         }
     }
     private lazy var viewModelFactory: GoCellViewModelFactory = {
-        return GoCellViewModelFactory(boardSize: self.game.board.size)
+        return GoCellViewModelFactory(boardSize: game.board.size)
     }()
     
     // MARK: - IBOutlet
@@ -34,11 +36,54 @@ class GameBoardViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = NSLocalizedString("Go ⚫️", comment: "")
-        game.delegate = self
-        boardCollectionView.register(UINib(nibName: "GoCell", bundle: nil), forCellWithReuseIdentifier: GoCell.storyboardIdentifier)
+        boardCollectionView.register(cell: GoCell.self)
         actionLabel.font = Fonts.System.ofSize(24.0, weight: .semibold, textStyle: .callout)
         actionLabel.adjustsFontForContentSizeCategory = true
+        self.game = Go(board: Board(size: .nineXNine))
+    }
+    
+    // MARK: - Playing Actions
+    
+    func playerAttemptedSuicide() {
+        UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
+        actionLabel.text = NSLocalizedString("☠️", comment: "")
+        actionLabel.alpha = 0.0
+        UIView.animate(withDuration: 1.2,
+                       delay: 0.0,
+                       options: [.curveEaseInOut],
+                       animations: {
+                        self.actionLabel.alpha = 1.0
+                        self.actionLabel.alpha = 0.0 },
+                       completion: nil)
+    }
+    
+    func playerAttemptedToPlayInCaptured() {
+        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+        actionLabel.text = NSLocalizedString("🔒", comment: "")
+        actionLabel.alpha = 0.0
+        UIView.animate(withDuration: 1.2,
+                       delay: 0.0,
+                       options: [.curveEaseInOut],
+                       animations: {
+                        self.actionLabel.alpha = 1.0
+                        self.actionLabel.alpha = 0.0 },
+                       completion: nil)
+    }
+    
+    // MARK: - Alerts
+    
+    private func presentNewGameAlert() {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        for size in Board.Size.allCases {
+            let new = UIAlertAction(title: NSLocalizedString(size.description, comment: ""), style: .default, handler: { [weak self] _ in
+                /// TODO: alert for select handicap before creating game w/ size -> pass size to Go init
+                self?.game = Go(board: Board(size: size))
+            })
+            alertController.addAction(new)
+        }
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel)
+        alertController.addAction(cancel)
+        present(alertController, animated: true)
     }
     
     // MARK: - IBAction
@@ -48,16 +93,7 @@ class GameBoardViewController: UIViewController {
     }
     
     @IBAction func tappedAction(_ sender: Any) {
-        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        for size in Board.Size.allCases {
-            let new = UIAlertAction(title: NSLocalizedString(size.description, comment: ""), style: .default, handler: { [weak self] _ in
-                self?.game = Go(board: Board(size: size))
-            })
-            alertController.addAction(new)
-        }
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel)
-        alertController.addAction(cancel)
-        present(alertController, animated: true)
+        presentNewGameAlert()
     }
     
     // MARK: - Trait Collection
@@ -85,7 +121,7 @@ extension GameBoardViewController: GoDelegate {
     }
     
     func undidLastMove() {
-        /// come back and try to only load impacted index paths - diff and find what changes -> reload those only
+        /// TODO: come back and try to only load impacted index paths - diff and find what changes -> reload those only 🥳
         boardCollectionView.reloadData()
     }
     
@@ -97,20 +133,7 @@ extension GameBoardViewController: GoDelegate {
         navigationItem.title = NSLocalizedString("Go \(player.string)", comment: "")
     }
     
-    func playerAttemptedSuicide(_ player: Player) {
-        UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
-        actionLabel.text = NSLocalizedString("☠️", comment: "")
-        actionLabel.alpha = 0.0
-        UIView.animate(withDuration: 1.2,
-                       delay: 0.0,
-                       options: [.curveEaseInOut],
-                       animations: {
-                        self.actionLabel.alpha = 1.0
-                        self.actionLabel.alpha = 0.0 },
-                       completion: nil)
-    }
-    
-    func atariForPlayer(_ player: Player) {
+    func atariForPlayer() {
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
         actionLabel.text = NSLocalizedString("🎯", comment: "")
         actionLabel.alpha = 0.0
@@ -148,8 +171,19 @@ extension GameBoardViewController: UICollectionViewDelegate {
         do {
             try game.playPosition(indexPath.row)
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        } catch let error as Go.PlayingError {
+            switch error {
+            case .attemptedSuicide:
+                playerAttemptedSuicide()
+            case .enemyCaptured:
+                playerAttemptedToPlayInCaptured()
+            case .positionTaken:
+                break
+            case .impossiblePosition:
+                assertionFailure()
+            }
         } catch {
-            // "fail" silently
+            assertionFailure()
         }
     }
 }
