@@ -6,8 +6,8 @@
 //  Copyright © 2019 Kevin Johnson. All rights reserved.
 //
 
-import Foundation
 import DifferenceKit
+import Foundation
 
 // https://www.britgo.org/intro/intro2.html
 // http://cjlarose.com/2014/01/09/react-board-game-tutorial.html 🙏
@@ -19,11 +19,12 @@ import DifferenceKit
 // need redo move as well?
 // add support for move documentation, A1, B7, etc. etc.
 // idea - init Game with mock positions (good for testing too)
+// on willSet/didSet for currentState, if diff == undidLast call delegate?
 
 protocol GoDelegate: class {
     func positionSelected(_ position: Int)
     func positionsCaptured(_ positions: [Int])
-    func undidLastMove()
+    func undidLastMove(changeset: StagedChangeset<[Go.Point]>)
     func canUndoChanged(_ canUndo: Bool)
     func switchedToPlayer(_ player: Player)
     func atariForPlayer()
@@ -37,14 +38,36 @@ class Go {
         let liberties: Int
     }
     
-    struct Point {
-        enum State {
+    struct Point: Differentiable {
+        ///typealias DifferenceIdentifier = Int
+        enum State: Equatable {
             case taken(Player)
             case open
             case captured(by: Player)
+            
+            static func ==(lhs: State, rhs: State) -> Bool {
+                switch (lhs, rhs) {
+                case (let .taken(playerOne), let .taken(playerTwo)):
+                    return playerOne == playerTwo
+                case (.open, .open):
+                    return true
+                case (let .captured(playerOne), let .captured(playerTwo)):
+                    return playerOne == playerTwo
+                default:
+                    return false
+                }
+            }
         }
+        
         let index: Int
         var state: State
+        var differenceIdentifier: Int {
+            return index
+        }
+        
+        func isContentEqual(to source: Go.Point) -> Bool {
+            return self.state == source.state
+        }
     }
     
     enum PlayingError: Error {
@@ -64,8 +87,13 @@ class Go {
     var cells: Int {
         return board.size.cells
     }
-    private(set) var currentPoints: [Point] // top left -> bottom right
-    private(set) var pastPoints: [[Point]]
+    var currentPoints: [Point] // top left -> bottom right
+    private(set) var pastPoints: [[Point]] {
+        didSet {
+            print("didSet..")
+            
+        }
+    }
     private var blackCaptures: Int = 0
     private var whiteCaptures: Int = 0
     private var currentPlayer: Player {
@@ -142,13 +170,12 @@ class Go {
     }
     
     func undoLast() {
-        guard !pastPoints.isEmpty else {
+        guard let changingTo = pastPoints.last else {
             assertionFailure()
             return
         }
         
-        self.currentPoints = pastPoints.removeLast() /// on willSet/didSet for currentState, if diff == undidLast call delegate?
-        delegate?.undidLastMove()
+        delegate?.undidLastMove(changeset: StagedChangeset(source: self.currentPoints, target: changingTo))
         togglePlayer()
         if pastPoints.isEmpty {
             canUndo = false

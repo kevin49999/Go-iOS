@@ -6,6 +6,7 @@
 //  Copyright © 2019 Kevin Johnson. All rights reserved.
 //
 
+import DifferenceKit
 import UIKit
 
 class GameBoardViewController: UIViewController {
@@ -115,14 +116,14 @@ extension GameBoardViewController: GoDelegate {
     }
     
     func positionsCaptured(_ positions: [Int]) {
-        // TODO: decide if want to indicate in UI at time of
         let indexPaths: [IndexPath] = positions.map({ IndexPath(row: $0, section: 0) })
         boardCollectionView.reloadItems(at: indexPaths)
     }
     
-    func undidLastMove() {
-        /// TODO: come back and try to only load impacted index paths - diff and find what changes -> reload those only 🥳
-        boardCollectionView.reloadData()
+    func undidLastMove(changeset: StagedChangeset<[Go.Point]>) {
+        boardCollectionView.reload(using: changeset) { points in
+            self.game.currentPoints = points
+        }
     }
     
     func canUndoChanged(_ canUndo: Bool) {
