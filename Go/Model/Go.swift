@@ -19,7 +19,6 @@ import Foundation
 // need redo move as well?
 // add support for move documentation, A1, B7, etc. etc.
 // idea - init Game with mock positions (good for testing too)
-// on willSet/didSet for currentState, if diff == undidLast call delegate?
 
 protocol GoDelegate: class {
     func positionSelected(_ position: Int)
@@ -39,7 +38,6 @@ class Go {
     }
     
     struct Point: Differentiable {
-        ///typealias DifferenceIdentifier = Int
         enum State: Equatable {
             case taken(Player)
             case open
@@ -90,8 +88,7 @@ class Go {
     var currentPoints: [Point] // top left -> bottom right
     private(set) var pastPoints: [[Point]] {
         didSet {
-            print("didSet..")
-            
+            canUndo = !pastPoints.isEmpty
         }
     }
     private var blackCaptures: Int = 0
@@ -166,7 +163,6 @@ class Go {
         }
         
         togglePlayer()
-        canUndo = true
     }
     
     func undoLast() {
@@ -175,11 +171,9 @@ class Go {
             return
         }
         
+        pastPoints.removeLast()
         delegate?.undidLastMove(changeset: StagedChangeset(source: self.currentPoints, target: changingTo))
         togglePlayer()
-        if pastPoints.isEmpty {
-            canUndo = false
-        }
     }
     
     // MARK: - Group Logic
