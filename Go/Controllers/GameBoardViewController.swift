@@ -156,8 +156,7 @@ extension GameBoardViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: GoCell = collectionView.dequeueReusableCell(for: indexPath)
-        let viewModel = viewModelFactory.create(position: indexPath.row,
-                                                boardState: game.currentState[indexPath.row])
+        let viewModel = viewModelFactory.create(for: game.currentPoints[indexPath.row])
         cell.configure(with: viewModel)
         return cell
     }

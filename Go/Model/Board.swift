@@ -29,12 +29,6 @@ class Board {
         }
     }
     
-    enum PointState {
-        case taken(Player)
-        case open
-        case captured(by: Player)
-    }
-    
     let size: Size
     
     init(size: Size) {

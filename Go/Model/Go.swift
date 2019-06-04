@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import DifferenceKit
 
 // https://www.britgo.org/intro/intro2.html
 // http://cjlarose.com/2014/01/09/react-board-game-tutorial.html 🙏
@@ -36,6 +37,16 @@ class Go {
         let liberties: Int
     }
     
+    struct Point {
+        enum State {
+            case taken(Player)
+            case open
+            case captured(by: Player)
+        }
+        let index: Int
+        var state: State
+    }
+    
     enum PlayingError: Error {
         case attemptedSuicide
         case enemyCaptured
@@ -53,8 +64,8 @@ class Go {
     var cells: Int {
         return board.size.cells
     }
-    private(set) var currentState: [Board.PointState] // top left -> bottom right
-    private(set) var pastStates: [[Board.PointState]]
+    private(set) var currentPoints: [Point] // top left -> bottom right
+    private(set) var pastPoints: [[Point]]
     private var blackCaptures: Int = 0
     private var whiteCaptures: Int = 0
     private var currentPlayer: Player {
@@ -76,11 +87,14 @@ class Go {
     
     // MARK: - Init
     
-    init(board: Board, currentPlayer: Player = .black) {
+    init(board: Board,
+         pastPoints: [[Go.Point]] = [[Go.Point]](),
+         currentPlayer: Player = .black) {
         self.board = board
-        self.currentState = [Board.PointState](repeating: .open,
-                                               count: board.size.cells)
-        self.pastStates = [[Board.PointState]]()
+        self.currentPoints = (0..<board.size.cells)
+            .map { Point(index: $0, state: .open)
+        }
+        self.pastPoints = pastPoints
         self.currentPlayer = currentPlayer
     }
     
@@ -91,7 +105,7 @@ class Go {
             throw PlayingError.impossiblePosition
         }
         
-        switch currentState[position] {
+        switch currentPoints[position].state {
         case .taken:
             throw PlayingError.positionTaken
         case .open:
@@ -128,15 +142,15 @@ class Go {
     }
     
     func undoLast() {
-        guard !pastStates.isEmpty else {
+        guard !pastPoints.isEmpty else {
             assertionFailure()
             return
         }
         
-        self.currentState = pastStates.removeLast() /// on willSet/didSet for currentState, if diff == undidLast call delegate?
+        self.currentPoints = pastPoints.removeLast() /// on willSet/didSet for currentState, if diff == undidLast call delegate?
         delegate?.undidLastMove()
         togglePlayer()
-        if pastStates.isEmpty {
+        if pastPoints.isEmpty {
             canUndo = false
         }
     }
@@ -144,7 +158,7 @@ class Go {
     // MARK: - Group Logic
     
     private func getGroupUsingBoardState(startingAt position: Int) -> Group? {
-        guard case let .taken(player) = currentState[position] else {
+        guard case let .taken(player) = currentPoints[position].state else {
             return nil
         }
         return getGroup(startingAt: position, player: player)
@@ -168,7 +182,7 @@ class Go {
             
             let neighbors = getNeighborsFor(position: stone)
             for neighbor in neighbors {
-                switch currentState[neighbor] {
+                switch currentPoints[neighbor].state {
                 case .taken(let takenPlayer):
                     if takenPlayer == player {
                         queue.append(neighbor)
@@ -177,7 +191,7 @@ class Go {
                     liberties += 1
                 case .captured(let capturedBy):
                     if capturedBy == player {
-                        liberties += 1 /// hmm 🤔🤔🤔
+                        liberties += 1 /// TODO: decide if sure abou this 🤔
                     }
                 }
             }
@@ -233,15 +247,15 @@ class Go {
         currentPlayer = currentPlayer.opposite
     }
     
-    private func update(position: Int, with state: Board.PointState) {
-        pastStates.append(self.currentState)
-        currentState[position] = state
+    private func update(position: Int, with state: Point.State) {
+        pastPoints.append(self.currentPoints)
+        currentPoints[position].state = state
         delegate?.positionSelected(position)
     }
     
     private func groupCaptured(_ group: Group) {
         group.positions.forEach {
-            currentState[$0] = .captured(by: group.player.opposite)
+            currentPoints[$0].state = .captured(by: group.player.opposite)
         }
         delegate?.positionsCaptured(group.positions)
     }

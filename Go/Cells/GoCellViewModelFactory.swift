@@ -18,10 +18,10 @@ struct GoCellViewModelFactory {
         self.cells = boardSize.rawValue * boardSize.rawValue
     }
     
-    func create(position: Int, boardState: Board.PointState) -> GoCellViewModel {
+    func create(for point: Go.Point) -> GoCellViewModel {
         let showStone: Bool
         let stoneString: String?
-        switch boardState {
+        switch point.state {
         case .taken(let player):
             showStone = true
             stoneString = player.string
@@ -31,7 +31,7 @@ struct GoCellViewModelFactory {
         }
         
         let borderStyle: GoCellViewModel.BorderStyle
-        switch position {
+        switch point.index {
         case 0:
             borderStyle = .topLeft
         case rows - 1:
@@ -59,7 +59,7 @@ struct GoCellViewModelFactory {
         let topRight = topLeft + ((rows - 1) / 2)
         let bottomRight = middle * 3/2
         let bottomLeft = bottomRight - ((rows - 1) / 2)
-        switch position {
+        switch point.index {
         case topLeft:
             showCenterDot = true
         case middle:
