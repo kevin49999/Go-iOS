@@ -47,28 +47,12 @@ class GameBoardViewController: UIViewController {
     
     func playerAttemptedSuicide() {
         UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
-        actionLabel.text = NSLocalizedString("☠️", comment: "")
-        actionLabel.alpha = 0.0
-        UIView.animate(withDuration: 1.2,
-                       delay: 0.0,
-                       options: [.curveEaseInOut],
-                       animations: {
-                        self.actionLabel.alpha = 1.0
-                        self.actionLabel.alpha = 0.0 },
-                       completion: nil)
+        actionLabel.animateCallout("☠️")
     }
     
     func playerAttemptedToPlayInCaptured() {
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-        actionLabel.text = NSLocalizedString("🔒", comment: "")
-        actionLabel.alpha = 0.0
-        UIView.animate(withDuration: 1.2,
-                       delay: 0.0,
-                       options: [.curveEaseInOut],
-                       animations: {
-                        self.actionLabel.alpha = 1.0
-                        self.actionLabel.alpha = 0.0 },
-                       completion: nil)
+        actionLabel.animateCallout("🔒")
     }
     
     // MARK: - Alerts
@@ -116,8 +100,9 @@ extension GameBoardViewController: GoDelegate {
     }
     
     func positionsCaptured(_ positions: [Int]) {
-        let indexPaths: [IndexPath] = positions.map({ IndexPath(row: $0, section: 0) })
-        boardCollectionView.reloadItems(at: indexPaths)
+        boardCollectionView.reloadItems(at: positions.map { IndexPath(row: $0, section: 0)})
+        UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
+        actionLabel.animateCallout("⚔️")
     }
     
     func undidLastMove(changeset: StagedChangeset<[Go.Point]>) {
@@ -136,15 +121,7 @@ extension GameBoardViewController: GoDelegate {
     
     func atariForPlayer() {
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-        actionLabel.text = NSLocalizedString("🎯", comment: "")
-        actionLabel.alpha = 0.0
-        UIView.animate(withDuration: 1.2,
-                       delay: 0.0,
-                       options: [.curveEaseInOut],
-                       animations: {
-                        self.actionLabel.alpha = 1.0
-                        self.actionLabel.alpha = 0.0 },
-                       completion: nil)
+        actionLabel.animateCallout("🎯")
     }
 }
 
@@ -167,7 +144,6 @@ extension GameBoardViewController: UICollectionViewDataSource {
 
 extension GameBoardViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // TODO: handle, later - add dragging from cell to cell with haptic when drag from one to the next, don't set the stone until release, use simple select for building game - show 0.5 alpha when dragging for stone, filled in when release
         do {
             try game.playPosition(indexPath.row)
             UIImpactFeedbackGenerator(style: .light).impactOccurred()

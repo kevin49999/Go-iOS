@@ -11,7 +11,7 @@ import UIKit
 enum Styles {
     
     static func bootstrap() {
-        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.font: Fonts.System.ofSize(weight: .semibold, textStyle: .headline)] /// fixme: doesn't adjust when sizing changes adjustFontTo..
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.font: Fonts.System.ofSize(weight: .semibold, textStyle: .headline)]
     }
     
     enum Colors {
