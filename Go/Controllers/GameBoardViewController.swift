@@ -57,8 +57,14 @@ class GameBoardViewController: UIViewController {
     
     // MARK: - Alerts
     
-    private func presentNewGameAlert() {
+    private func presentGameActionAlert() {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        if !game.isOver {
+            let passStone = UIAlertAction(title: NSLocalizedString("Pass Stone \(game.currentPlayer.string)", comment: ""), style: .destructive, handler: { [weak self] _ in
+                self?.game.passStone()
+            })
+            alertController.addAction(passStone)
+        }
         for size in Board.Size.allCases {
             let new = UIAlertAction(title: NSLocalizedString(size.description, comment: ""), style: .default, handler: { [weak self] _ in
                 /// TODO: alert for select handicap before creating game w/ size -> pass size to Go init
@@ -66,8 +72,15 @@ class GameBoardViewController: UIViewController {
             })
             alertController.addAction(new)
         }
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel)
+        let cancel = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel)
         alertController.addAction(cancel)
+        present(alertController, animated: true)
+    }
+    
+    private func presentGameOverAlert() {
+        let alertController = UIAlertController(title: NSLocalizedString("Game Over", comment: ""), message: nil, preferredStyle: .alert)
+        let okay = UIAlertAction(title: NSLocalizedString("🏆", comment: ""), style: .default)
+        alertController.addAction(okay)
         present(alertController, animated: true)
     }
     
@@ -78,7 +91,7 @@ class GameBoardViewController: UIViewController {
     }
     
     @IBAction func tappedAction(_ sender: Any) {
-        presentNewGameAlert()
+        presentGameActionAlert()
     }
     
     // MARK: - Trait Collection
@@ -95,6 +108,17 @@ class GameBoardViewController: UIViewController {
 // MARK: - GoDelegate
 
 extension GameBoardViewController: GoDelegate {
+    func atariForPlayer() {
+        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+        actionLabel.animateCallout("🎯")
+    }
+    
+    func gameOver() {
+        navigationItem.title = NSLocalizedString("Game Over 🏆", comment: "")
+        undoBarButtonItem.isEnabled = false
+        presentGameOverAlert()
+    }
+    
     func positionSelected(_ position: Int) {
         boardCollectionView.reloadItems(at: [IndexPath(row: position, section: 0)])
     }
@@ -117,11 +141,6 @@ extension GameBoardViewController: GoDelegate {
     
     func switchedToPlayer(_ player: Player) {
         navigationItem.title = NSLocalizedString("Go \(player.string)", comment: "")
-    }
-    
-    func atariForPlayer() {
-        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-        actionLabel.animateCallout("🎯")
     }
 }
 
@@ -153,7 +172,7 @@ extension GameBoardViewController: UICollectionViewDelegate {
                 playerAttemptedSuicide()
             case .enemyCaptured:
                 playerAttemptedToPlayInCaptured()
-            case .positionTaken:
+            case .positionTaken, .gameOver:
                 break
             case .impossiblePosition:
                 assertionFailure()

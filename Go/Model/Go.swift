@@ -18,15 +18,16 @@ import Foundation
 // Later:
 // need redo move as well?
 // add support for move documentation, A1, B7, etc. etc.
-// idea - init Game with mock positions (good for testing too)
+// init Game with mock positions (good for testing too)
 
 protocol GoDelegate: class {
+    func atariForPlayer()
+    func canUndoChanged(_ canUndo: Bool)
+    func gameOver()
     func positionSelected(_ position: Int)
     func positionsCaptured(_ positions: [Int])
-    func undidLastMove(changeset: StagedChangeset<[Go.Point]>)
-    func canUndoChanged(_ canUndo: Bool)
     func switchedToPlayer(_ player: Player)
-    func atariForPlayer()
+    func undidLastMove(changeset: StagedChangeset<[Go.Point]>)
 }
 
 class Go {
@@ -71,6 +72,7 @@ class Go {
     enum PlayingError: Error {
         case attemptedSuicide
         case enemyCaptured
+        case gameOver
         case positionTaken
         case impossiblePosition
     }
@@ -91,14 +93,19 @@ class Go {
             canUndo = !pastPoints.isEmpty
         }
     }
-    private var blackCaptures: Int = 0
-    private var whiteCaptures: Int = 0
-    private var currentPlayer: Player {
+    private(set) var currentPlayer: Player {
         didSet {
             guard oldValue != currentPlayer else {
                 return
             }
             delegate?.switchedToPlayer(currentPlayer)
+        }
+    }
+    private(set) var isOver: Bool = false {
+        didSet {
+            if isOver {
+                delegate?.gameOver()
+            }
         }
     }
     private var canUndo: Bool = false {
@@ -109,6 +116,15 @@ class Go {
             delegate?.canUndoChanged(canUndo)
         }
     }
+    private var passedCount: Int = 0 {
+        didSet {
+            if passedCount == 2 {
+                isOver = true
+            }
+        }
+    }
+    private var blackCaptures: Int = 0
+    private var whiteCaptures: Int = 0
     
     // MARK: - Init
     
@@ -126,6 +142,9 @@ class Go {
     /// MARK: - Move Handling
     
     func playPosition(_ position: Int) throws {
+        guard !isOver else {
+            throw PlayingError.gameOver
+        }
         guard let currentPlayerGroup = getGroup(startingAt: position, player: currentPlayer) else {
             throw PlayingError.impossiblePosition
         }
@@ -174,6 +193,15 @@ class Go {
         pastPoints.removeLast()
         delegate?.undidLastMove(changeset: StagedChangeset(source: self.currentPoints, target: changingTo))
         togglePlayer()
+        if passedCount > 0 {
+            passedCount -= 1
+        }
+    }
+    
+    func passStone() {
+        togglePlayer()
+        passedCount += 1
+        pastPoints.append(self.currentPoints)
     }
     
     // MARK: - Group Logic
@@ -212,7 +240,7 @@ class Go {
                     liberties += 1
                 case .captured(let capturedBy):
                     if capturedBy == player {
-                        liberties += 1 /// TODO: decide if sure abou this 🤔
+                        liberties += 1 /// TODO: decide if sure about this 🤔
                     }
                 }
             }
@@ -271,6 +299,7 @@ class Go {
     private func update(position: Int, with state: Point.State) {
         pastPoints.append(self.currentPoints)
         currentPoints[position].state = state
+        passedCount = 0
         delegate?.positionSelected(position)
     }
     
