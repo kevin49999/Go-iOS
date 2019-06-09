@@ -131,6 +131,7 @@ class Go {
     init(board: Board,
          pastPoints: [[Go.Point]] = [[Go.Point]](),
          currentPlayer: Player = .black) {
+        /// pass handicap indexes
         self.board = board
         self.currentPoints = (0..<board.size.cells)
             .map { Point(index: $0, state: .open)

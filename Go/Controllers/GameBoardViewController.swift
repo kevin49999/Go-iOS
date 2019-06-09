@@ -58,30 +58,46 @@ class GameBoardViewController: UIViewController {
     // MARK: - Alerts
     
     private func presentGameActionAlert() {
-        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         if !game.isOver {
             let passStone = UIAlertAction(title: NSLocalizedString("Pass Stone \(game.currentPlayer.string)", comment: ""), style: .destructive, handler: { [weak self] _ in
                 self?.game.passStone()
             })
-            alertController.addAction(passStone)
+            alert.addAction(passStone)
         }
         for size in Board.Size.allCases {
             let new = UIAlertAction(title: NSLocalizedString(size.description, comment: ""), style: .default, handler: { [weak self] _ in
-                /// TODO: alert for select handicap before creating game w/ size -> pass size to Go init
-                self?.game = Go(board: Board(size: size))
+                if size.handicapIndexes.isEmpty {
+                    self?.game = Go(board: Board(size: size))
+                } else {
+                    self?.presentHandicapStoneSelection(for: size)
+                }
             })
-            alertController.addAction(new)
+            alert.addAction(new)
         }
         let cancel = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel)
-        alertController.addAction(cancel)
-        present(alertController, animated: true)
+        alert.addAction(cancel)
+        present(alert, animated: true)
+    }
+    
+    private func presentHandicapStoneSelection(for size: Board.Size) {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        (2...size.handicapIndexes.count).forEach {
+            let count = UIAlertAction(title: NSLocalizedString("\($0)", comment: ""), style: .default, handler: { [weak self] _ in
+                self?.game = Go(board: Board(size: size)) /// TODO: need init with handicap! add to current state but not past moves, as black positions.. then start game w/ white's turn
+            })
+            alert.addAction(count)
+        }
+        let cancel = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel)
+        alert.addAction(cancel)
+        present(alert, animated: true)
     }
     
     private func presentGameOverAlert() {
-        let alertController = UIAlertController(title: NSLocalizedString("Game Over", comment: ""), message: nil, preferredStyle: .alert)
+        let alert = UIAlertController(title: NSLocalizedString("Game Over", comment: ""), message: nil, preferredStyle: .alert)
         let okay = UIAlertAction(title: NSLocalizedString("🏆", comment: ""), style: .default)
-        alertController.addAction(okay)
-        present(alertController, animated: true)
+        alert.addAction(okay)
+        present(alert, animated: true)
     }
     
     // MARK: - IBAction

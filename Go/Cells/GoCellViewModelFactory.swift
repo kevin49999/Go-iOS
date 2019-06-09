@@ -18,7 +18,7 @@ struct GoCellViewModelFactory {
     init(board: Board) {
         self.rows = board.size.rawValue
         self.cells = board.size.rawValue * board.size.rawValue
-        self.handicapIndexes = board.handicapIndexes
+        self.handicapIndexes = board.size.handicapIndexes
     }
     
     func create(for point: Go.Point) -> GoCellViewModel {
