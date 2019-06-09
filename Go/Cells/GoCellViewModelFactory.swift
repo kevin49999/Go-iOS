@@ -12,10 +12,13 @@ struct GoCellViewModelFactory {
     
     private let rows: Int
     private let cells: Int
+    private let handicapIndexes: [Int]
     
-    init(boardSize: Board.Size) {
-        self.rows = boardSize.rawValue
-        self.cells = boardSize.rawValue * boardSize.rawValue
+    /// init with Go?
+    init(board: Board) {
+        self.rows = board.size.rawValue
+        self.cells = board.size.rawValue * board.size.rawValue
+        self.handicapIndexes = board.handicapIndexes
     }
     
     func create(for point: Go.Point) -> GoCellViewModel {
@@ -52,31 +55,10 @@ struct GoCellViewModelFactory {
             borderStyle = .default
         }
         
-        /// TODO: Finish logic, breaks down on nineteenXNineteen board, may have to assume 5x5, 9x9 each have 2x2 squares in corner and thirteen and nineteen ahve 2x2 squares in corner
-        let showCenterDot: Bool
-        let middle = (cells - 1)/2
-        let topLeft = middle / 2
-        let topRight = topLeft + ((rows - 1) / 2)
-        let bottomRight = middle * 3/2
-        let bottomLeft = bottomRight - ((rows - 1) / 2)
-        switch point.index {
-        case topLeft:
-            showCenterDot = true
-        case middle:
-            showCenterDot = true
-        case topRight:
-            showCenterDot = true
-        case bottomLeft:
-            showCenterDot = true
-        case bottomRight:
-            showCenterDot = true
-        default:
-            showCenterDot = false
-        }
-        
-        let viewModel = GoCellViewModel(showCenterDot: showCenterDot,
-                                        showStone: showStone,
+        let showHandicapDot: Bool = handicapIndexes.contains(point.index)
+        let viewModel = GoCellViewModel(showStone: showStone,
                                         stoneString: stoneString,
+                                        showHandicapDot: showHandicapDot,
                                         borderStyle: borderStyle)
         return viewModel
     }

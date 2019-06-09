@@ -24,18 +24,19 @@ struct GoCellViewModel {
     
     let showStone: Bool
     let stoneString: String?
-    let showCenterDot: Bool
-    let centerDotColor: UIColor = .black
+    let showHandicapDot: Bool
+    let handicapDotColor: UIColor
     let borderStyle: BorderStyle
     
-    init(showCenterDot: Bool = false,
-         showStone: Bool = false,
+    init(showStone: Bool = false,
          stoneString: String? = nil,
+         showHandicapDot: Bool = false,
+         handicapDotColor: UIColor = .black,
          borderStyle: BorderStyle = .default) {
-        
-        self.showCenterDot = showCenterDot
         self.showStone = showStone
         self.stoneString = stoneString
+        self.showHandicapDot = showHandicapDot
+        self.handicapDotColor = handicapDotColor
         self.borderStyle = borderStyle
     }
 }

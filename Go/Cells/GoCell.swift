@@ -26,7 +26,7 @@ class GoCell: UICollectionViewCell {
     func configure(with viewModel: ViewModel = ViewModel()) {
         stoneLabel.isHidden = !viewModel.showStone
         stoneLabel.text = viewModel.stoneString
-        centerDotView.isHidden = !viewModel.showCenterDot
+        centerDotView.isHidden = !viewModel.showHandicapDot
         configureBorder(with: viewModel.borderStyle)
     }
     

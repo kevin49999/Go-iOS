@@ -16,14 +16,14 @@ class GameBoardViewController: UIViewController {
     private var game: Go! {
         didSet {
             navigationItem.title = NSLocalizedString("Go ⚫️", comment: "")
-            viewModelFactory = GoCellViewModelFactory(boardSize: game.board.size)
+            viewModelFactory = GoCellViewModelFactory(board: game.board)
             undoBarButtonItem.isEnabled = false
             boardCollectionView.reloadData()
             game.delegate = self
         }
     }
     private lazy var viewModelFactory: GoCellViewModelFactory = {
-        return GoCellViewModelFactory(boardSize: game.board.size)
+        return GoCellViewModelFactory(board: game.board)
     }()
     
     // MARK: - IBOutlet
@@ -40,7 +40,7 @@ class GameBoardViewController: UIViewController {
         boardCollectionView.register(cell: GoCell.self)
         actionLabel.font = Fonts.System.ofSize(24.0, weight: .semibold, textStyle: .callout)
         actionLabel.adjustsFontForContentSizeCategory = true
-        self.game = Go(board: Board(size: .nineXNine))
+        self.game = Go(board: Board(size: .thirteenXThirteen))
     }
     
     // MARK: - Playing Actions
@@ -163,6 +163,7 @@ extension GameBoardViewController: UICollectionViewDataSource {
 
 extension GameBoardViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(indexPath.row)
         do {
             try game.playPosition(indexPath.row)
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
