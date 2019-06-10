@@ -12,13 +12,12 @@ struct GoCellViewModelFactory {
     
     private let rows: Int
     private let cells: Int
-    private let handicapIndexes: [Int]
-    
-    /// init with Go?
-    init(board: Board) {
-        self.rows = board.size.rawValue
-        self.cells = board.size.rawValue * board.size.rawValue
-        self.handicapIndexes = board.size.handicapIndexes
+    private let availableHandicapIndexes: [Int]
+
+    init(go: Go) {
+        self.rows = go.board.size.rawValue
+        self.cells = go.board.size.rawValue * go.board.size.rawValue
+        self.availableHandicapIndexes = go.board.availableHandicapIndexes
     }
     
     func create(for point: Go.Point) -> GoCellViewModel {
@@ -55,7 +54,7 @@ struct GoCellViewModelFactory {
             borderStyle = .default
         }
         
-        let showHandicapDot: Bool = handicapIndexes.contains(point.index)
+        let showHandicapDot: Bool = availableHandicapIndexes.contains(point.index)
         let viewModel = GoCellViewModel(showStone: showStone,
                                         stoneString: stoneString,
                                         showHandicapDot: showHandicapDot,

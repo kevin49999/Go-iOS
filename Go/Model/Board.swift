@@ -16,39 +16,82 @@ class Board {
         case thirteenXThirteen = 13
         case nineteenXNineteen = 19
         
-        var rows: Int {
-            return rawValue
-        }
-        
-        var cells: Int {
-            return rawValue * rawValue
-        }
-        
-        var description: String {
-            return String(format: "New %dx%d", rows, rows)
-        }
-        
-        /// TODO: come up with logic to determine for any size..
-        /// placed in lieu of black's first turn
-        var handicapIndexes: [Int] {
+        var canHandicap: Bool {
             switch self {
             case .fiveXFive:
-                return [] /// lookup? is there one?
+                return false
+            case .nineXNine, .thirteenXThirteen, .nineteenXNineteen:
+                return true
+            }
+        }
+        
+        var maxHandicap: Int {
+            switch self {
+            case .fiveXFive:
+                return 0
             case .nineXNine:
-                return [24, 56, 60, 20, 40]
-            case .thirteenXThirteen:
-                /// same for 19x19
-                return [48, 120, 126, 42, 84, 81, 87, 45, 123]
-            case .nineteenXNineteen:
-                /// different order based on if 5 v 6 stones, etc.
-                return [72, 288, 300, 60, 180, 174, 186, 66, 294]
+                return 5
+            case .thirteenXThirteen, .nineteenXNineteen:
+                return 9
             }
         }
     }
     
     let size: Size
+    var rows: Int {
+        return size.rawValue
+    }
+    var cells: Int {
+        return rows * rows
+    }
+    var availableHandicapIndexes: [Int] {
+        switch size {
+        case .fiveXFive:
+            return []
+        case .nineXNine:
+            return [24, 56, 60, 20, 40]
+        case .thirteenXThirteen:
+            return [48, 120, 126, 42, 84, 81, 87, 45, 123]
+        case .nineteenXNineteen:
+            return [72, 288, 300, 60, 180, 174, 186, 66, 294]
+        }
+    }
     
     init(size: Size) {
         self.size = size
+    }
+    
+    /// come up w/ non-hardcoded solution if problem, order of stones makes difficult
+    func handicapStoneIndexes(for count: Int) -> [Int] {
+        switch size {
+        case .fiveXFive:
+            return []
+            
+        case .nineXNine:
+            assert(count >= 2 && count <= 5)
+            return Array([24, 56, 60, 20, 40].prefix(count))
+            
+        case .thirteenXThirteen:
+            assert(count >= 2 && count <= 9)
+            switch count {
+            case 2, 3, 4, 6, 8, 9:
+                return Array([48, 120, 126, 42, 81, 87, 45, 123, 84].prefix(count))
+            case 5, 7:
+                return Array([48, 120, 126, 42, 84, 81, 87].prefix(count))
+            default:
+                fatalError()
+            }
+            
+        case .nineteenXNineteen:
+            assert(count >= 2 && count <= 9)
+            switch count {
+            case 2, 3, 4, 6, 8, 9:
+                return Array([72, 288, 300, 60, 174, 186, 66, 294, 180].prefix(count))
+            case 5, 7:
+                return Array([72, 288, 300, 60, 180, 174, 186].prefix(count))
+            default:
+                fatalError()
+            }
+        }
     }
 }

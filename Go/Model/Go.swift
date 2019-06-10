@@ -80,12 +80,13 @@ class Go {
     // MARK: -  Properties
     
     let board: Board
+    let availableHandicapIndexes: [Int]
     weak var delegate: GoDelegate?
     var rows: Int {
-        return board.size.rows
+        return board.rows
     }
     var cells: Int {
-        return board.size.cells
+        return board.cells
     }
     var currentPoints: [Point] // top left -> bottom right
     private(set) var pastPoints: [[Point]] {
@@ -130,14 +131,24 @@ class Go {
     
     init(board: Board,
          pastPoints: [[Go.Point]] = [[Go.Point]](),
-         currentPlayer: Player = .black) {
-        /// pass handicap indexes
+         handicap: Int  = 0) {
         self.board = board
-        self.currentPoints = (0..<board.size.cells)
+        self.pastPoints = pastPoints
+        self.availableHandicapIndexes = board.availableHandicapIndexes
+        var currentPoints = (0..<board.cells)
             .map { Point(index: $0, state: .open)
         }
-        self.pastPoints = pastPoints
-        self.currentPlayer = currentPlayer
+        self.currentPlayer = .black
+        if handicap > 0 {
+            let handicapStoneIndexes = board.handicapStoneIndexes(for: handicap)
+            if !handicapStoneIndexes.isEmpty {
+                handicapStoneIndexes.forEach {
+                    currentPoints[$0].state = .taken(.black)
+                }
+                self.currentPlayer = .white
+            }
+        }
+        self.currentPoints = currentPoints
     }
     
     /// MARK: - Move Handling

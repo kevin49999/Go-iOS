@@ -15,15 +15,15 @@ class GameBoardViewController: UIViewController {
     
     private var game: Go! {
         didSet {
-            navigationItem.title = NSLocalizedString("Go ⚫️", comment: "")
-            viewModelFactory = GoCellViewModelFactory(board: game.board)
+            navigationItem.title = NSLocalizedString("Go \(game.currentPlayer.string)", comment: "")
+            viewModelFactory = GoCellViewModelFactory(go: game)
             undoBarButtonItem.isEnabled = false
             boardCollectionView.reloadData()
             game.delegate = self
         }
     }
     private lazy var viewModelFactory: GoCellViewModelFactory = {
-        return GoCellViewModelFactory(board: game.board)
+        return GoCellViewModelFactory(go: game)
     }()
     
     // MARK: - IBOutlet
@@ -66,11 +66,11 @@ class GameBoardViewController: UIViewController {
             alert.addAction(passStone)
         }
         for size in Board.Size.allCases {
-            let new = UIAlertAction(title: NSLocalizedString(size.description, comment: ""), style: .default, handler: { [weak self] _ in
-                if size.handicapIndexes.isEmpty {
-                    self?.game = Go(board: Board(size: size))
-                } else {
+            let new = UIAlertAction(title: NSLocalizedString("New \(size.rawValue)x\(size.rawValue)", comment: ""), style: .default, handler: { [weak self] _ in
+                if size.canHandicap {
                     self?.presentHandicapStoneSelection(for: size)
+                } else {
+                    self?.game = Go(board: Board(size: size))
                 }
             })
             alert.addAction(new)
@@ -81,13 +81,15 @@ class GameBoardViewController: UIViewController {
     }
     
     private func presentHandicapStoneSelection(for size: Board.Size) {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        (2...size.handicapIndexes.count).forEach {
-            let count = UIAlertAction(title: NSLocalizedString("\($0)", comment: ""), style: .default, handler: { [weak self] _ in
-                self?.game = Go(board: Board(size: size)) /// TODO: need init with handicap! add to current state but not past moves, as black positions.. then start game w/ white's turn
+        let alert = UIAlertController(title: NSLocalizedString("Handicap Stones", comment: ""), message: nil, preferredStyle: .actionSheet)
+        (2...size.maxHandicap).forEach {
+            let handicap = $0
+            let count = UIAlertAction(title: NSLocalizedString("\(handicap)", comment: ""), style: .default, handler: { [weak self] _ in
+                self?.game = Go(board: Board(size: size), handicap: handicap)
             })
             alert.addAction(count)
         }
+        /// + Include option for no handicap (X arms emoji..)
         let cancel = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel)
         alert.addAction(cancel)
         present(alert, animated: true)
