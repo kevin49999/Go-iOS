@@ -8,6 +8,7 @@ target 'Go' do
   # Pods for Go
 
   pod 'DifferenceKit'
+  pod 'SwiftLint'
 
   target 'GoTests' do
     inherit! :search_paths

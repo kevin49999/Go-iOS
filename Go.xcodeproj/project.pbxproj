@@ -11,6 +11,7 @@
 		0A21BFBE226C144D004C54B9 /* GoCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A21BFBD226C144D004C54B9 /* GoCellViewModel.swift */; };
 		0A21BFC0226C1574004C54B9 /* GoCellViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A21BFBF226C1574004C54B9 /* GoCellViewModelFactory.swift */; };
 		0A634D0D22A8A4EA00FE10E0 /* UILabel+AnimateCallout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A634D0C22A8A4EA00FE10E0 /* UILabel+AnimateCallout.swift */; };
+		0A634D1222ADF5C600FE10E0 /* GoPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A634D1122ADF5C600FE10E0 /* GoPoint.swift */; };
 		0AF46461225AE50B00DE34EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46460225AE50B00DE34EA /* AppDelegate.swift */; };
 		0AF46463225AE50B00DE34EA /* GameBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46462225AE50B00DE34EA /* GameBoardViewController.swift */; };
 		0AF46466225AE50B00DE34EA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AF46464225AE50B00DE34EA /* Main.storyboard */; };
@@ -45,6 +46,7 @@
 		0A21BFBD226C144D004C54B9 /* GoCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoCellViewModel.swift; sourceTree = "<group>"; };
 		0A21BFBF226C1574004C54B9 /* GoCellViewModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoCellViewModelFactory.swift; sourceTree = "<group>"; };
 		0A634D0C22A8A4EA00FE10E0 /* UILabel+AnimateCallout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+AnimateCallout.swift"; sourceTree = "<group>"; };
+		0A634D1122ADF5C600FE10E0 /* GoPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoPoint.swift; sourceTree = "<group>"; };
 		0AF4645D225AE50B00DE34EA /* Go.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Go.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0AF46460225AE50B00DE34EA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0AF46462225AE50B00DE34EA /* GameBoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBoardViewController.swift; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 			children = (
 				0AF46491226C01F800DE34EA /* Board.swift */,
 				0AF46480225AF04900DE34EA /* Go.swift */,
+				0A634D1122ADF5C600FE10E0 /* GoPoint.swift */,
 				0AF4648F226C01E200DE34EA /* Player.swift */,
 			);
 			path = Model;
@@ -235,6 +238,7 @@
 				0AF4645A225AE50B00DE34EA /* Frameworks */,
 				0AF4645B225AE50B00DE34EA /* Resources */,
 				1CE48CC20724092F2ABE0E87 /* [CP] Embed Pods Frameworks */,
+				0A634D1022ADF1F100FE10E0 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -324,6 +328,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		0A634D1022ADF1F100FE10E0 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
 		19565C5DBCB1B68491C3E2A1 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -396,6 +417,7 @@
 				0A634D0D22A8A4EA00FE10E0 /* UILabel+AnimateCallout.swift in Sources */,
 				0AF4648E226B922400DE34EA /* Styles.swift in Sources */,
 				0A21BFBE226C144D004C54B9 /* GoCellViewModel.swift in Sources */,
+				0A634D1222ADF5C600FE10E0 /* GoPoint.swift in Sources */,
 				0AF46488226A7F7E00DE34EA /* GoCell.swift in Sources */,
 				0AF46481225AF04900DE34EA /* Go.swift in Sources */,
 				0AF46490226C01E200DE34EA /* Player.swift in Sources */,

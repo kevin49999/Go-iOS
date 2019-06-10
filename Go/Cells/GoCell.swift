@@ -36,7 +36,6 @@ class GoCell: UICollectionViewCell {
             topVerticalLine.isHidden = true
             bottomVerticalLine.isHidden = false
             bottomVerticalLineSize.constant = Styles.Sizing.boldBorder
-            
             leftHorizontalLine.isHidden = true
             rightHorizontalLine.isHidden = false
             rightHorizontalLineSize.constant = Styles.Sizing.boldBorder
@@ -44,7 +43,6 @@ class GoCell: UICollectionViewCell {
             topVerticalLine.isHidden = true
             bottomVerticalLine.isHidden = false
             bottomVerticalLineSize.constant = Styles.Sizing.boldBorder
-            
             leftHorizontalLine.isHidden = false
             leftHorizontalLineSize.constant = Styles.Sizing.boldBorder
             rightHorizontalLine.isHidden = true
@@ -52,7 +50,6 @@ class GoCell: UICollectionViewCell {
             topVerticalLine.isHidden = false
             topVerticalLineSize.constant = Styles.Sizing.boldBorder
             bottomVerticalLine.isHidden = true
-            
             leftHorizontalLine.isHidden = true
             rightHorizontalLine.isHidden = false
             rightHorizontalLineSize.constant = Styles.Sizing.boldBorder
@@ -60,7 +57,6 @@ class GoCell: UICollectionViewCell {
             topVerticalLine.isHidden = false
             topVerticalLineSize.constant = Styles.Sizing.boldBorder
             bottomVerticalLine.isHidden = true
-            
             leftHorizontalLine.isHidden = false
             leftHorizontalLineSize.constant = Styles.Sizing.boldBorder
             rightHorizontalLine.isHidden = true
@@ -68,7 +64,6 @@ class GoCell: UICollectionViewCell {
             topVerticalLine.isHidden = false
             topVerticalLineSize.constant = Styles.Sizing.defaultBorder
             bottomVerticalLine.isHidden = true
-            
             leftHorizontalLine.isHidden = false
             leftHorizontalLineSize.constant = Styles.Sizing.boldBorder
             rightHorizontalLine.isHidden = false
@@ -77,7 +72,6 @@ class GoCell: UICollectionViewCell {
             topVerticalLine.isHidden = true
             bottomVerticalLine.isHidden = false
             bottomVerticalLineSize.constant = Styles.Sizing.defaultBorder
-            
             leftHorizontalLine.isHidden = false
             leftHorizontalLineSize.constant = Styles.Sizing.boldBorder
             rightHorizontalLine.isHidden = false
@@ -87,7 +81,6 @@ class GoCell: UICollectionViewCell {
             topVerticalLineSize.constant = Styles.Sizing.boldBorder
             bottomVerticalLine.isHidden = false
             bottomVerticalLineSize.constant = Styles.Sizing.boldBorder
-            
             leftHorizontalLine.isHidden = true
             rightHorizontalLine.isHidden = false
             rightHorizontalLineSize.constant = Styles.Sizing.defaultBorder
@@ -96,7 +89,6 @@ class GoCell: UICollectionViewCell {
             topVerticalLineSize.constant = Styles.Sizing.boldBorder
             bottomVerticalLine.isHidden = false
             bottomVerticalLineSize.constant = Styles.Sizing.boldBorder
-            
             leftHorizontalLine.isHidden = false
             leftHorizontalLineSize.constant = Styles.Sizing.defaultBorder
             rightHorizontalLine.isHidden = true
@@ -105,7 +97,6 @@ class GoCell: UICollectionViewCell {
             topVerticalLineSize.constant = Styles.Sizing.defaultBorder
             bottomVerticalLine.isHidden = false
             bottomVerticalLineSize.constant = Styles.Sizing.defaultBorder
-            
             leftHorizontalLine.isHidden = false
             leftHorizontalLineSize.constant = Styles.Sizing.defaultBorder
             rightHorizontalLine.isHidden = false

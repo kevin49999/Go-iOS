@@ -11,11 +11,6 @@ import Foundation
 
 // https://www.britgo.org/intro/intro2.html
 // http://cjlarose.com/2014/01/09/react-board-game-tutorial.html 🙏
-
-// need end game concept, passing twice == game over (then need to sum current points from capture + remaining group liberties
-// need handicap placement of stones automatically - also, while 5 handicaps possibly for smaller board, there are 9 handicap stones for the larger boards
-
-// Later:
 // need redo move as well?
 // add support for move documentation, A1, B7, etc. etc.
 // init Game with mock positions (good for testing too)
@@ -32,41 +27,12 @@ protocol GoDelegate: class {
 
 class Go {
     
+    typealias Point = GoPoint
+    
     struct Group: Hashable {
         let player: Player
         let positions: [Int]
         let liberties: Int
-    }
-    
-    struct Point: Differentiable {
-        enum State: Equatable {
-            case taken(Player)
-            case open
-            case captured(by: Player)
-            
-            static func ==(lhs: State, rhs: State) -> Bool {
-                switch (lhs, rhs) {
-                case (let .taken(playerOne), let .taken(playerTwo)):
-                    return playerOne == playerTwo
-                case (.open, .open):
-                    return true
-                case (let .captured(playerOne), let .captured(playerTwo)):
-                    return playerOne == playerTwo
-                default:
-                    return false
-                }
-            }
-        }
-        
-        let index: Int
-        var state: State
-        var differenceIdentifier: Int {
-            return index
-        }
-        
-        func isContentEqual(to source: Go.Point) -> Bool {
-            return self.state == source.state
-        }
     }
     
     enum PlayingError: Error {
@@ -77,7 +43,7 @@ class Go {
         case impossiblePosition
     }
     
-    // MARK: -  Properties
+    // MARK: - Properties
     
     let board: Board
     let availableHandicapIndexes: [Int]
@@ -181,7 +147,7 @@ class Go {
         // impact on other player groups
         let neighbors = getNeighborsFor(position: position)
         let otherPlayerGroups: Set<Group> = Set(neighbors.compactMap { getGroupUsingBoardState(startingAt: $0) })
-            .filter( { $0.player != currentPlayer })
+            .filter { $0.player != currentPlayer }
         for group in otherPlayerGroups {
             switch group.liberties {
             case 0:
@@ -317,7 +283,7 @@ class Go {
     
     private func groupCaptured(_ group: Group) {
         group.positions.forEach {
-            currentPoints[$0].state = .captured(by: group.player.opposite)
+            currentPoints[$0].state = .captured(group.player.opposite)
         }
         delegate?.positionsCaptured(group.positions)
     }

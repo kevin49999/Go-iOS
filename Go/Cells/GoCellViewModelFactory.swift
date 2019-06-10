@@ -31,34 +31,35 @@ struct GoCellViewModelFactory {
             showStone = false
             stoneString = nil
         }
-        
-        let borderStyle: GoCellViewModel.BorderStyle
-        switch point.index {
-        case 0:
-            borderStyle = .topLeft
-        case rows - 1:
-            borderStyle = .topRight
-        case (rows * (rows - 1)):
-            borderStyle = .bottomLeft
-        case cells - 1:
-            borderStyle = .bottomRight
-        case 1..<rows:
-            borderStyle = .top
-        case ((rows * (rows - 1)) + 1)..<cells:
-            borderStyle = .bottom
-        case let i where i % rows == 0:
-            borderStyle = .left
-        case let i where (i + 1) % rows == 0:
-            borderStyle = .right
-        default:
-            borderStyle = .default
-        }
-        
+
         let showHandicapDot: Bool = availableHandicapIndexes.contains(point.index)
         let viewModel = GoCellViewModel(showStone: showStone,
                                         stoneString: stoneString,
                                         showHandicapDot: showHandicapDot,
-                                        borderStyle: borderStyle)
+                                        borderStyle: borderStyle(for: point.index))
         return viewModel
+    }
+    
+    private func borderStyle(for pointIndex: Int) -> GoCellViewModel.BorderStyle {
+        switch pointIndex {
+        case 0:
+            return .topLeft
+        case rows - 1:
+            return .topRight
+        case (rows * (rows - 1)):
+            return .bottomLeft
+        case cells - 1:
+            return .bottomRight
+        case 1..<rows:
+            return .top
+        case ((rows * (rows - 1)) + 1)..<cells:
+            return .bottom
+        case let i where i % rows == 0:
+            return .left
+        case let i where (i + 1) % rows == 0:
+            return .right
+        default:
+            return .default
+        }
     }
 }

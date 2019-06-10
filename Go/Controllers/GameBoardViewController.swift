@@ -81,14 +81,20 @@ class GameBoardViewController: UIViewController {
     }
     
     private func presentHandicapStoneSelection(for size: Board.Size) {
-        let alert = UIAlertController(title: NSLocalizedString("Handicap Stones", comment: ""), message: nil, preferredStyle: .actionSheet)
-        let noHandicap = UIAlertAction(title: NSLocalizedString("🙅‍♀️", comment: ""), style: .default, handler: { [weak self] _ in
+        let alert = UIAlertController(title: NSLocalizedString("Handicap Stones", comment: ""),
+                                      message: nil,
+                                      preferredStyle: .actionSheet)
+        let noHandicap = UIAlertAction(title: NSLocalizedString("🙅‍♀️", comment: ""),
+                                       style: .default,
+                                       handler: { [weak self] _ in
             self?.game = Go(board: Board(size: size), handicap: 0)
         })
         alert.addAction(noHandicap)
         (2...size.maxHandicap).forEach {
             let handicap = $0
-            let count = UIAlertAction(title: NSLocalizedString("\(handicap)", comment: ""), style: .default, handler: { [weak self] _ in
+            let count = UIAlertAction(title: NSLocalizedString("\(handicap)", comment: ""),
+                                      style: .default,
+                                      handler: { [weak self] _ in
                 self?.game = Go(board: Board(size: size), handicap: handicap)
             })
             alert.addAction(count)
@@ -99,7 +105,9 @@ class GameBoardViewController: UIViewController {
     }
     
     private func presentGameOverAlert() {
-        let alert = UIAlertController(title: NSLocalizedString("Game Over", comment: ""), message: nil, preferredStyle: .alert)
+        let alert = UIAlertController(title: NSLocalizedString("Game Over", comment: ""),
+                                      message: nil,
+                                      preferredStyle: .alert)
         let okay = UIAlertAction(title: NSLocalizedString("🏆", comment: ""), style: .default)
         alert.addAction(okay)
         present(alert, animated: true)
@@ -172,7 +180,8 @@ extension GameBoardViewController: UICollectionViewDataSource {
         return game.cells
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: GoCell = collectionView.dequeueReusableCell(for: indexPath)
         let viewModel = viewModelFactory.create(for: game.currentPoints[indexPath.row])
         cell.configure(with: viewModel)
@@ -208,7 +217,9 @@ extension GameBoardViewController: UICollectionViewDelegate {
 // MARK: - UICollectionViewDelegateFlowLayout
 
 extension GameBoardViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
         let side = collectionView.frame.width / CGFloat(game.rows)
         return CGSize(width: side, height: side)
     }
