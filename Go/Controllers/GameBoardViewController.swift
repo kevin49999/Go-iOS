@@ -82,6 +82,10 @@ class GameBoardViewController: UIViewController {
     
     private func presentHandicapStoneSelection(for size: Board.Size) {
         let alert = UIAlertController(title: NSLocalizedString("Handicap Stones", comment: ""), message: nil, preferredStyle: .actionSheet)
+        let noHandicap = UIAlertAction(title: NSLocalizedString("🙅‍♀️", comment: ""), style: .default, handler: { [weak self] _ in
+            self?.game = Go(board: Board(size: size), handicap: 0)
+        })
+        alert.addAction(noHandicap)
         (2...size.maxHandicap).forEach {
             let handicap = $0
             let count = UIAlertAction(title: NSLocalizedString("\(handicap)", comment: ""), style: .default, handler: { [weak self] _ in
@@ -89,7 +93,6 @@ class GameBoardViewController: UIViewController {
             })
             alert.addAction(count)
         }
-        /// + Include option for no handicap (X arms emoji..)
         let cancel = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel)
         alert.addAction(cancel)
         present(alert, animated: true)
