@@ -7,6 +7,7 @@
 //
 
 import DifferenceKit
+import StoreKit
 import UIKit
 
 class GameBoardViewController: UIViewController {
@@ -108,7 +109,9 @@ class GameBoardViewController: UIViewController {
         let alert = UIAlertController(title: NSLocalizedString("Game Over", comment: ""),
                                       message: nil,
                                       preferredStyle: .alert)
-        let okay = UIAlertAction(title: NSLocalizedString("🏆", comment: ""), style: .default)
+        let okay = UIAlertAction(title: NSLocalizedString("🏆", comment: ""), style: .default, handler: { _ in
+            SKStoreReviewController.requestReview()
+        })
         alert.addAction(okay)
         present(alert, animated: true)
     }
