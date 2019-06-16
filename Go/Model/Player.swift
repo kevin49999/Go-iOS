@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum Player {
+enum Player: String, Codable {
     case black
     case white
     

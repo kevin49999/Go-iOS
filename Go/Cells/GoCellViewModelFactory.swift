@@ -20,7 +20,7 @@ struct GoCellViewModelFactory {
         self.availableHandicapIndexes = go.board.availableHandicapIndexes
     }
     
-    func create(for point: Go.Point) -> GoCellViewModel {
+    func create(for point: GoPoint) -> GoCellViewModel {
         let showStone: Bool
         let stoneString: String?
         switch point.state {

@@ -12,6 +12,7 @@
 		0A21BFC0226C1574004C54B9 /* GoCellViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A21BFBF226C1574004C54B9 /* GoCellViewModelFactory.swift */; };
 		0A634D0D22A8A4EA00FE10E0 /* UILabel+AnimateCallout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A634D0C22A8A4EA00FE10E0 /* UILabel+AnimateCallout.swift */; };
 		0A634D1222ADF5C600FE10E0 /* GoPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A634D1122ADF5C600FE10E0 /* GoPoint.swift */; };
+		0A6E0E6A22B6C1490074E0CA /* GoSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6E0E6922B6C1490074E0CA /* GoSaver.swift */; };
 		0AF46461225AE50B00DE34EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46460225AE50B00DE34EA /* AppDelegate.swift */; };
 		0AF46463225AE50B00DE34EA /* GameBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46462225AE50B00DE34EA /* GameBoardViewController.swift */; };
 		0AF46466225AE50B00DE34EA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AF46464225AE50B00DE34EA /* Main.storyboard */; };
@@ -47,6 +48,7 @@
 		0A21BFBF226C1574004C54B9 /* GoCellViewModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoCellViewModelFactory.swift; sourceTree = "<group>"; };
 		0A634D0C22A8A4EA00FE10E0 /* UILabel+AnimateCallout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+AnimateCallout.swift"; sourceTree = "<group>"; };
 		0A634D1122ADF5C600FE10E0 /* GoPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoPoint.swift; sourceTree = "<group>"; };
+		0A6E0E6922B6C1490074E0CA /* GoSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoSaver.swift; sourceTree = "<group>"; };
 		0AF4645D225AE50B00DE34EA /* Go.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Go.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0AF46460225AE50B00DE34EA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0AF46462225AE50B00DE34EA /* GameBoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBoardViewController.swift; sourceTree = "<group>"; };
@@ -123,6 +125,14 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
+		0A6E0E6822B6BFE10074E0CA /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				0A6E0E6922B6C1490074E0CA /* GoSaver.swift */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
 		0AF46454225AE50B00DE34EA = {
 			isa = PBXGroup;
 			children = (
@@ -153,6 +163,7 @@
 				0A21BFBC226C13F0004C54B9 /* Protocols */,
 				0AF99360226C097D006DC49C /* Styling */,
 				0AF46484225AF73D00DE34EA /* Supporting Files */,
+				0A6E0E6822B6BFE10074E0CA /* Utility */,
 			);
 			path = Go;
 			sourceTree = "<group>";
@@ -428,6 +439,7 @@
 				0A21BFB9226C134C004C54B9 /* UIView+IBInspectable.swift in Sources */,
 				0AF4648A226B8F9B00DE34EA /* StoryboardIdentifiable.swift in Sources */,
 				0AF46492226C01F800DE34EA /* Board.swift in Sources */,
+				0A6E0E6A22B6C1490074E0CA /* GoSaver.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

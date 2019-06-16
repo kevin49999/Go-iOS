@@ -22,12 +22,10 @@ protocol GoDelegate: class {
     func positionSelected(_ position: Int)
     func positionsCaptured(_ positions: [Int])
     func switchedToPlayer(_ player: Player)
-    func undidLastMove(changeset: StagedChangeset<[Go.Point]>)
+    func undidLastMove(changeset: StagedChangeset<[GoPoint]>)
 }
 
-class Go {
-    
-    typealias Point = GoPoint
+final class Go: Codable {
     
     struct Group: Hashable {
         let player: Player
@@ -46,7 +44,6 @@ class Go {
     // MARK: - Properties
     
     let board: Board
-    let availableHandicapIndexes: [Int]
     weak var delegate: GoDelegate?
     var rows: Int {
         return board.rows
@@ -54,8 +51,8 @@ class Go {
     var cells: Int {
         return board.cells
     }
-    var currentPoints: [Point] // top left -> bottom right
-    private(set) var pastPoints: [[Point]] {
+    var currentPoints: [GoPoint] // top left -> bottom right
+    private(set) var pastPoints: [[GoPoint]] {
         didSet {
             canUndo = !pastPoints.isEmpty
         }
@@ -96,13 +93,12 @@ class Go {
     // MARK: - Init
     
     init(board: Board,
-         pastPoints: [[Go.Point]] = [[Go.Point]](),
+         pastPoints: [[GoPoint]] = [[GoPoint]](),
          handicap: Int  = 0) {
         self.board = board
         self.pastPoints = pastPoints
-        self.availableHandicapIndexes = board.availableHandicapIndexes
         var currentPoints = (0..<board.cells)
-            .map { Point(index: $0, state: .open)
+            .map { GoPoint(index: $0, state: .open)
         }
         self.currentPlayer = .black
         if handicap > 0 {
@@ -115,6 +111,30 @@ class Go {
             }
         }
         self.currentPoints = currentPoints
+    }
+    
+    ///
+    enum CodingKeys: String, CodingKey {
+        case board
+        case pastPoints
+        case currentPlayer
+        case currentPoints
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.board = try container.decode(Board.self, forKey: .board)
+        self.pastPoints = try container.decode([[GoPoint]].self, forKey: .pastPoints)
+        self.currentPlayer = try container.decode(Player.self, forKey: .currentPlayer)
+        self.currentPoints = try container.decode([GoPoint].self, forKey: .currentPlayer)
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(board, forKey: .board)
+        try container.encode(pastPoints, forKey: .pastPoints)
+        try container.encode(currentPlayer, forKey: .currentPlayer)
+        try container.encode(currentPoints, forKey: .currentPoints)
     }
     
     /// MARK: - Move Handling
@@ -274,7 +294,7 @@ class Go {
         currentPlayer = currentPlayer.opposite
     }
     
-    private func update(position: Int, with state: Point.State) {
+    private func update(position: Int, with state: GoPoint.State) {
         pastPoints.append(self.currentPoints)
         currentPoints[position].state = state
         passedCount = 0

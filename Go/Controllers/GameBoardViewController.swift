@@ -161,7 +161,7 @@ extension GameBoardViewController: GoDelegate {
         actionLabel.animateCallout("⚔️")
     }
     
-    func undidLastMove(changeset: StagedChangeset<[Go.Point]>) {
+    func undidLastMove(changeset: StagedChangeset<[GoPoint]>) {
         boardCollectionView.reload(using: changeset) { points in
             self.game.currentPoints = points
         }

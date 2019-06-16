@@ -8,9 +8,9 @@
 
 import Foundation
 
-class Board {
+class Board: Codable {
     
-    enum Size: Int, CaseIterable {
+    enum Size: Int, CaseIterable, Codable {
         case fiveXFive = 5
         case nineXNine = 9
         case thirteenXThirteen = 13
