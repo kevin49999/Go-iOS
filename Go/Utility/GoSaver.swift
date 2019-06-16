@@ -10,20 +10,35 @@ import Foundation
 
 class GoSaver {
     
+    private let defaults: UserDefaults
+    private let key: String
     private let jsonEncoder: JSONEncoder = JSONEncoder()
-    private let defaults: UserDefaults = UserDefaults.standard
+    private let jsonDecoder: JSONDecoder = JSONDecoder()
+    
+    init(defaults: UserDefaults = UserDefaults.standard,
+         key: String = "SavedGame") {
+        self.defaults = defaults
+        self.key = key
+    }
     
     func saveGo(_ go: Go) throws {
         let goData = try jsonEncoder.encode(go)
-        defaults.set(goData, forKey: "SavedGame")
+        defaults.set(goData, forKey: key)
         defaults.synchronize() /// needed anymore?
     }
     
-    func getSavedGo() -> Go? {
-    
-        
-        return nil
+    func clearGo() {
+        defaults.removeObject(forKey: key)
+        defaults.synchronize() /// ..
     }
+    
+    func getSavedGo() -> Go? {
+        guard let goData = defaults.value(forKey: key) as? Data else {
+            return nil
+        }
+        return try? jsonDecoder.decode(Go.self, from: goData)
+    }
+    
+    /// save/retreve last game size..
+    /// when game is over, clear it?
 }
-
-/// Base PersistenceHANDLY class

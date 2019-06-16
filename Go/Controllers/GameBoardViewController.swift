@@ -14,17 +14,18 @@ class GameBoardViewController: UIViewController {
     
     // MARK: - Properties
     
-    private var game: Go! {
+    private let goSaver: GoSaver = GoSaver()
+    private var go: Go! {
         didSet {
-            navigationItem.title = NSLocalizedString("Go \(game.currentPlayer.string)", comment: "")
-            viewModelFactory = GoCellViewModelFactory(go: game)
+            navigationItem.title = NSLocalizedString("Go \(go.currentPlayer.string)", comment: "")
+            viewModelFactory = GoCellViewModelFactory(go: go)
             undoBarButtonItem.isEnabled = false
             boardCollectionView.reloadData()
-            game.delegate = self
+            go.delegate = self
         }
     }
     private lazy var viewModelFactory: GoCellViewModelFactory = {
-        return GoCellViewModelFactory(go: game)
+        return GoCellViewModelFactory(go: go)
     }()
     
     // MARK: - IBOutlet
@@ -41,7 +42,15 @@ class GameBoardViewController: UIViewController {
         boardCollectionView.register(cell: GoCell.self)
         actionLabel.font = Fonts.System.ofSize(24.0, weight: .semibold, textStyle: .callout)
         actionLabel.adjustsFontForContentSizeCategory = true
-        self.game = Go(board: Board(size: .thirteenXThirteen))
+        if let savedGo = goSaver.getSavedGo() {
+            self.go = savedGo // TEST!
+        } else {
+            /// else create game with saved size, save with default size
+            self.go = Go(board: Board(size: .thirteenXThirteen))
+        }
+        
+        /// aren't there more?
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillResign), name: UIApplication.willTerminateNotification, object: applicationWillResign)
     }
     
     // MARK: - Playing Actions
@@ -60,9 +69,9 @@ class GameBoardViewController: UIViewController {
     
     private func presentGameActionAlert() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        if !game.isOver {
-            let passStone = UIAlertAction(title: NSLocalizedString("Pass Stone \(game.currentPlayer.string)", comment: ""), style: .destructive, handler: { [weak self] _ in
-                self?.game.passStone()
+        if !go.isOver {
+            let passStone = UIAlertAction(title: NSLocalizedString("Pass Stone \(go.currentPlayer.string)", comment: ""), style: .destructive, handler: { [weak self] _ in
+                self?.go.passStone()
             })
             alert.addAction(passStone)
         }
@@ -71,7 +80,7 @@ class GameBoardViewController: UIViewController {
                 if size.canHandicap {
                     self?.presentHandicapStoneSelection(for: size)
                 } else {
-                    self?.game = Go(board: Board(size: size))
+                    self?.go = Go(board: Board(size: size))
                 }
             })
             alert.addAction(new)
@@ -88,7 +97,7 @@ class GameBoardViewController: UIViewController {
         let noHandicap = UIAlertAction(title: NSLocalizedString("🙅‍♀️", comment: ""),
                                        style: .default,
                                        handler: { [weak self] _ in
-            self?.game = Go(board: Board(size: size), handicap: 0)
+            self?.go = Go(board: Board(size: size), handicap: 0)
         })
         alert.addAction(noHandicap)
         (2...size.maxHandicap).forEach {
@@ -96,7 +105,7 @@ class GameBoardViewController: UIViewController {
             let count = UIAlertAction(title: NSLocalizedString("\(handicap)", comment: ""),
                                       style: .default,
                                       handler: { [weak self] _ in
-                self?.game = Go(board: Board(size: size), handicap: handicap)
+                self?.go = Go(board: Board(size: size), handicap: handicap)
             })
             alert.addAction(count)
         }
@@ -119,7 +128,7 @@ class GameBoardViewController: UIViewController {
     // MARK: - IBAction
     
     @IBAction func tappedUndo(_ sender: Any) {
-        game.undoLast()
+        go.undoLast()
     }
     
     @IBAction func tappedAction(_ sender: Any) {
@@ -134,6 +143,12 @@ class GameBoardViewController: UIViewController {
         guard previous != current else { return }
         
         // TODO: Reload what you need to..
+    }
+    
+    // MARK: - Notifications
+    
+    @objc private func applicationWillResign() {
+        try? goSaver.saveGo(go)
     }
 }
 
@@ -163,7 +178,7 @@ extension GameBoardViewController: GoDelegate {
     
     func undidLastMove(changeset: StagedChangeset<[GoPoint]>) {
         boardCollectionView.reload(using: changeset) { points in
-            self.game.currentPoints = points
+            self.go.currentPoints = points
         }
     }
     
@@ -180,13 +195,13 @@ extension GameBoardViewController: GoDelegate {
 
 extension GameBoardViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return game.cells
+        return go.cells
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: GoCell = collectionView.dequeueReusableCell(for: indexPath)
-        let viewModel = viewModelFactory.create(for: game.currentPoints[indexPath.row])
+        let viewModel = viewModelFactory.create(for: go.currentPoints[indexPath.row])
         cell.configure(with: viewModel)
         return cell
     }
@@ -198,7 +213,7 @@ extension GameBoardViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath.row)
         do {
-            try game.playPosition(indexPath.row)
+            try go.playPosition(indexPath.row)
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
         } catch let error as Go.PlayingError {
             switch error {
@@ -223,7 +238,7 @@ extension GameBoardViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let side = collectionView.frame.width / CGFloat(game.rows)
+        let side = collectionView.frame.width / CGFloat(go.rows)
         return CGSize(width: side, height: side)
     }
 }
