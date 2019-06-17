@@ -31,9 +31,9 @@ struct GoPoint: Differentiable, Codable {
                 self = .open
             } else if try container.decodeIfPresent(String.self, forKey: .captured) != nil, let playerString = try container.decodeIfPresent(String.self, forKey: .player), let player = Player(rawValue: playerString) {
                 self = .captured(player)
+            } else {
+                self = .open
             }
-            /// fallback needed?
-            self = .open
         }
         
         func encode(to encoder: Encoder) throws {

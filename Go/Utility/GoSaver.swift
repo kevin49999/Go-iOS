@@ -12,7 +12,7 @@ class GoSaver {
     
     private let defaults: UserDefaults
     private let key: String
-    private let jsonEncoder: JSONEncoder = JSONEncoder()
+    private let jsonEncoder: JSONEncoder =  JSONEncoder()
     private let jsonDecoder: JSONDecoder = JSONDecoder()
     
     init(defaults: UserDefaults = UserDefaults.standard,
@@ -36,7 +36,12 @@ class GoSaver {
         guard let goData = defaults.value(forKey: key) as? Data else {
             return nil
         }
-        return try? jsonDecoder.decode(Go.self, from: goData)
+        do {
+            return try jsonDecoder.decode(Go.self, from: goData)
+        } catch {
+            print(error.localizedDescription)
+            return nil
+        }
     }
     
     /// save/retreve last game size..

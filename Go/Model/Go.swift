@@ -25,7 +25,7 @@ protocol GoDelegate: class {
     func undidLastMove(changeset: StagedChangeset<[GoPoint]>)
 }
 
-final class Go: Codable {
+final class Go {
     
     struct Group: Hashable {
         let player: Player
@@ -113,31 +113,17 @@ final class Go: Codable {
         self.currentPoints = currentPoints
     }
     
-    ///
-    enum CodingKeys: String, CodingKey {
-        case board
-        case pastPoints
-        case currentPlayer
-        case currentPoints
+    init(board: Board,
+         pastPoints: [[GoPoint]] = [[]],
+         currentPoints: [GoPoint] = [],
+         currentPlayer: Player = .black) {
+        self.board = board
+        self.pastPoints = pastPoints
+        self.currentPoints = currentPoints
+        self.currentPlayer = currentPlayer
     }
     
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.board = try container.decode(Board.self, forKey: .board)
-        self.pastPoints = try container.decode([[GoPoint]].self, forKey: .pastPoints)
-        self.currentPlayer = try container.decode(Player.self, forKey: .currentPlayer)
-        self.currentPoints = try container.decode([GoPoint].self, forKey: .currentPlayer)
-    }
-    
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(board, forKey: .board)
-        try container.encode(pastPoints, forKey: .pastPoints)
-        try container.encode(currentPlayer, forKey: .currentPlayer)
-        try container.encode(currentPoints, forKey: .currentPoints)
-    }
-    
-    /// MARK: - Move Handling
+    // MARK: - Public Functions
     
     func playPosition(_ position: Int) throws {
         guard !isOver else {
@@ -178,7 +164,6 @@ final class Go: Codable {
                 continue
             }
         }
-        
         togglePlayer()
     }
     
@@ -202,7 +187,7 @@ final class Go: Codable {
         pastPoints.append(self.currentPoints)
     }
     
-    // MARK: - Group Logic
+    // MARK: - Private Functions
     
     private func getGroupUsingBoardState(startingAt position: Int) -> Group? {
         guard case let .taken(player) = currentPoints[position].state else {
@@ -277,18 +262,17 @@ final class Go: Codable {
     }
     
     private func handleGroupCaptured(_ group: Group) {
-        let points = group.positions.count
-        let playerScoring = group.player.opposite
-        switch playerScoring {
+        switch group.player.opposite {
         case .black:
-            blackCaptures += points
+            blackCaptures += group.positions.count
         case .white:
-            whiteCaptures += points
+            whiteCaptures += group.positions.count
         }
-        groupCaptured(group)
+        group.positions.forEach {
+            currentPoints[$0].state = .captured(group.player.opposite)
+        }
+        delegate?.positionsCaptured(group.positions)
     }
-    
-    // MARK: - Game Board Logic
     
     private func togglePlayer() {
         currentPlayer = currentPlayer.opposite
@@ -300,11 +284,33 @@ final class Go: Codable {
         passedCount = 0
         delegate?.positionSelected(position)
     }
+}
+
+// MARK: - Codable
+
+extension Go: Codable {
     
-    private func groupCaptured(_ group: Group) {
-        group.positions.forEach {
-            currentPoints[$0].state = .captured(group.player.opposite)
-        }
-        delegate?.positionsCaptured(group.positions)
+    enum CodingKeys: String, CodingKey {
+        case board
+        case pastPoints
+        case currentPlayer
+        case currentPoints
+    }
+    
+    convenience init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let board = try container.decode(Board.self, forKey: .board)
+        let pastPoints = try container.decode([[GoPoint]].self, forKey: .pastPoints)
+        let currentPoints = try container.decode([GoPoint].self, forKey: .currentPoints)
+        let currentPlayer = try container.decode(Player.self, forKey: .currentPlayer)
+        self.init(board: board, pastPoints: pastPoints, currentPoints: currentPoints, currentPlayer: currentPlayer)
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(board, forKey: .board)
+        try container.encode(pastPoints, forKey: .pastPoints)
+        try container.encode(currentPlayer, forKey: .currentPlayer)
+        try container.encode(currentPoints, forKey: .currentPoints)
     }
 }

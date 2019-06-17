@@ -17,11 +17,11 @@ class GameBoardViewController: UIViewController {
     private let goSaver: GoSaver = GoSaver()
     private var go: Go! {
         didSet {
+            go.delegate = self
             navigationItem.title = NSLocalizedString("Go \(go.currentPlayer.string)", comment: "")
             viewModelFactory = GoCellViewModelFactory(go: go)
             undoBarButtonItem.isEnabled = false
             boardCollectionView.reloadData()
-            go.delegate = self
         }
     }
     private lazy var viewModelFactory: GoCellViewModelFactory = {
@@ -50,7 +50,8 @@ class GameBoardViewController: UIViewController {
         }
         
         /// aren't there more?
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillResign), name: UIApplication.willTerminateNotification, object: applicationWillResign)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationQuitting), name: UIApplication.willTerminateNotification, object: applicationQuitting)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationQuitting), name: UIApplication.didEnterBackgroundNotification, object: applicationQuitting)
     }
     
     // MARK: - Playing Actions
@@ -147,8 +148,8 @@ class GameBoardViewController: UIViewController {
     
     // MARK: - Notifications
     
-    @objc private func applicationWillResign() {
-        try? goSaver.saveGo(go)
+    @objc private func applicationQuitting() {
+        //try? goSaver.saveGo(go)
     }
 }
 
@@ -211,7 +212,6 @@ extension GameBoardViewController: UICollectionViewDataSource {
 
 extension GameBoardViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath.row)
         do {
             try go.playPosition(indexPath.row)
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
