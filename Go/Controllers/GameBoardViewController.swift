@@ -17,16 +17,10 @@ class GameBoardViewController: UIViewController {
     private let goSaver: GoSaver = GoSaver()
     private var go: Go! {
         didSet {
-            go.delegate = self
-            navigationItem.title = NSLocalizedString("Go \(go.currentPlayer.string)", comment: "")
-            viewModelFactory = GoCellViewModelFactory(go: go)
-            undoBarButtonItem.isEnabled = false
-            boardCollectionView.reloadData()
+            newGoGameInitialized(go)
         }
     }
-    private lazy var viewModelFactory: GoCellViewModelFactory = {
-        return GoCellViewModelFactory(go: go)
-    }()
+    private var viewModelFactory: GoCellViewModelFactory!
     
     // MARK: - IBOutlet
     
@@ -42,16 +36,18 @@ class GameBoardViewController: UIViewController {
         boardCollectionView.register(cell: GoCell.self)
         actionLabel.font = Fonts.System.ofSize(24.0, weight: .semibold, textStyle: .callout)
         actionLabel.adjustsFontForContentSizeCategory = true
-        if let savedGo = goSaver.getSavedGo() {
-            self.go = savedGo // TEST!
-        } else {
-            /// else create game with saved size, save with default size
-            self.go = Go(board: Board(size: .thirteenXThirteen))
-        }
-        
-        /// aren't there more?
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationQuitting), name: UIApplication.willTerminateNotification, object: applicationQuitting)
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationQuitting), name: UIApplication.didEnterBackgroundNotification, object: applicationQuitting)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationQuitting), name: UIApplication.willTerminateNotification, object: nil)
+    }
+    
+    // MARK: - Initializing Game
+    
+    private func newGoGameInitialized(_ go: Go) {
+        go.delegate = self
+        viewModelFactory = GoCellViewModelFactory(go: go, collectionView: boardCollectionView)
+        let title: String = go.isOver ? "Game Over 🏆" : "Go \(go.currentPlayer.string)"
+        navigationItem.title = NSLocalizedString(title, comment: "")
+        undoBarButtonItem.isEnabled = go.canUndo
+        boardCollectionView.reloadData()
     }
     
     // MARK: - Playing Actions
@@ -148,8 +144,8 @@ class GameBoardViewController: UIViewController {
     
     // MARK: - Notifications
     
-    @objc private func applicationQuitting() {
-        //try? goSaver.saveGo(go)
+    @objc private func applicationQuitting(notification: Notification) {
+        try? goSaver.saveGo(go)
     }
 }
 
@@ -238,7 +234,6 @@ extension GameBoardViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let side = collectionView.frame.width / CGFloat(go.rows)
-        return CGSize(width: side, height: side)
+        return viewModelFactory.cellSize
     }
 }

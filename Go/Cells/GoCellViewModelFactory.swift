@@ -10,14 +10,18 @@ import UIKit
 
 struct GoCellViewModelFactory {
     
+    let cellSize: CGSize
     private let rows: Int
     private let cells: Int
     private let availableHandicapIndexes: [Int]
-
-    init(go: Go) {
+    
+    init(go: Go,
+         collectionView: UICollectionView) {
         self.rows = go.board.size.rawValue
         self.cells = go.board.size.rawValue * go.board.size.rawValue
         self.availableHandicapIndexes = go.board.availableHandicapIndexes
+        let side: CGFloat = collectionView.frame.width / CGFloat(go.rows)
+        self.cellSize = CGSize(width: side, height: side)
     }
     
     func create(for point: GoPoint) -> GoCellViewModel {
@@ -31,13 +35,12 @@ struct GoCellViewModelFactory {
             showStone = false
             stoneString = nil
         }
-
+        
         let showHandicapDot: Bool = availableHandicapIndexes.contains(point.index)
-        let viewModel = GoCellViewModel(showStone: showStone,
-                                        stoneString: stoneString,
-                                        showHandicapDot: showHandicapDot,
-                                        borderStyle: borderStyle(for: point.index))
-        return viewModel
+        return GoCellViewModel(showStone: showStone,
+                               stoneString: stoneString,
+                               showHandicapDot: showHandicapDot,
+                               borderStyle: borderStyle(for: point.index))
     }
     
     private func borderStyle(for pointIndex: Int) -> GoCellViewModel.BorderStyle {

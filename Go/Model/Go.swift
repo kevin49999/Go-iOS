@@ -43,6 +43,7 @@ final class Go {
     
     // MARK: - Properties
     
+    typealias Point = GoPoint
     let board: Board
     weak var delegate: GoDelegate?
     var rows: Int {
@@ -51,8 +52,8 @@ final class Go {
     var cells: Int {
         return board.cells
     }
-    var currentPoints: [GoPoint] // top left -> bottom right
-    private(set) var pastPoints: [[GoPoint]] {
+    var currentPoints: [Point] // top left -> bottom right
+    private(set) var pastPoints: [[Point]] {
         didSet {
             canUndo = !pastPoints.isEmpty
         }
@@ -72,7 +73,7 @@ final class Go {
             }
         }
     }
-    private var canUndo: Bool = false {
+    private(set) var canUndo: Bool = false {
         didSet {
             guard oldValue != canUndo else {
                 return
@@ -93,12 +94,11 @@ final class Go {
     // MARK: - Init
     
     init(board: Board,
-         pastPoints: [[GoPoint]] = [[GoPoint]](),
          handicap: Int  = 0) {
         self.board = board
-        self.pastPoints = pastPoints
+        self.pastPoints = []
         var currentPoints = (0..<board.cells)
-            .map { GoPoint(index: $0, state: .open)
+            .map { Point(index: $0, state: .open)
         }
         self.currentPlayer = .black
         if handicap > 0 {
@@ -114,13 +114,22 @@ final class Go {
     }
     
     init(board: Board,
-         pastPoints: [[GoPoint]] = [[]],
-         currentPoints: [GoPoint] = [],
-         currentPlayer: Player = .black) {
+         pastPoints: [[Point]] = [[]],
+         currentPoints: [Point] = [],
+         currentPlayer: Player = .black,
+         passedCount: Int = 0,
+         blackCaptures: Int = 0,
+         whiteCaptures: Int = 0,
+         isOver: Bool = false) {
         self.board = board
         self.pastPoints = pastPoints
         self.currentPoints = currentPoints
         self.currentPlayer = currentPlayer
+        self.canUndo = !pastPoints.isEmpty
+        self.passedCount = passedCount
+        self.blackCaptures = blackCaptures
+        self.whiteCaptures = whiteCaptures
+        self.isOver = isOver
     }
     
     // MARK: - Public Functions
@@ -144,13 +153,13 @@ final class Go {
             }
         }
         
-        // current player
+        // current player update
         if currentPlayerGroup.liberties == 0 {
             throw PlayingError.attemptedSuicide
         }
         update(position: position, with: .taken(currentPlayer))
         
-        // impact on other player groups
+        // other player update
         let neighbors = getNeighborsFor(position: position)
         let otherPlayerGroups: Set<Group> = Set(neighbors.compactMap { getGroupUsingBoardState(startingAt: $0) })
             .filter { $0.player != currentPlayer }
@@ -211,7 +220,6 @@ final class Go {
             if visited[stone] == true {
                 continue
             }
-            
             let neighbors = getNeighborsFor(position: stone)
             for neighbor in neighbors {
                 switch currentPoints[neighbor].state {
@@ -230,7 +238,6 @@ final class Go {
             positions.append(stone)
             visited[stone] = true
         }
-        
         return Group(player: player, positions: positions, liberties: liberties)
     }
     
@@ -258,7 +265,7 @@ final class Go {
         if position < rows * (rows - 1) {
             bottom = position + rows
         }
-        return [left, right, top, bottom].compactMap({ $0 })
+        return [left, right, top, bottom].compactMap { $0 }
     }
     
     private func handleGroupCaptured(_ group: Group) {
@@ -278,7 +285,7 @@ final class Go {
         currentPlayer = currentPlayer.opposite
     }
     
-    private func update(position: Int, with state: GoPoint.State) {
+    private func update(position: Int, with state: Point.State) {
         pastPoints.append(self.currentPoints)
         currentPoints[position].state = state
         passedCount = 0
@@ -295,15 +302,30 @@ extension Go: Codable {
         case pastPoints
         case currentPlayer
         case currentPoints
+        case passedCount
+        case blackCaptures
+        case whiteCaptures
+        case isOver
     }
     
     convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let board = try container.decode(Board.self, forKey: .board)
-        let pastPoints = try container.decode([[GoPoint]].self, forKey: .pastPoints)
-        let currentPoints = try container.decode([GoPoint].self, forKey: .currentPoints)
+        let pastPoints = try container.decode([[Point]].self, forKey: .pastPoints)
+        let currentPoints = try container.decode([Point].self, forKey: .currentPoints)
         let currentPlayer = try container.decode(Player.self, forKey: .currentPlayer)
-        self.init(board: board, pastPoints: pastPoints, currentPoints: currentPoints, currentPlayer: currentPlayer)
+        let passedCount = try container.decode(Int.self, forKey: .passedCount)
+        let blackCaptures = try container.decode(Int.self, forKey: .passedCount)
+        let whiteCaptures = try container.decode(Int.self, forKey: .whiteCaptures)
+        let isOver = try container.decode(Bool.self, forKey: .isOver)
+        self.init(board: board,
+                  pastPoints: pastPoints,
+                  currentPoints: currentPoints,
+                  currentPlayer: currentPlayer,
+                  passedCount: passedCount,
+                  blackCaptures: blackCaptures,
+                  whiteCaptures: whiteCaptures,
+                  isOver: isOver)
     }
     
     func encode(to encoder: Encoder) throws {
@@ -312,5 +334,9 @@ extension Go: Codable {
         try container.encode(pastPoints, forKey: .pastPoints)
         try container.encode(currentPlayer, forKey: .currentPlayer)
         try container.encode(currentPoints, forKey: .currentPoints)
+        try container.encode(passedCount, forKey: .passedCount)
+        try container.encode(blackCaptures, forKey: .blackCaptures)
+        try container.encode(whiteCaptures, forKey: .whiteCaptures)
+        try container.encode(isOver, forKey: .isOver)
     }
 }

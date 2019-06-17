@@ -12,11 +12,11 @@ class GoSaver {
     
     private let defaults: UserDefaults
     private let key: String
-    private let jsonEncoder: JSONEncoder =  JSONEncoder()
+    private let jsonEncoder: JSONEncoder = JSONEncoder()
     private let jsonDecoder: JSONDecoder = JSONDecoder()
     
     init(defaults: UserDefaults = UserDefaults.standard,
-         key: String = "SavedGame") {
+         key: String = "SavedGo") {
         self.defaults = defaults
         self.key = key
     }
@@ -24,26 +24,13 @@ class GoSaver {
     func saveGo(_ go: Go) throws {
         let goData = try jsonEncoder.encode(go)
         defaults.set(goData, forKey: key)
-        defaults.synchronize() /// needed anymore?
-    }
-    
-    func clearGo() {
-        defaults.removeObject(forKey: key)
-        defaults.synchronize() /// ..
+        defaults.synchronize()
     }
     
     func getSavedGo() -> Go? {
         guard let goData = defaults.value(forKey: key) as? Data else {
             return nil
         }
-        do {
-            return try jsonDecoder.decode(Go.self, from: goData)
-        } catch {
-            print(error.localizedDescription)
-            return nil
-        }
+        return try? jsonDecoder.decode(Go.self, from: goData)
     }
-    
-    /// save/retreve last game size..
-    /// when game is over, clear it?
 }
