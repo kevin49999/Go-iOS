@@ -34,8 +34,9 @@ class GameBoardViewController: UIViewController {
         super.viewDidLoad()
         
         boardCollectionView.register(cell: GoCell.self)
-        actionLabel.font = Fonts.System.ofSize(24.0, weight: .semibold, textStyle: .callout)
+        actionLabel.font = Fonts.System.ofSize(32.0, weight: .semibold, textStyle: .callout)
         actionLabel.adjustsFontForContentSizeCategory = true
+        self.go = goSaver.getSavedGo() ?? Go(board: Board(size: .nineXNine))
         NotificationCenter.default.addObserver(self, selector: #selector(applicationQuitting), name: UIApplication.willTerminateNotification, object: nil)
     }
     

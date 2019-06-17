@@ -12,7 +12,7 @@ extension UILabel {
     func animateCallout(_ callout: String) {
         self.alpha = 0.0
         self.text = NSLocalizedString(callout, comment: "")
-        UIView.animate(withDuration: 1.2,
+        UIView.animate(withDuration: 1.3,
                        delay: 0.0,
                        options: [.curveEaseInOut],
                        animations: {
