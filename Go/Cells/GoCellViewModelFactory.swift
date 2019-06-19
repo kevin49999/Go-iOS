@@ -17,10 +17,10 @@ struct GoCellViewModelFactory {
     
     init(go: Go,
          collectionView: UICollectionView) {
-        self.rows = go.board.size.rawValue
-        self.cells = go.board.size.rawValue * go.board.size.rawValue
+        self.rows = go.board.rows
+        self.cells = go.board.cells
         self.availableHandicapIndexes = go.board.availableHandicapIndexes
-        let side: CGFloat = collectionView.frame.width / CGFloat(go.rows)
+        let side: CGFloat = collectionView.frame.width / CGFloat(go.board.rows)
         self.cellSize = CGSize(width: side, height: side)
     }
     

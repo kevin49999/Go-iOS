@@ -46,12 +46,6 @@ final class Go {
     typealias Point = GoPoint
     let board: Board
     weak var delegate: GoDelegate?
-    var rows: Int {
-        return board.rows
-    }
-    var cells: Int {
-        return board.cells
-    }
     var currentPoints: [Point] // top left -> bottom right
     private(set) var pastPoints: [[Point]] {
         didSet {
@@ -125,7 +119,7 @@ final class Go {
         self.pastPoints = pastPoints
         self.currentPoints = currentPoints
         self.currentPlayer = currentPlayer
-        self.canUndo = !pastPoints.isEmpty
+        self.canUndo = !pastPoints.isEmpty && !isOver
         self.passedCount = passedCount
         self.blackCaptures = blackCaptures
         self.whiteCaptures = whiteCaptures
@@ -242,7 +236,7 @@ final class Go {
     }
     
     private func getNeighborsFor(position: Int) -> [Int] {
-        let endIndex = cells - 1
+        let endIndex = board.cells - 1
         guard position <= endIndex else {
             assertionFailure("Position: \(position) out of bounds")
             return []
@@ -253,17 +247,17 @@ final class Go {
         var top: Int?
         var bottom: Int?
         
-        if position > 0, position % rows != 0 {
+        if position > 0, position % board.rows != 0 {
             left = position - 1
         }
-        if position < endIndex, (position + 1) % rows != 0 {
+        if position < endIndex, (position + 1) % board.rows != 0 {
             right = position + 1
         }
-        if position >= rows {
-            top = position - rows
+        if position >= board.rows {
+            top = position - board.rows
         }
-        if position < rows * (rows - 1) {
-            bottom = position + rows
+        if position < board.rows * (board.rows - 1) {
+            bottom = position + board.rows
         }
         return [left, right, top, bottom].compactMap { $0 }
     }

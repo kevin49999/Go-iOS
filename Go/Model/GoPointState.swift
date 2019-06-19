@@ -23,15 +23,12 @@ enum GoPointState: Codable {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        if try container.decodeIfPresent(String.self, forKey: .taken) != nil,
-            let playerString = try container.decodeIfPresent(String.self, forKey: .player), let player = Player(rawValue: playerString) {
+        if try container.decodeIfPresent(String.self, forKey: .taken) != nil, let playerString = try container.decodeIfPresent(String.self, forKey: .player), let player = Player(rawValue: playerString) {
             self = .taken(player)
-        } else if try container.decodeIfPresent(String.self, forKey: .open) != nil {
-            self = .open
-        } else if try container.decodeIfPresent(String.self, forKey: .captured) != nil,
-            let playerString = try container.decodeIfPresent(String.self, forKey: .player), let player = Player(rawValue: playerString) {
+        } else if try container.decodeIfPresent(String.self, forKey: .captured) != nil, let playerString = try container.decodeIfPresent(String.self, forKey: .player), let player = Player(rawValue: playerString) {
             self = .captured(player)
         } else {
+            _ = try container.decode(String.self, forKey: .open)
             self = .open
         }
     }

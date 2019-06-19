@@ -8,44 +8,42 @@
 
 import Foundation
 
-class Board: Codable {
+enum Board: Int, CaseIterable, Codable {
+    case fiveXFive = 5
+    case nineXNine = 9
+    case thirteenXThirteen = 13
+    case nineteenXNineteen = 19
     
-    enum Size: Int, CaseIterable, Codable {
-        case fiveXFive = 5
-        case nineXNine = 9
-        case thirteenXThirteen = 13
-        case nineteenXNineteen = 19
-        
-        var canHandicap: Bool {
-            switch self {
-            case .fiveXFive:
-                return false
-            case .nineXNine, .thirteenXThirteen, .nineteenXNineteen:
-                return true
-            }
-        }
-        
-        var maxHandicap: Int {
-            switch self {
-            case .fiveXFive:
-                return 0
-            case .nineXNine:
-                return 5
-            case .thirteenXThirteen, .nineteenXNineteen:
-                return 9
-            }
-        }
-    }
-    
-    let size: Size
     var rows: Int {
-        return size.rawValue
+        return rawValue
     }
+    
     var cells: Int {
         return rows * rows
     }
+    
+    var canHandicap: Bool {
+        switch self {
+        case .fiveXFive:
+            return false
+        case .nineXNine, .thirteenXThirteen, .nineteenXNineteen:
+            return true
+        }
+    }
+    
+    var maxHandicap: Int {
+        switch self {
+        case .fiveXFive:
+            return 0
+        case .nineXNine:
+            return 5
+        case .thirteenXThirteen, .nineteenXNineteen:
+            return 9
+        }
+    }
+    
     var availableHandicapIndexes: [Int] {
-        switch size {
+        switch self {
         case .fiveXFive:
             return []
         case .nineXNine:
@@ -57,20 +55,14 @@ class Board: Codable {
         }
     }
     
-    init(size: Size) {
-        self.size = size
-    }
-    
-    /// come up w/ non-hardcoded solution if problem, order of stones makes difficult
+    // come up w/ non-hardcoded solution if problem, order of stones makes difficult
     func handicapStoneIndexes(for count: Int) -> [Int] {
-        switch size {
+        switch self {
         case .fiveXFive:
             return []
-            
         case .nineXNine:
             assert(count >= 2 && count <= 5)
             return Array([24, 56, 60, 20, 40].prefix(count))
-            
         case .thirteenXThirteen:
             assert(count >= 2 && count <= 9)
             switch count {
@@ -81,7 +73,6 @@ class Board: Codable {
             default:
                 fatalError()
             }
-            
         case .nineteenXNineteen:
             assert(count >= 2 && count <= 9)
             switch count {
