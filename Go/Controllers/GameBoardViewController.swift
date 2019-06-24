@@ -235,6 +235,7 @@ extension GameBoardViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return viewModelFactory.cellSize
+        let side = collectionView.frame.width / CGFloat(go.board.rows)
+        return CGSize(width: side, height: side)
     }
 }

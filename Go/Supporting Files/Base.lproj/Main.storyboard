@@ -38,7 +38,7 @@
                                 <rect key="frame" x="8" y="154" width="359" height="359"/>
                                 <color key="backgroundColor" red="0.97254901959999995" green="0.95686274510000002" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="vrr-Gh-4MH" secondAttribute="height" id="4C0-W7-pGx"/>
+                                    <constraint firstAttribute="width" secondItem="vrr-Gh-4MH" secondAttribute="height" multiplier="1:1" id="ez7-hy-q06"/>
                                 </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="3js-96-w52">
                                     <size key="itemSize" width="131" height="126"/>

@@ -10,7 +10,6 @@ import UIKit
 
 struct GoCellViewModelFactory {
     
-    let cellSize: CGSize
     private let rows: Int
     private let cells: Int
     private let availableHandicapIndexes: [Int]
@@ -20,8 +19,6 @@ struct GoCellViewModelFactory {
         self.rows = go.board.rows
         self.cells = go.board.cells
         self.availableHandicapIndexes = go.board.availableHandicapIndexes
-        let side: CGFloat = collectionView.frame.width / CGFloat(go.board.rows)
-        self.cellSize = CGSize(width: side, height: side)
     }
     
     func create(for point: GoPoint) -> GoCellViewModel {
