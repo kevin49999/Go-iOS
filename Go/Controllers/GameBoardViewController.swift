@@ -85,6 +85,7 @@ class GameBoardViewController: UIViewController {
         }
         let cancel = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel)
         alert.addAction(cancel)
+        alert.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
         present(alert, animated: true)
     }
     
@@ -109,6 +110,7 @@ class GameBoardViewController: UIViewController {
         }
         let cancel = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel)
         alert.addAction(cancel)
+        alert.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
         present(alert, animated: true)
     }
     
@@ -120,6 +122,7 @@ class GameBoardViewController: UIViewController {
             SKStoreReviewController.requestReview()
         })
         alert.addAction(okay)
+        alert.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
         present(alert, animated: true)
     }
     
