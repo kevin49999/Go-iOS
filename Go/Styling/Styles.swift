@@ -15,8 +15,7 @@ enum Styles {
     }
     
     enum Colors {
-        static let boardLight = "f8f4ee" /// add fromhex extension
-        /// boardDark ++ other colors to support light/dark
+        static let boardLight: UIColor = UIColor.fromHex("f8f4ee")
     }
     
     enum Sizing {

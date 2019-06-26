@@ -12,6 +12,7 @@
 		0A21BFC0226C1574004C54B9 /* GoCellViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A21BFBF226C1574004C54B9 /* GoCellViewModelFactory.swift */; };
 		0A634D0D22A8A4EA00FE10E0 /* UILabel+AnimateCallout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A634D0C22A8A4EA00FE10E0 /* UILabel+AnimateCallout.swift */; };
 		0A634D1222ADF5C600FE10E0 /* GoPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A634D1122ADF5C600FE10E0 /* GoPoint.swift */; };
+		0A64ADED22C3152300989A9D /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A64ADEC22C3152300989A9D /* UIColor+Hex.swift */; };
 		0A6E0E6A22B6C1490074E0CA /* GoSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6E0E6922B6C1490074E0CA /* GoSaver.swift */; };
 		0A6E0E6C22B72A300074E0CA /* GoPointState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6E0E6B22B72A300074E0CA /* GoPointState.swift */; };
 		0AF46461225AE50B00DE34EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46460225AE50B00DE34EA /* AppDelegate.swift */; };
@@ -49,6 +50,7 @@
 		0A21BFBF226C1574004C54B9 /* GoCellViewModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoCellViewModelFactory.swift; sourceTree = "<group>"; };
 		0A634D0C22A8A4EA00FE10E0 /* UILabel+AnimateCallout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+AnimateCallout.swift"; sourceTree = "<group>"; };
 		0A634D1122ADF5C600FE10E0 /* GoPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoPoint.swift; sourceTree = "<group>"; };
+		0A64ADEC22C3152300989A9D /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
 		0A6E0E6922B6C1490074E0CA /* GoSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoSaver.swift; sourceTree = "<group>"; };
 		0A6E0E6B22B72A300074E0CA /* GoPointState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoPointState.swift; sourceTree = "<group>"; };
 		0AF4645D225AE50B00DE34EA /* Go.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Go.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -214,8 +216,9 @@
 		0AF99360226C097D006DC49C /* Styling */ = {
 			isa = PBXGroup;
 			children = (
-				0AF4648D226B922400DE34EA /* Styles.swift */,
 				0AF46493226C05A600DE34EA /* Fonts.swift */,
+				0AF4648D226B922400DE34EA /* Styles.swift */,
+				0A64ADEC22C3152300989A9D /* UIColor+Hex.swift */,
 			);
 			path = Styling;
 			sourceTree = "<group>";
@@ -432,6 +435,7 @@
 				0AF46463225AE50B00DE34EA /* GameBoardViewController.swift in Sources */,
 				0A634D0D22A8A4EA00FE10E0 /* UILabel+AnimateCallout.swift in Sources */,
 				0AF4648E226B922400DE34EA /* Styles.swift in Sources */,
+				0A64ADED22C3152300989A9D /* UIColor+Hex.swift in Sources */,
 				0A6E0E6C22B72A300074E0CA /* GoPointState.swift in Sources */,
 				0A21BFBE226C144D004C54B9 /* GoCellViewModel.swift in Sources */,
 				0A634D1222ADF5C600FE10E0 /* GoPoint.swift in Sources */,
