@@ -122,7 +122,6 @@ class GameBoardViewController: UIViewController {
             SKStoreReviewController.requestReview()
         })
         alert.addAction(okay)
-        alert.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
         present(alert, animated: true)
     }
     
