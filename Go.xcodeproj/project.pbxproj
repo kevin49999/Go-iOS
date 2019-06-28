@@ -142,7 +142,7 @@
 		0AF46454225AE50B00DE34EA = {
 			isa = PBXGroup;
 			children = (
-				0AF4645F225AE50B00DE34EA /* Go */,
+				0AF4645F225AE50B00DE34EA /* Classes */,
 				0AF46474225AE50F00DE34EA /* GoTests */,
 				0AF4645E225AE50B00DE34EA /* Products */,
 				B46C914B39ACB94E935B354A /* Pods */,
@@ -159,7 +159,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		0AF4645F225AE50B00DE34EA /* Go */ = {
+		0AF4645F225AE50B00DE34EA /* Classes */ = {
 			isa = PBXGroup;
 			children = (
 				0A21BFBA226C13CC004C54B9 /* Cells */,
@@ -171,7 +171,7 @@
 				0AF46484225AF73D00DE34EA /* Supporting Files */,
 				0A6E0E6822B6BFE10074E0CA /* Utility */,
 			);
-			path = Go;
+			path = Classes;
 			sourceTree = "<group>";
 		};
 		0AF46474225AE50F00DE34EA /* GoTests */ = {
