@@ -21,14 +21,14 @@ protocol GoDelegate: class {
     func gameOver()
     func positionSelected(_ position: Int)
     func positionsCaptured(_ positions: [Int])
-    func switchedToPlayer(_ player: Player)
+    func switchedToPlayer(_ player: GoPlayer)
     func undidLastMove(changeset: StagedChangeset<[GoPoint]>)
 }
 
 final class Go {
     
     struct Group: Hashable {
-        let player: Player
+        let player: GoPlayer
         let positions: [Int]
         let liberties: Int
     }
@@ -44,7 +44,7 @@ final class Go {
     // MARK: - Properties
     
     typealias Point = GoPoint
-    let board: Board
+    let board: GoBoard
     weak var delegate: GoDelegate?
     var currentPoints: [Point] // top left -> bottom right
     private(set) var pastPoints: [[Point]] {
@@ -52,7 +52,7 @@ final class Go {
             canUndo = !pastPoints.isEmpty
         }
     }
-    private(set) var currentPlayer: Player {
+    private(set) var currentPlayer: GoPlayer {
         didSet {
             guard oldValue != currentPlayer else {
                 return
@@ -87,7 +87,7 @@ final class Go {
     
     // MARK: - Init
     
-    init(board: Board,
+    init(board: GoBoard,
          handicap: Int  = 0) {
         self.board = board
         self.pastPoints = []
@@ -107,10 +107,10 @@ final class Go {
         self.currentPoints = currentPoints
     }
     
-    init(board: Board,
+    init(board: GoBoard,
          pastPoints: [[Point]] = [[]],
          currentPoints: [Point] = [],
-         currentPlayer: Player = .black,
+         currentPlayer: GoPlayer = .black,
          passedCount: Int = 0,
          blackCaptures: Int = 0,
          whiteCaptures: Int = 0,
@@ -199,7 +199,7 @@ final class Go {
         return getGroup(startingAt: position, player: player)
     }
     
-    private func getGroup(startingAt position: Int, player: Player) -> Group? {
+    private func getGroup(startingAt position: Int, player: GoPlayer) -> Group? {
         var queue: [Int] = [position]
         var positions: [Int] = []
         var visited = [Int: Bool]()
@@ -304,10 +304,10 @@ extension Go: Codable {
     
     convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let board = try container.decode(Board.self, forKey: .board)
+        let board = try container.decode(GoBoard.self, forKey: .board)
         let pastPoints = try container.decode([[Point]].self, forKey: .pastPoints)
         let currentPoints = try container.decode([Point].self, forKey: .currentPoints)
-        let currentPlayer = try container.decode(Player.self, forKey: .currentPlayer)
+        let currentPlayer = try container.decode(GoPlayer.self, forKey: .currentPlayer)
         let passedCount = try container.decode(Int.self, forKey: .passedCount)
         let blackCaptures = try container.decode(Int.self, forKey: .passedCount)
         let whiteCaptures = try container.decode(Int.self, forKey: .whiteCaptures)

@@ -27,8 +27,8 @@
 		0AF4648A226B8F9B00DE34EA /* StoryboardIdentifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46489226B8F9B00DE34EA /* StoryboardIdentifiable.swift */; };
 		0AF4648C226B8FB900DE34EA /* UICollectionView+Generic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF4648B226B8FB900DE34EA /* UICollectionView+Generic.swift */; };
 		0AF4648E226B922400DE34EA /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF4648D226B922400DE34EA /* Styles.swift */; };
-		0AF46490226C01E200DE34EA /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF4648F226C01E200DE34EA /* Player.swift */; };
-		0AF46492226C01F800DE34EA /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46491226C01F800DE34EA /* Board.swift */; };
+		0AF46490226C01E200DE34EA /* GoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF4648F226C01E200DE34EA /* GoPlayer.swift */; };
+		0AF46492226C01F800DE34EA /* GoBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46491226C01F800DE34EA /* GoBoard.swift */; };
 		0AF46494226C05A600DE34EA /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46493226C05A600DE34EA /* Fonts.swift */; };
 		5E0E6B7FA13513148A248471 /* Pods_Go.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9756D892091F8B3AA09871CE /* Pods_Go.framework */; };
 		9CACA21B81D68966D49125AF /* Pods_GoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4804208AE748C05926085DA1 /* Pods_GoTests.framework */; };
@@ -69,8 +69,8 @@
 		0AF46489226B8F9B00DE34EA /* StoryboardIdentifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryboardIdentifiable.swift; sourceTree = "<group>"; };
 		0AF4648B226B8FB900DE34EA /* UICollectionView+Generic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Generic.swift"; sourceTree = "<group>"; };
 		0AF4648D226B922400DE34EA /* Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
-		0AF4648F226C01E200DE34EA /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
-		0AF46491226C01F800DE34EA /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
+		0AF4648F226C01E200DE34EA /* GoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoPlayer.swift; sourceTree = "<group>"; };
+		0AF46491226C01F800DE34EA /* GoBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoBoard.swift; sourceTree = "<group>"; };
 		0AF46493226C05A600DE34EA /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		4804208AE748C05926085DA1 /* Pods_GoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6ECD90480DC9A92BF6D39F44 /* Pods-GoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GoTests.debug.xcconfig"; path = "Target Support Files/Pods-GoTests/Pods-GoTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -163,7 +163,7 @@
 				0A21BFBA226C13CC004C54B9 /* Cells */,
 				0AF46482225AF72F00DE34EA /* Controllers */,
 				0A21BFBB226C13D8004C54B9 /* Extensions */,
-				0AF46483225AF73500DE34EA /* Model */,
+				0AF46483225AF73500DE34EA /* Go */,
 				0A21BFBC226C13F0004C54B9 /* Protocols */,
 				0AF99360226C097D006DC49C /* Styling */,
 				0AF46484225AF73D00DE34EA /* Supporting Files */,
@@ -189,16 +189,16 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
-		0AF46483225AF73500DE34EA /* Model */ = {
+		0AF46483225AF73500DE34EA /* Go */ = {
 			isa = PBXGroup;
 			children = (
-				0AF46491226C01F800DE34EA /* Board.swift */,
+				0AF46491226C01F800DE34EA /* GoBoard.swift */,
 				0AF46480225AF04900DE34EA /* Go.swift */,
 				0A634D1122ADF5C600FE10E0 /* GoPoint.swift */,
 				0A6E0E6B22B72A300074E0CA /* GoPointState.swift */,
-				0AF4648F226C01E200DE34EA /* Player.swift */,
+				0AF4648F226C01E200DE34EA /* GoPlayer.swift */,
 			);
-			path = Model;
+			path = Go;
 			sourceTree = "<group>";
 		};
 		0AF46484225AF73D00DE34EA /* Supporting Files */ = {
@@ -441,14 +441,14 @@
 				0A634D1222ADF5C600FE10E0 /* GoPoint.swift in Sources */,
 				0AF46488226A7F7E00DE34EA /* GoCell.swift in Sources */,
 				0AF46481225AF04900DE34EA /* Go.swift in Sources */,
-				0AF46490226C01E200DE34EA /* Player.swift in Sources */,
+				0AF46490226C01E200DE34EA /* GoPlayer.swift in Sources */,
 				0AF46461225AE50B00DE34EA /* AppDelegate.swift in Sources */,
 				0AF46494226C05A600DE34EA /* Fonts.swift in Sources */,
 				0AF4648C226B8FB900DE34EA /* UICollectionView+Generic.swift in Sources */,
 				0A21BFC0226C1574004C54B9 /* GoCellViewModelFactory.swift in Sources */,
 				0A21BFB9226C134C004C54B9 /* UIView+IBInspectable.swift in Sources */,
 				0AF4648A226B8F9B00DE34EA /* StoryboardIdentifiable.swift in Sources */,
-				0AF46492226C01F800DE34EA /* Board.swift in Sources */,
+				0AF46492226C01F800DE34EA /* GoBoard.swift in Sources */,
 				0A6E0E6A22B6C1490074E0CA /* GoSaver.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

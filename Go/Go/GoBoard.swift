@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum Board: Int, CaseIterable, Codable {
+enum GoBoard: Int, CaseIterable, Codable {
     case fiveXFive = 5
     case nineXNine = 9
     case thirteenXThirteen = 13

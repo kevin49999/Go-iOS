@@ -73,7 +73,7 @@ class GameBoardViewController: UIViewController {
             })
             alert.addAction(passStone)
         }
-        for board in Board.allCases {
+        for board in GoBoard.allCases {
             let new = UIAlertAction(title: NSLocalizedString("New \(board.rows)x\(board.rows)", comment: ""), style: .default, handler: { [weak self] _ in
                 if board.canHandicap {
                     self?.presentHandicapStoneSelection(for: board)
@@ -89,7 +89,7 @@ class GameBoardViewController: UIViewController {
         present(alert, animated: true)
     }
     
-    private func presentHandicapStoneSelection(for board: Board) {
+    private func presentHandicapStoneSelection(for board: GoBoard) {
         let alert = UIAlertController(title: NSLocalizedString("Handicap Stones", comment: ""),
                                       message: nil,
                                       preferredStyle: .actionSheet)
@@ -186,7 +186,7 @@ extension GameBoardViewController: GoDelegate {
         undoBarButtonItem.isEnabled = canUndo
     }
     
-    func switchedToPlayer(_ player: Player) {
+    func switchedToPlayer(_ player: GoPlayer) {
         navigationItem.title = NSLocalizedString("Go \(player.string)", comment: "")
     }
 }

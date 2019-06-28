@@ -8,11 +8,11 @@
 
 import UIKit
 
-enum Player: String, Codable {
+enum GoPlayer: String, Codable {
     case black
     case white
     
-    var opposite: Player {
+    var opposite: GoPlayer {
         return (self == .black) ? .white : .black
     }
     

@@ -9,9 +9,9 @@
 import Foundation
 
 enum GoPointState: Codable {
-    case taken(Player)
+    case taken(GoPlayer)
     case open
-    case captured(Player)
+    case captured(GoPlayer)
     
     enum CodingKeys: String, CodingKey {
         case index
@@ -23,9 +23,9 @@ enum GoPointState: Codable {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        if try container.decodeIfPresent(String.self, forKey: .taken) != nil, let playerString = try container.decodeIfPresent(String.self, forKey: .player), let player = Player(rawValue: playerString) {
+        if try container.decodeIfPresent(String.self, forKey: .taken) != nil, let playerString = try container.decodeIfPresent(String.self, forKey: .player), let player = GoPlayer(rawValue: playerString) {
             self = .taken(player)
-        } else if try container.decodeIfPresent(String.self, forKey: .captured) != nil, let playerString = try container.decodeIfPresent(String.self, forKey: .player), let player = Player(rawValue: playerString) {
+        } else if try container.decodeIfPresent(String.self, forKey: .captured) != nil, let playerString = try container.decodeIfPresent(String.self, forKey: .player), let player = GoPlayer(rawValue: playerString) {
             self = .captured(player)
         } else {
             _ = try container.decode(String.self, forKey: .open)
