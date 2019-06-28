@@ -1,5 +1,5 @@
 //
-//  Player.swift
+//  GoPlayer.swift
 //  Go
 //
 //  Created by Kevin Johnson on 4/20/19.

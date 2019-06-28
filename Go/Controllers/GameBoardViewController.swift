@@ -114,13 +114,21 @@ class GameBoardViewController: UIViewController {
         present(alert, animated: true)
     }
     
-    private func presentGameOverAlert() {
-        let alert = UIAlertController(title: NSLocalizedString("Game Over", comment: ""),
-                                      message: nil,
-                                      preferredStyle: .alert)
-        let okay = UIAlertAction(title: NSLocalizedString("🏆", comment: ""), style: .default, handler: { _ in
-            SKStoreReviewController.requestReview()
-        })
+    private func presentGameOverAlert(result: GoEndGameResult) {
+        let title = NSLocalizedString("Game Over", comment: "")
+        let message = NSLocalizedString(result.pointsDescription(), comment: "")
+        let alert = UIAlertController(
+            title: title,
+            message: message,
+            preferredStyle: .alert
+        )
+        let okay = UIAlertAction(
+            title: NSLocalizedString(result.winnerDescription(), comment: ""),
+            style: .default,
+            handler: { _ in
+                SKStoreReviewController.requestReview()
+            }
+        )
         alert.addAction(okay)
         present(alert, animated: true)
     }
@@ -160,10 +168,10 @@ extension GameBoardViewController: GoDelegate {
         actionLabel.animateCallout("🎯")
     }
     
-    func gameOver() {
+    func gameOver(result: GoEndGameResult) {
         navigationItem.title = NSLocalizedString("Game Over 🏆", comment: "")
         undoBarButtonItem.isEnabled = false
-        presentGameOverAlert()
+        presentGameOverAlert(result: result)
     }
     
     func positionSelected(_ position: Int) {

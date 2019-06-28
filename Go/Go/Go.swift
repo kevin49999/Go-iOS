@@ -9,16 +9,10 @@
 import DifferenceKit
 import Foundation
 
-// https://www.britgo.org/intro/intro2.html
-// http://cjlarose.com/2014/01/09/react-board-game-tutorial.html 🙏
-// need redo move as well?
-// add support for move documentation, A1, B7, etc. etc.
-// init Game with mock positions (good for testing too)
-
 protocol GoDelegate: class {
     func atariForPlayer()
     func canUndoChanged(_ canUndo: Bool)
-    func gameOver()
+    func gameOver(result: GoEndGameResult)
     func positionSelected(_ position: Int)
     func positionsCaptured(_ positions: [Int])
     func switchedToPlayer(_ player: GoPlayer)
@@ -26,11 +20,16 @@ protocol GoDelegate: class {
 }
 
 final class Go {
-    
+
     struct Group: Hashable {
         let player: GoPlayer
-        let positions: [Int]
+        let positions: Set<Int>
         let liberties: Int
+    }
+    
+    struct SurroundedTerritory: Hashable {
+        let player: GoPlayer
+        let positions: Set<Int>
     }
     
     enum PlayingError: Error {
@@ -63,7 +62,7 @@ final class Go {
     private(set) var isOver: Bool = false {
         didSet {
             if isOver {
-                delegate?.gameOver()
+                delegate?.gameOver(result: endGameResult())
             }
         }
     }
@@ -214,8 +213,7 @@ final class Go {
             if visited[stone] == true {
                 continue
             }
-            let neighbors = getNeighborsFor(position: stone)
-            for neighbor in neighbors {
+            for neighbor in getNeighborsFor(position: stone) {
                 switch currentPoints[neighbor].state {
                 case .taken(let takenPlayer):
                     if takenPlayer == player {
@@ -225,15 +223,90 @@ final class Go {
                     liberties += 1
                 case .captured(let capturedBy):
                     if capturedBy == player {
-                        liberties += 1 /// TODO: decide if sure about this 🤔
+                        liberties += 1
                     }
                 }
             }
             positions.append(stone)
             visited[stone] = true
         }
-        return Group(player: player, positions: positions, liberties: liberties)
+        return Group(player: player,
+                     positions: Set(positions),
+                     liberties: liberties)
     }
+
+    // MARK: - Surrounded Territory
+
+    private func getSurroundTerritory(startingAt position: Int) -> SurroundedTerritory? {
+        var queue: [Int] = [position]
+        var positions: [Int] = []
+        var visited = [Int: Bool]()
+        var surroundingPlayer: GoPlayer?
+        
+        while !queue.isEmpty {
+            guard let stone = queue.popLast() else {
+                assertionFailure()
+                break
+            }
+            
+            if visited[stone] == true {
+                continue
+            }
+            for neighbor in getNeighborsFor(position: stone) {
+                switch currentPoints[neighbor].state {
+                case .taken(let player):
+                    if let surrounding = surroundingPlayer,
+                        surrounding != player {
+                        return nil
+                    }
+                    surroundingPlayer = player
+                    
+                case .open:
+                    queue.append(neighbor)
+                case .captured:
+                    assertionFailure("Should not be possible, an open space next to a captured space")
+                    continue
+                }
+            }
+            positions.append(stone)
+            visited[stone] = true
+        }
+        return SurroundedTerritory(player: surroundingPlayer!,
+                                   positions: Set(positions))
+    }
+    
+    // MARK: - End Game
+
+    func endGameResult() -> GoEndGameResult {
+        var surroundedTerritories: Set<SurroundedTerritory> = []
+        for (i, point) in currentPoints.enumerated()
+            where point.state == .open {
+            if let surrounded = getSurroundTerritory(startingAt: i) {
+                /// FIXME: want to remove as i go.. but this works
+                /// ex: remove points from currentPoints if surrounded includes them
+                surroundedTerritories.insert(surrounded)
+            }
+        }
+
+        var blackSurrounded = 0
+        var whiteSurrounded = 0
+        for surrounded in surroundedTerritories {
+            switch surrounded.player {
+            case .black:
+                blackSurrounded += surrounded.positions.count
+            case .white:
+                whiteSurrounded += surrounded.positions.count
+            }
+        }
+        return GoEndGameResult(
+            blackCaptured: blackCaptures,
+            blackSurrounded: blackSurrounded,
+            whiteCaptured: whiteCaptures,
+            whiteSurrounded: whiteSurrounded
+        )
+    }
+    
+    /// MARK: -
     
     private func getNeighborsFor(position: Int) -> [Int] {
         let endIndex = board.cells - 1
@@ -272,7 +345,7 @@ final class Go {
         group.positions.forEach {
             currentPoints[$0].state = .captured(group.player.opposite)
         }
-        delegate?.positionsCaptured(group.positions)
+        delegate?.positionsCaptured(Array(group.positions))
     }
     
     private func togglePlayer() {

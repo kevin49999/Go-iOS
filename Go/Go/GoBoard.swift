@@ -1,5 +1,5 @@
 //
-//  Board.swift
+//  GoBoard.swift
 //  Go
 //
 //  Created by Kevin Johnson on 4/20/19.

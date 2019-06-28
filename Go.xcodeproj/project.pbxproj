@@ -13,6 +13,7 @@
 		0A634D0D22A8A4EA00FE10E0 /* UILabel+AnimateCallout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A634D0C22A8A4EA00FE10E0 /* UILabel+AnimateCallout.swift */; };
 		0A634D1222ADF5C600FE10E0 /* GoPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A634D1122ADF5C600FE10E0 /* GoPoint.swift */; };
 		0A64ADED22C3152300989A9D /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A64ADEC22C3152300989A9D /* UIColor+Hex.swift */; };
+		0A64ADEF22C5BC7D00989A9D /* GoEndGameResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A64ADEE22C5BC7D00989A9D /* GoEndGameResult.swift */; };
 		0A6E0E6A22B6C1490074E0CA /* GoSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6E0E6922B6C1490074E0CA /* GoSaver.swift */; };
 		0A6E0E6C22B72A300074E0CA /* GoPointState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6E0E6B22B72A300074E0CA /* GoPointState.swift */; };
 		0AF46461225AE50B00DE34EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46460225AE50B00DE34EA /* AppDelegate.swift */; };
@@ -51,6 +52,7 @@
 		0A634D0C22A8A4EA00FE10E0 /* UILabel+AnimateCallout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+AnimateCallout.swift"; sourceTree = "<group>"; };
 		0A634D1122ADF5C600FE10E0 /* GoPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoPoint.swift; sourceTree = "<group>"; };
 		0A64ADEC22C3152300989A9D /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
+		0A64ADEE22C5BC7D00989A9D /* GoEndGameResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoEndGameResult.swift; sourceTree = "<group>"; };
 		0A6E0E6922B6C1490074E0CA /* GoSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoSaver.swift; sourceTree = "<group>"; };
 		0A6E0E6B22B72A300074E0CA /* GoPointState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoPointState.swift; sourceTree = "<group>"; };
 		0AF4645D225AE50B00DE34EA /* Go.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Go.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -192,11 +194,12 @@
 		0AF46483225AF73500DE34EA /* Go */ = {
 			isa = PBXGroup;
 			children = (
-				0AF46491226C01F800DE34EA /* GoBoard.swift */,
 				0AF46480225AF04900DE34EA /* Go.swift */,
+				0AF46491226C01F800DE34EA /* GoBoard.swift */,
+				0A64ADEE22C5BC7D00989A9D /* GoEndGameResult.swift */,
+				0AF4648F226C01E200DE34EA /* GoPlayer.swift */,
 				0A634D1122ADF5C600FE10E0 /* GoPoint.swift */,
 				0A6E0E6B22B72A300074E0CA /* GoPointState.swift */,
-				0AF4648F226C01E200DE34EA /* GoPlayer.swift */,
 			);
 			path = Go;
 			sourceTree = "<group>";
@@ -435,6 +438,7 @@
 				0AF46463225AE50B00DE34EA /* GameBoardViewController.swift in Sources */,
 				0A634D0D22A8A4EA00FE10E0 /* UILabel+AnimateCallout.swift in Sources */,
 				0AF4648E226B922400DE34EA /* Styles.swift in Sources */,
+				0A64ADEF22C5BC7D00989A9D /* GoEndGameResult.swift in Sources */,
 				0A64ADED22C3152300989A9D /* UIColor+Hex.swift in Sources */,
 				0A6E0E6C22B72A300074E0CA /* GoPointState.swift in Sources */,
 				0A21BFBE226C144D004C54B9 /* GoCellViewModel.swift in Sources */,
