@@ -20,7 +20,7 @@ protocol GoDelegate: class {
 }
 
 final class Go {
-
+    
     struct Group: Hashable {
         let player: GoPlayer
         let positions: Set<Int>
@@ -154,8 +154,14 @@ final class Go {
         
         // other player update
         let neighbors = getNeighborsFor(position: position)
-        let otherPlayerGroups: Set<Group> = Set(neighbors.compactMap { getGroupUsingBoardState(startingAt: $0) })
-            .filter { $0.player != currentPlayer }
+        let otherPlayerGroups: Set<Group> = Set(
+            neighbors.compactMap {
+                guard case let .taken(player) = currentPoints[$0].state,
+                    player != currentPlayer else {
+                        return nil
+                }
+                return getGroup(startingAt: $0, player: player)
+        })
         for group in otherPlayerGroups {
             switch group.liberties {
             case 0:
@@ -191,16 +197,9 @@ final class Go {
     
     // MARK: - Private Functions
     
-    private func getGroupUsingBoardState(startingAt position: Int) -> Group? {
-        guard case let .taken(player) = currentPoints[position].state else {
-            return nil
-        }
-        return getGroup(startingAt: position, player: player)
-    }
-    
     private func getGroup(startingAt position: Int, player: GoPlayer) -> Group? {
         var queue: [Int] = [position]
-        var positions: [Int] = []
+        var positions: Set<Int> = []
         var visited = [Int: Bool]()
         var liberties = 0
         
@@ -227,19 +226,21 @@ final class Go {
                     }
                 }
             }
-            positions.append(stone)
+            positions.insert(stone)
             visited[stone] = true
         }
-        return Group(player: player,
-                     positions: Set(positions),
-                     liberties: liberties)
+        return Group(
+            player: player,
+            positions: positions,
+            liberties: liberties
+        )
     }
-
+    
     // MARK: - Surrounded Territory
-
+    
     private func getSurroundTerritory(startingAt position: Int) -> SurroundedTerritory? {
         var queue: [Int] = [position]
-        var positions: [Int] = []
+        var positions: Set<Int> = []
         var visited = [Int: Bool]()
         var surroundingPlayer: GoPlayer?
         
@@ -268,26 +269,24 @@ final class Go {
                     continue
                 }
             }
-            positions.append(stone)
+            positions.insert(stone)
             visited[stone] = true
         }
-        return SurroundedTerritory(player: surroundingPlayer!,
-                                   positions: Set(positions))
+        return SurroundedTerritory(
+            player: surroundingPlayer!,
+            positions: positions
+        )
     }
     
     // MARK: - End Game
-
+    
     func endGameResult() -> GoEndGameResult {
-        var surroundedTerritories: Set<SurroundedTerritory> = []
-        for (i, point) in currentPoints.enumerated()
-            where point.state == .open {
-            if let surrounded = getSurroundTerritory(startingAt: i) {
-                /// FIXME: want to remove as i go.. but this works
-                /// ex: remove points from currentPoints if surrounded includes them
-                surroundedTerritories.insert(surrounded)
-            }
-        }
-
+        let surroundedTerritories = Set(currentPoints
+            .filter { $0.state == .open }
+            .enumerated()
+            .compactMap { getSurroundTerritory(startingAt: $0.offset) }
+        )
+        
         var blackSurrounded = 0
         var whiteSurrounded = 0
         for surrounded in surroundedTerritories {
@@ -306,7 +305,7 @@ final class Go {
         )
     }
     
-    /// MARK: -
+    // MARK: - Private Functions
     
     private func getNeighborsFor(position: Int) -> [Int] {
         let endIndex = board.cells - 1

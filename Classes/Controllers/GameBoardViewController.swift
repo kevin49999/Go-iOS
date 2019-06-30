@@ -93,7 +93,7 @@ class GameBoardViewController: UIViewController {
         let alert = UIAlertController(title: NSLocalizedString("Handicap Stones", comment: ""),
                                       message: nil,
                                       preferredStyle: .actionSheet)
-        let noHandicap = UIAlertAction(title: NSLocalizedString("🙅‍♀️", comment: ""),
+        let noHandicap = UIAlertAction(title: NSLocalizedString("\(0)", comment: ""),
                                        style: .default,
                                        handler: { [weak self] _ in
             self?.go = Go(board: board, handicap: 0)
