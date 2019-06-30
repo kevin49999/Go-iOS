@@ -15,13 +15,33 @@ enum GoPlayer: String, Codable {
     var opposite: GoPlayer {
         return (self == .black) ? .white : .black
     }
-    
+}
+
+extension GoPlayer {
     var string: String {
         switch self {
         case .black:
             return "⚫️"
         case .white:
             return "⚪️"
+        }
+    }
+    
+    var capturedString: String {
+        switch self {
+        case .black:
+            return "b⚔️"
+        case .white:
+            return "w⚔️"
+        }
+    }
+    
+    var surroundedString: String {
+        switch self {
+        case .black:
+            return "b🧱"
+        case .white:
+            return "w🧱"
         }
     }
 }
