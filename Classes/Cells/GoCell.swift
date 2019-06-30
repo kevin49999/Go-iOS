@@ -24,8 +24,9 @@ class GoCell: UICollectionViewCell {
     @IBOutlet weak private var rightHorizontalLineSize: NSLayoutConstraint!
     
     func configure(with viewModel: ViewModel = ViewModel()) {
-        stoneLabel.isHidden = !viewModel.showStone
-        stoneLabel.text = viewModel.stoneString
+        stoneLabel.font = Fonts.System.ofSize(viewModel.labelSize, weight: .semibold, textStyle: .body)
+        stoneLabel.isHidden = !viewModel.showLabel
+        stoneLabel.text = viewModel.labelString
         centerDotView.isHidden = !viewModel.showHandicapDot
         configureBorder(with: viewModel.borderStyle)
     }

@@ -12,7 +12,7 @@ import Foundation
 protocol GoDelegate: class {
     func atariForPlayer()
     func canUndoChanged(_ canUndo: Bool)
-    func gameOver(result: GoEndGameResult)
+    func gameOver(result: GoEndGameResult, changeset: StagedChangeset<[GoPoint]>)
     func positionSelected(_ position: Int)
     func positionsCaptured(_ positions: [Int])
     func switchedToPlayer(_ player: GoPlayer)
@@ -62,7 +62,7 @@ final class Go {
     private(set) var isOver: Bool = false {
         didSet {
             if isOver {
-                delegate?.gameOver(result: endGameResult())
+                endGame()
             }
         }
     }
@@ -98,7 +98,7 @@ final class Go {
             let handicapStoneIndexes = board.handicapStoneIndexes(for: handicap)
             if !handicapStoneIndexes.isEmpty {
                 handicapStoneIndexes.forEach {
-                    currentPoints[$0].state = .taken(.black)
+                    currentPoints[$0].state = .taken(by: .black)
                 }
                 self.currentPlayer = .white
             }
@@ -144,13 +144,16 @@ final class Go {
             if capturedBy == currentPlayer.opposite {
                 throw PlayingError.enemyCaptured
             }
+        case .surrounded:
+            assertionFailure() /// game over..
+            throw PlayingError.enemyCaptured
         }
         
         // current player update
         if currentPlayerGroup.liberties == 0 {
             throw PlayingError.attemptedSuicide
         }
-        update(position: position, with: .taken(currentPlayer))
+        update(position: position, with: .taken(by: currentPlayer))
         
         // other player update
         let neighbors = getNeighborsFor(position: position)
@@ -199,7 +202,7 @@ final class Go {
     
     private func getGroup(startingAt position: Int, player: GoPlayer) -> Group? {
         var queue: [Int] = [position]
-        var positions: Set<Int> = []
+        var positions: [Int] = []
         var visited = [Int: Bool]()
         var liberties = 0
         
@@ -224,14 +227,16 @@ final class Go {
                     if capturedBy == player {
                         liberties += 1
                     }
+                case .surrounded:
+                    continue
                 }
             }
-            positions.insert(stone)
+            positions.append(stone)
             visited[stone] = true
         }
         return Group(
             player: player,
-            positions: positions,
+            positions: Set(positions),
             liberties: liberties
         )
     }
@@ -240,7 +245,7 @@ final class Go {
     
     private func getSurroundTerritory(startingAt position: Int) -> SurroundedTerritory? {
         var queue: [Int] = [position]
-        var positions: Set<Int> = []
+        var positions: [Int] = []
         var visited = [Int: Bool]()
         var surroundingPlayer: GoPlayer?
         
@@ -264,32 +269,44 @@ final class Go {
                     
                 case .open:
                     queue.append(neighbor)
-                case .captured:
-                    assertionFailure("Should not be possible, an open space next to a captured space")
+                case .captured, .surrounded:
                     continue
                 }
             }
-            positions.insert(stone)
+            positions.append(stone)
             visited[stone] = true
         }
         return SurroundedTerritory(
             player: surroundingPlayer!,
-            positions: positions
+            positions: Set(positions)
         )
     }
     
     // MARK: - End Game
     
-    func endGameResult() -> GoEndGameResult {
-        let surroundedTerritories = Set(currentPoints
-            .filter { $0.state == .open }
-            .enumerated()
-            .compactMap { getSurroundTerritory(startingAt: $0.offset) }
-        )
+    func endGame() {
+        var surroundedTerritories: Set<SurroundedTerritory> = []
+        for (i, point) in currentPoints.enumerated()
+            where point.state == .open {
+                if let surrounded = getSurroundTerritory(startingAt: i) {
+                    surroundedTerritories.insert(surrounded)
+                }
+        }
+
+        pastPoints.append(self.currentPoints)
+        var beforeFinal = self.currentPoints /// copied..
+        for (i, point) in beforeFinal.enumerated()
+            where point.state != .open {
+            /// want captured to reload as well.. hacky way by reseting to open
+            beforeFinal[i].state = .open
+        }
         
         var blackSurrounded = 0
         var whiteSurrounded = 0
         for surrounded in surroundedTerritories {
+            surrounded.positions.forEach {
+                currentPoints[$0].state = .surrounded(by: surrounded.player)
+            }
             switch surrounded.player {
             case .black:
                 blackSurrounded += surrounded.positions.count
@@ -297,12 +314,15 @@ final class Go {
                 whiteSurrounded += surrounded.positions.count
             }
         }
-        return GoEndGameResult(
+        let result = GoEndGameResult(
             blackCaptured: blackCaptures,
             blackSurrounded: blackSurrounded,
             whiteCaptured: whiteCaptures,
             whiteSurrounded: whiteSurrounded
         )
+        
+        let changeset = StagedChangeset(source: beforeFinal, target: self.currentPoints)
+        delegate?.gameOver(result: result, changeset: changeset)
     }
     
     // MARK: - Private Functions
@@ -342,7 +362,7 @@ final class Go {
             whiteCaptures += group.positions.count
         }
         group.positions.forEach {
-            currentPoints[$0].state = .captured(group.player.opposite)
+            currentPoints[$0].state = .captured(by: group.player.opposite)
         }
         delegate?.positionsCaptured(Array(group.positions))
     }

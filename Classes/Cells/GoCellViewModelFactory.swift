@@ -21,23 +21,41 @@ struct GoCellViewModelFactory {
         self.availableHandicapIndexes = go.board.availableHandicapIndexes
     }
     
-    func create(for point: GoPoint) -> GoCellViewModel {
-        let showStone: Bool
-        let stoneString: String?
+    func create(for point: GoPoint, isOver: Bool) -> GoCellViewModel {
+        let showLabel: Bool
+        let labelString: String?
+        let labelSize: CGFloat
         switch point.state {
         case .taken(let player):
-            showStone = true
-            stoneString = player.string
-        case .open, .captured:
-            showStone = false
-            stoneString = nil
+            showLabel = true
+            labelString = player.string
+            labelSize = 100.0 // hacky way to ensure stone fills cell, so large it resizes to fit
+        case .open:
+            showLabel = false
+            labelString = nil
+            labelSize = 0.0
+        case .captured(let player):
+            if isOver {
+                showLabel = true
+                labelString = player.capturedString
+                labelSize = 24.0
+            } else {
+                showLabel = false
+                labelString = nil
+                labelSize = 0.0
+            }
+        case .surrounded(let player):
+            showLabel = true
+            labelString = player.surroundedString
+            labelSize = 24.0
         }
-        
-        let showHandicapDot: Bool = availableHandicapIndexes.contains(point.index)
-        return GoCellViewModel(showStone: showStone,
-                               stoneString: stoneString,
-                               showHandicapDot: showHandicapDot,
-                               borderStyle: borderStyle(for: point.index))
+        return GoCellViewModel(
+            showLabel: showLabel,
+            labelString: labelString,
+            labelSize: labelSize,
+            showHandicapDot: availableHandicapIndexes.contains(point.index),
+            borderStyle: borderStyle(for: point.index)
+        )
     }
     
     private func borderStyle(for pointIndex: Int) -> GoCellViewModel.BorderStyle {

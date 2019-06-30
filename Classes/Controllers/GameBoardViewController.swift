@@ -37,7 +37,12 @@ class GameBoardViewController: UIViewController {
         actionLabel.font = Fonts.System.ofSize(32.0, weight: .semibold, textStyle: .callout)
         actionLabel.adjustsFontForContentSizeCategory = true
         self.go = goSaver.getSavedGo() ?? Go(board: .nineXNine)
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationQuitting), name: UIApplication.willTerminateNotification, object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(applicationQuitting),
+            name: UIApplication.willTerminateNotification,
+            object: nil
+        )
     }
     
     // MARK: - Initializing Game
@@ -45,7 +50,7 @@ class GameBoardViewController: UIViewController {
     private func goGameInitialized(_ go: Go) {
         go.delegate = self
         viewModelFactory = GoCellViewModelFactory(go: go, collectionView: boardCollectionView)
-        let title: String = go.isOver ? "Game Over 🏆" : "Go \(go.currentPlayer.string)"
+        let title: String = go.isOver ? "Game Over 🏆" : "Go \(go.currentPlayer.string)" /// calc game over result to display..
         navigationItem.title = NSLocalizedString(title, comment: "")
         undoBarButtonItem.isEnabled = go.canUndo
         boardCollectionView.reloadData()
@@ -74,62 +79,53 @@ class GameBoardViewController: UIViewController {
             alert.addAction(passStone)
         }
         for board in GoBoard.allCases {
-            let new = UIAlertAction(title: NSLocalizedString("New \(board.rows)x\(board.rows)", comment: ""), style: .default, handler: { [weak self] _ in
-                if board.canHandicap {
-                    self?.presentHandicapStoneSelection(for: board)
-                } else {
-                    self?.go = Go(board: board)
-                }
+            let new = UIAlertAction(
+                title: NSLocalizedString("New \(board.rows)x\(board.rows)", comment: ""),
+                style: .default,
+                handler: { [weak self] _ in
+                    if board.canHandicap {
+                        self?.presentHandicapStoneSelection(for: board)
+                    } else {
+                        self?.go = Go(board: board)
+                    }
             })
             alert.addAction(new)
         }
-        let cancel = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel)
+        let cancel = UIAlertAction(
+            title: NSLocalizedString("Cancel", comment: ""),
+            style: .cancel
+        )
         alert.addAction(cancel)
         alert.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
         present(alert, animated: true)
     }
     
     private func presentHandicapStoneSelection(for board: GoBoard) {
-        let alert = UIAlertController(title: NSLocalizedString("Handicap Stones", comment: ""),
-                                      message: nil,
-                                      preferredStyle: .actionSheet)
-        let noHandicap = UIAlertAction(title: NSLocalizedString("\(0)", comment: ""),
-                                       style: .default,
-                                       handler: { [weak self] _ in
-            self?.go = Go(board: board, handicap: 0)
+        let alert = UIAlertController(
+            title: NSLocalizedString("Handicap Stones", comment: ""),
+            message: nil,
+            preferredStyle: .actionSheet
+        )
+        let noHandicap = UIAlertAction(
+            title: NSLocalizedString("\(0)", comment: ""),
+            style: .default,
+            handler: { [weak self] _ in
+                self?.go = Go(board: board, handicap: 0)
         })
         alert.addAction(noHandicap)
         (2...board.maxHandicap).forEach {
             let handicap = $0
-            let count = UIAlertAction(title: NSLocalizedString("\(handicap)", comment: ""),
-                                      style: .default,
-                                      handler: { [weak self] _ in
-                self?.go = Go(board: board, handicap: handicap)
+            let count = UIAlertAction(
+                title: NSLocalizedString("\(handicap)", comment: ""),
+                style: .default,
+                handler: { [weak self] _ in
+                    self?.go = Go(board: board, handicap: handicap)
             })
             alert.addAction(count)
         }
         let cancel = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel)
         alert.addAction(cancel)
         alert.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
-        present(alert, animated: true)
-    }
-    
-    private func presentGameOverAlert(result: GoEndGameResult) {
-        let title = NSLocalizedString("Game Over", comment: "")
-        let message = NSLocalizedString(result.pointsDescription(), comment: "")
-        let alert = UIAlertController(
-            title: title,
-            message: message,
-            preferredStyle: .alert
-        )
-        let okay = UIAlertAction(
-            title: NSLocalizedString(result.winnerDescription(), comment: ""),
-            style: .default,
-            handler: { _ in
-                SKStoreReviewController.requestReview()
-            }
-        )
-        alert.addAction(okay)
         present(alert, animated: true)
     }
     
@@ -168,10 +164,13 @@ extension GameBoardViewController: GoDelegate {
         actionLabel.animateCallout("🎯")
     }
     
-    func gameOver(result: GoEndGameResult) {
-        navigationItem.title = NSLocalizedString("Game Over 🏆", comment: "")
+    func gameOver(result: GoEndGameResult, changeset: StagedChangeset<[GoPoint]>) {
+        let title = result.gameOverDescription()
+        navigationItem.title = NSLocalizedString(title, comment: "")
         undoBarButtonItem.isEnabled = false
-        presentGameOverAlert(result: result)
+        boardCollectionView.reload(using: changeset) { points in
+            self.go.currentPoints = points
+        }
     }
     
     func positionSelected(_ position: Int) {
@@ -209,7 +208,10 @@ extension GameBoardViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: GoCell = collectionView.dequeueReusableCell(for: indexPath)
-        let viewModel = viewModelFactory.create(for: go.currentPoints[indexPath.row])
+        let viewModel = viewModelFactory.create(
+            for: go.currentPoints[indexPath.row],
+            isOver: go.isOver
+        )
         cell.configure(with: viewModel)
         return cell
     }

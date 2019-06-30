@@ -22,17 +22,6 @@ struct GoEndGameResult {
         return whiteCaptured + whiteSurrounded
     }
     
-    func pointsDescription() -> String {
-        return String(format: "\n%@\n captured: %d\n surrounded: %d\n score: %d\n \n%@\n captured: %d\n surrounded: %d\n score: %d", GoPlayer.black.string, blackCaptured, blackSurrounded, blackScore, GoPlayer.white.string, whiteCaptured, whiteSurrounded, whiteScore)
-    }
-    
-    func winnerDescription() -> String {
-        if let winner = winner() {
-            return String(format: "%@ Wins 🏆", winner.rawValue.capitalized)
-        }
-        return "Tie Game"
-    }
-    
     func winner() -> GoPlayer? {
         guard blackScore != whiteScore else {
             return nil
@@ -41,5 +30,12 @@ struct GoEndGameResult {
             return .black
         }
         return .white
+    }
+    
+    func gameOverDescription() -> String {
+        if let winner = winner() {
+            return String(format: "%@ Wins 🏆 %@ %d %@ %d", winner.rawValue.capitalized, GoPlayer.black.string, blackScore, GoPlayer.white.string, whiteScore)
+        }
+        return "Tie Game"
     }
 }

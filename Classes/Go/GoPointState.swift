@@ -9,9 +9,10 @@
 import Foundation
 
 enum GoPointState: Codable {
-    case taken(GoPlayer)
+    case taken(by: GoPlayer)
     case open
-    case captured(GoPlayer)
+    case captured(by: GoPlayer)
+    case surrounded(by: GoPlayer)
     
     enum CodingKeys: String, CodingKey {
         case index
@@ -19,14 +20,17 @@ enum GoPointState: Codable {
         case open
         case captured
         case player
+        case surrounded
     }
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         if try container.decodeIfPresent(String.self, forKey: .taken) != nil, let playerString = try container.decodeIfPresent(String.self, forKey: .player), let player = GoPlayer(rawValue: playerString) {
-            self = .taken(player)
+            self = .taken(by: player)
         } else if try container.decodeIfPresent(String.self, forKey: .captured) != nil, let playerString = try container.decodeIfPresent(String.self, forKey: .player), let player = GoPlayer(rawValue: playerString) {
-            self = .captured(player)
+            self = .captured(by: player)
+        } else if try container.decodeIfPresent(String.self, forKey: .surrounded) != nil, let playerString = try container.decodeIfPresent(String.self, forKey: .player), let player = GoPlayer(rawValue: playerString) {
+            self = .surrounded(by: player)
         } else {
             _ = try container.decode(String.self, forKey: .open)
             self = .open
@@ -44,6 +48,9 @@ enum GoPointState: Codable {
         case .captured(let player):
             try container.encode("captured", forKey: .captured)
             try container.encode(player, forKey: .player)
+        case .surrounded(let player):
+            try container.encode("surrounded", forKey: .captured)
+            try container.encode(player, forKey: .player)
         }
     }
 }
@@ -58,6 +65,8 @@ extension GoPointState: Equatable {
         case (.open, .open):
             return true
         case (let .captured(playerOne), let .captured(playerTwo)):
+            return playerOne == playerTwo
+        case (let .surrounded(playerOne), let .surrounded(playerTwo)):
             return playerOne == playerTwo
         default:
             return false

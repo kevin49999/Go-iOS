@@ -22,19 +22,22 @@ struct GoCellViewModel {
         case `default`
     }
     
-    let showStone: Bool
-    let stoneString: String?
+    let showLabel: Bool
+    let labelString: String?
+    let labelSize: CGFloat
     let showHandicapDot: Bool
     let handicapDotColor: UIColor
     let borderStyle: BorderStyle
     
-    init(showStone: Bool = false,
-         stoneString: String? = nil,
+    init(showLabel: Bool = false,
+         labelString: String? = nil,
+         labelSize: CGFloat = 24.0,
          showHandicapDot: Bool = false,
          handicapDotColor: UIColor = .black,
          borderStyle: BorderStyle = .default) {
-        self.showStone = showStone
-        self.stoneString = stoneString
+        self.showLabel = showLabel
+        self.labelString = labelString
+        self.labelSize = labelSize
         self.showHandicapDot = showHandicapDot
         self.handicapDotColor = handicapDotColor
         self.borderStyle = borderStyle
