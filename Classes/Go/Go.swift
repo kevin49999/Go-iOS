@@ -133,28 +133,23 @@ final class Go {
         guard !isOver else {
             throw PlayingError.gameOver
         }
-        guard let currentPlayerGroup = getGroup(startingAt: position, player: currentPlayer) else {
-            throw PlayingError.impossiblePosition
-        }
         if case .taken = currentPoints[position].state {
             throw PlayingError.positionTaken
         }
+        guard let currentPlayerGroup = getGroup(startingAt: position, player: currentPlayer) else {
+            throw PlayingError.impossiblePosition
+        }
         
+        let otherPlayerGroups: Set<Group> = getPlayerGroups(
+            currentPlayer.opposite,
+            for: getNeighbors(for: position)
+        )
         if currentPlayerGroup.liberties == 0 {
-            // TODO: unless this move removes the group that causes it to have 0 liberties..
+            // TODO: unless this move removes group that causes it to have 0 liberties..
             throw PlayingError.attemptedSuicide
         }
         update(position: position, with: .taken(by: currentPlayer))
         
-        let neighbors = getNeighborsFor(position: position)
-        let otherPlayerGroups: Set<Group> = Set(
-            neighbors.compactMap {
-                guard case let .taken(player) = currentPoints[$0].state,
-                    player != currentPlayer else {
-                        return nil
-                }
-                return getGroup(startingAt: $0, player: player)
-        })
         for group in otherPlayerGroups {
             switch group.liberties {
             case 0:
@@ -190,6 +185,18 @@ final class Go {
     
     // MARK: - Private Functions
     
+    private func getPlayerGroups(_ player: GoPlayer, for positions: [Int]) -> Set<Group> {
+        return Set(
+            positions.compactMap {
+                guard case let .taken(byPlayer) = currentPoints[$0].state,
+                    byPlayer == player else {
+                        return nil
+                }
+                return getGroup(startingAt: $0, player: player)
+            }
+        )
+    }
+    
     private func getGroup(startingAt position: Int, player: GoPlayer) -> Group? {
         var queue: [Int] = [position]
         var positions: Set<Int> = []
@@ -205,7 +212,7 @@ final class Go {
             if visited[stone] == true {
                 continue
             }
-            for neighbor in getNeighborsFor(position: stone) {
+            for neighbor in getNeighbors(for: stone) {
                 switch currentPoints[neighbor].state {
                 case .taken(let takenPlayer):
                     if takenPlayer == player {
@@ -231,8 +238,6 @@ final class Go {
         )
     }
     
-    // MARK: - Surrounded Territory
-    
     private func getSurroundTerritory(startingAt position: Int) -> SurroundedTerritory? {
         var queue: [Int] = [position]
         var positions: Set<Int> = []
@@ -248,7 +253,7 @@ final class Go {
             if visited[stone] == true {
                 continue
             }
-            for neighbor in getNeighborsFor(position: stone) {
+            for neighbor in getNeighbors(for: stone) {
                 switch currentPoints[neighbor].state {
                 case .taken(let player):
                     if let surrounding = surroundingPlayer,
@@ -256,7 +261,6 @@ final class Go {
                         return nil
                     }
                     surroundingPlayer = player
-                    
                 case .open:
                     queue.append(neighbor)
                 case .captured, .surrounded:
@@ -277,9 +281,7 @@ final class Go {
         )
     }
     
-    // MARK: - End Game
-    
-    func endGame() {
+    private func endGame() {
         var surroundedTerritories: Set<SurroundedTerritory> = []
         for (i, point) in currentPoints.enumerated()
             where point.state == .open {
@@ -308,13 +310,13 @@ final class Go {
                 whiteSurrounded += surrounded.positions.count
             }
         }
+        
         let result = GoEndGameResult(
             blackCaptured: blackCaptures,
             blackSurrounded: blackSurrounded,
             whiteCaptured: whiteCaptures,
             whiteSurrounded: whiteSurrounded
         )
-        
         let changeset = StagedChangeset(
             source: beforeFinal,
             target: self.currentPoints
@@ -326,9 +328,7 @@ final class Go {
         )
     }
     
-    // MARK: - Private Functions
-    
-    private func getNeighborsFor(position: Int) -> [Int] {
+    private func getNeighbors(for position: Int) -> [Int] {
         let endIndex = board.cells - 1
         guard position <= endIndex else {
             assertionFailure("Position: \(position) out of bounds")

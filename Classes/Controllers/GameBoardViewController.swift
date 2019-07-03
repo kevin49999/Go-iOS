@@ -71,11 +71,6 @@ class GameBoardViewController: UIViewController {
         actionLabel.animateCallout("☠️")
     }
     
-    func playerAttemptedToPlayInCaptured() {
-        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-        actionLabel.animateCallout("🔒")
-    }
-    
     // MARK: - Alerts
     
     private func presentGameActionAlert() {
@@ -252,8 +247,6 @@ extension GameBoardViewController: UICollectionViewDelegate {
             switch error {
             case .attemptedSuicide:
                 playerAttemptedSuicide()
-            case .enemyCaptured:
-                playerAttemptedToPlayInCaptured()
             case .positionTaken, .gameOver:
                 break
             case .impossiblePosition:
