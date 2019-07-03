@@ -49,7 +49,7 @@ enum GoPointState: Codable {
             try container.encode("captured", forKey: .captured)
             try container.encode(player, forKey: .player)
         case .surrounded(let player):
-            try container.encode("surrounded", forKey: .captured)
+            try container.encode("surrounded", forKey: .surrounded)
             try container.encode(player, forKey: .player)
         }
     }
