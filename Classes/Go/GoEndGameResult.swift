@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct GoEndGameResult {
+struct GoEndGameResult: Codable {
     let blackCaptured: Int
     let blackSurrounded: Int
     let whiteCaptured: Int

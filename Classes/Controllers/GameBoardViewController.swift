@@ -49,8 +49,16 @@ class GameBoardViewController: UIViewController {
     
     private func goGameInitialized(_ go: Go) {
         go.delegate = self
-        viewModelFactory = GoCellViewModelFactory(go: go, collectionView: boardCollectionView)
-        let title: String = go.isOver ? "Game Over 🏆" : "Go \(go.currentPlayer.string)" /// calc game over result to display..
+        viewModelFactory = GoCellViewModelFactory(
+            go: go,
+            collectionView: boardCollectionView
+        )
+        let title: String
+        if let endGameResult = go.endGameResult {
+            title = endGameResult.gameOverDescription()
+        } else {
+            title = "Go \(go.currentPlayer.string)"
+        }
         navigationItem.title = NSLocalizedString(title, comment: "")
         undoBarButtonItem.isEnabled = go.canUndo
         boardCollectionView.reloadData()
@@ -71,16 +79,26 @@ class GameBoardViewController: UIViewController {
     // MARK: - Alerts
     
     private func presentGameActionAlert() {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let alert = UIAlertController(
+            title: nil,
+            message: nil,
+            preferredStyle: .actionSheet
+        )
         if !go.isOver {
-            let passStone = UIAlertAction(title: NSLocalizedString("Pass Stone \(go.currentPlayer.string)", comment: ""), style: .destructive, handler: { [weak self] _ in
-                self?.go.passStone()
-            })
+            let title = "Pass Stone \(go.currentPlayer.string)"
+            let passStone = UIAlertAction(
+                title: NSLocalizedString(title, comment: ""),
+                style: .destructive,
+                handler: { [weak self] _ in
+                    self?.go.passStone()
+                }
+            )
             alert.addAction(passStone)
         }
         for board in GoBoard.allCases {
+            let title = "New \(board.rows)x\(board.rows)"
             let new = UIAlertAction(
-                title: NSLocalizedString("New \(board.rows)x\(board.rows)", comment: ""),
+                title: NSLocalizedString(title, comment: ""),
                 style: .default,
                 handler: { [weak self] _ in
                     if board.canHandicap {
@@ -88,7 +106,8 @@ class GameBoardViewController: UIViewController {
                     } else {
                         self?.go = Go(board: board)
                     }
-            })
+                }
+            )
             alert.addAction(new)
         }
         let cancel = UIAlertAction(
@@ -111,7 +130,8 @@ class GameBoardViewController: UIViewController {
             style: .default,
             handler: { [weak self] _ in
                 self?.go = Go(board: board, handicap: 0)
-        })
+            }
+        )
         alert.addAction(noHandicap)
         (2...board.maxHandicap).forEach {
             let handicap = $0
@@ -120,10 +140,14 @@ class GameBoardViewController: UIViewController {
                 style: .default,
                 handler: { [weak self] _ in
                     self?.go = Go(board: board, handicap: handicap)
-            })
+                }
+            )
             alert.addAction(count)
         }
-        let cancel = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel)
+        let cancel = UIAlertAction(
+            title: NSLocalizedString("Cancel", comment: ""),
+            style: .cancel
+        )
         alert.addAction(cancel)
         alert.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
         present(alert, animated: true)
@@ -146,7 +170,7 @@ class GameBoardViewController: UIViewController {
         let current = traitCollection.preferredContentSizeCategory.isAccessibilityCategory
         guard previous != current else { return }
         
-        // TODO: Reload what you need to..
+        boardCollectionView.reloadData()
     }
     
     // MARK: - Notifications
