@@ -140,16 +140,29 @@ final class Go {
             throw PlayingError.impossiblePosition
         }
         
+        update(position: position, with: .taken(by: currentPlayer))
+        let neighbors: [Int] = getNeighbors(for: position)
         let otherPlayerGroups: Set<Group> = getPlayerGroups(
             currentPlayer.opposite,
-            for: getNeighbors(for: position)
+            for: neighbors
         )
         if currentPlayerGroup.liberties == 0 {
-            // TODO: unless this move removes group that causes it to have 0 liberties..
-            throw PlayingError.attemptedSuicide
+            // TODO: clean up.. iterating through twice, etc.
+            var capturedToSaveSelf = false
+            for group in otherPlayerGroups where group.liberties == 0 {
+                for position in group.positions {
+                    if neighbors.contains(position) {
+                        capturedToSaveSelf = true
+                    }
+                }
+            }
+            if !capturedToSaveSelf {
+                update(position: position, with: .open)
+                throw PlayingError.attemptedSuicide
+            }
         }
-        update(position: position, with: .taken(by: currentPlayer))
         
+        /// split..
         for group in otherPlayerGroups {
             switch group.liberties {
             case 0:
@@ -236,6 +249,19 @@ final class Go {
             positions: positions,
             liberties: liberties
         )
+    }
+    
+    private func handleGroupCaptured(_ group: Group) {
+        switch group.player.opposite {
+        case .black:
+            blackCaptures += group.positions.count
+        case .white:
+            whiteCaptures += group.positions.count
+        }
+        group.positions.forEach {
+            currentPoints[$0].state = .captured(by: group.player.opposite)
+        }
+        delegate?.positionsCaptured(Array(group.positions))
     }
     
     private func getSurroundTerritory(startingAt position: Int) -> SurroundedTerritory? {
@@ -353,19 +379,6 @@ final class Go {
             bottom = position + board.rows
         }
         return [left, right, top, bottom].compactMap { $0 }
-    }
-    
-    private func handleGroupCaptured(_ group: Group) {
-        switch group.player.opposite {
-        case .black:
-            blackCaptures += group.positions.count
-        case .white:
-            whiteCaptures += group.positions.count
-        }
-        group.positions.forEach {
-            currentPoints[$0].state = .captured(by: group.player.opposite)
-        }
-        delegate?.positionsCaptured(Array(group.positions))
     }
     
     private func togglePlayer() {
