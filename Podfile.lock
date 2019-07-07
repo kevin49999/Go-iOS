@@ -1,10 +1,13 @@
 PODS:
+  - Crashlytics (3.13.2):
+    - Fabric (~> 1.10.2)
   - DifferenceKit (1.1.2):
     - DifferenceKit/Core (= 1.1.2)
     - DifferenceKit/UIKitExtension (= 1.1.2)
   - DifferenceKit/Core (1.1.2)
   - DifferenceKit/UIKitExtension (1.1.2):
     - DifferenceKit/Core
+  - Fabric (1.10.2)
   - Firebase/Core (6.3.0):
     - Firebase/CoreOnly
     - FirebaseAnalytics (= 6.0.2)
@@ -58,13 +61,17 @@ PODS:
   - SwiftLint (0.33.0)
 
 DEPENDENCIES:
+  - Crashlytics
   - DifferenceKit
+  - Fabric
   - Firebase/Core
   - SwiftLint
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - Crashlytics
     - DifferenceKit
+    - Fabric
     - Firebase
     - FirebaseAnalytics
     - FirebaseCore
@@ -75,7 +82,9 @@ SPEC REPOS:
     - SwiftLint
 
 SPEC CHECKSUMS:
+  Crashlytics: 611738c7847f8291a1a51084e35987b86ba6b3ee
   DifferenceKit: 3a1cff9ac9a9cdf2a3f205671067797e83c3f066
+  Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
   Firebase: 8432d732974498afd5987e9001a05f90f1a3d625
   FirebaseAnalytics: 470ddab7253b21ad5a40bebd4a9903d7ae19386a
   FirebaseCore: 68f8a7f50cdae542715d4e86afa37c4067217dcb
@@ -85,6 +94,6 @@ SPEC CHECKSUMS:
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   SwiftLint: fed9c66336e41fc74dc48a73678380718f0c8b0e
 
-PODFILE CHECKSUM: e772301421b391f9bb3916114a3ca738fc2d7e3d
+PODFILE CHECKSUM: 52e1493b2b5a0ff3076726afee1b4eaeb6734bf0
 
 COCOAPODS: 1.7.1

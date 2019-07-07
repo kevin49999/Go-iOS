@@ -7,7 +7,9 @@ target 'Go' do
 
   # Pods for Go
 
+  pod 'Crashlytics'
   pod 'DifferenceKit'
+  pod 'Fabric'
   pod 'Firebase/Core'
   pod 'SwiftLint'
 
