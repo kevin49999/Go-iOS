@@ -8,6 +8,7 @@ target 'Go' do
   # Pods for Go
 
   pod 'DifferenceKit'
+  pod 'Firebase/Core'
   pod 'SwiftLint'
 
   target 'GoTests' do
