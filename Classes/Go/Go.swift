@@ -130,50 +130,30 @@ final class Go {
     // MARK: - Public Functions
     
     func playPosition(_ position: Int) throws {
-        guard !isOver else {
-            throw PlayingError.gameOver
+        do {
+            let currentPlayerGroup = try createGroup(
+                from: position,
+                player: currentPlayer
+            )
+            update(position: position, with: .taken(by: currentPlayer))
+            let neighbors = getNeighbors(for: position)
+            let otherPlayerGroups = getPlayerGroups(
+                currentPlayer.opposite,
+                for: neighbors
+            )
+            try suicideDetection(
+                for: position,
+                group: currentPlayerGroup,
+                groupNeighbors: neighbors,
+                otherPlayerGroups: otherPlayerGroups
+            )
+            handleOtherPlayerGroups(otherPlayerGroups)
+            togglePlayer()
+        } catch let error as PlayingError {
+            throw error
+        } catch {
+            assertionFailure()
         }
-        if case .taken = currentPoints[position].state {
-            throw PlayingError.positionTaken
-        }
-        guard let currentPlayerGroup = getGroup(startingAt: position, player: currentPlayer) else {
-            throw PlayingError.impossiblePosition
-        }
-        
-        update(position: position, with: .taken(by: currentPlayer))
-        let neighbors: [Int] = getNeighbors(for: position)
-        let otherPlayerGroups: Set<Group> = getPlayerGroups(
-            currentPlayer.opposite,
-            for: neighbors
-        )
-        if currentPlayerGroup.liberties == 0 {
-            // TODO: clean up.. iterating through twice, etc.
-            var capturedToSaveSelf = false
-            for group in otherPlayerGroups where group.liberties == 0 {
-                for position in group.positions {
-                    if neighbors.contains(position) {
-                        capturedToSaveSelf = true
-                    }
-                }
-            }
-            if !capturedToSaveSelf {
-                update(position: position, with: .open)
-                throw PlayingError.attemptedSuicide
-            }
-        }
-        
-        /// split..
-        for group in otherPlayerGroups {
-            switch group.liberties {
-            case 0:
-                handleGroupCaptured(group)
-            case 1:
-                delegate?.atariForPlayer()
-            default:
-                continue
-            }
-        }
-        togglePlayer()
     }
     
     func undoLast() {
@@ -198,7 +178,7 @@ final class Go {
     
     // MARK: - Private Functions
     
-    private func getPlayerGroups(_ player: GoPlayer, for positions: [Int]) -> Set<Group> {
+    private func getPlayerGroups(_ player: GoPlayer, for positions: Set<Int>) -> Set<Group> {
         return Set(
             positions.compactMap {
                 guard case let .taken(byPlayer) = currentPoints[$0].state,
@@ -251,6 +231,31 @@ final class Go {
         )
     }
     
+    private func createGroup(from position: Int, player: GoPlayer) throws -> Group {
+        guard !isOver else {
+            throw PlayingError.gameOver
+        }
+        if case .taken = currentPoints[position].state {
+            throw PlayingError.positionTaken
+        }
+        guard let currentPlayerGroup = getGroup(startingAt: position, player: player) else {
+            throw PlayingError.impossiblePosition
+        }
+        return currentPlayerGroup
+    }
+    
+    private func suicideDetection(for position: Int,
+                                  group: Group,
+                                  groupNeighbors: Set<Int>,
+                                  otherPlayerGroups: Set<Group> ) throws {
+        if group.liberties == 0,
+            !otherPlayerGroups
+                .contains(where: { $0.liberties == 0 && $0.positions.containsElement(from: groupNeighbors) }) {
+            update(position: position, with: .open)
+            throw PlayingError.attemptedSuicide
+        }
+    }
+    
     private func handleGroupCaptured(_ group: Group) {
         switch group.player.opposite {
         case .black:
@@ -262,6 +267,19 @@ final class Go {
             currentPoints[$0].state = .captured(by: group.player.opposite)
         }
         delegate?.positionsCaptured(Array(group.positions))
+    }
+    
+    private func handleOtherPlayerGroups(_ otherPlayerGroups: Set<Group>) {
+        for group in otherPlayerGroups {
+            switch group.liberties {
+            case 0:
+                handleGroupCaptured(group)
+            case 1:
+                delegate?.atariForPlayer()
+            default:
+                continue
+            }
+        }
     }
     
     private func getSurroundTerritory(startingAt position: Int) -> SurroundedTerritory? {
@@ -315,12 +333,12 @@ final class Go {
                     surroundedTerritories.insert(surrounded)
                 }
         }
-
+        
         pastPoints.append(self.currentPoints)
         var beforeFinal = self.currentPoints
         for (i, point) in beforeFinal.enumerated()
             where point.state != .open {
-            beforeFinal[i].state = .open // want captured positions to reload as well, hacky way to do by reseting to open which adds it to changeset
+                beforeFinal[i].state = .open // want captured positions to reload as well, hacky way to do by reseting to open which adds it to changeset
         }
         
         var blackSurrounded = 0
@@ -354,7 +372,7 @@ final class Go {
         )
     }
     
-    private func getNeighbors(for position: Int) -> [Int] {
+    private func getNeighbors(for position: Int) -> Set<Int> {
         let endIndex = board.cells - 1
         guard position <= endIndex else {
             assertionFailure("Position: \(position) out of bounds")
@@ -378,7 +396,7 @@ final class Go {
         if position < board.rows * (board.rows - 1) {
             bottom = position + board.rows
         }
-        return [left, right, top, bottom].compactMap { $0 }
+        return Set([left, right, top, bottom].compactMap { $0 })
     }
     
     private func togglePlayer() {
