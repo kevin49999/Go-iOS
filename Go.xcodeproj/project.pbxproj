@@ -17,7 +17,7 @@
 		0A6E0E6A22B6C1490074E0CA /* GoSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6E0E6922B6C1490074E0CA /* GoSaver.swift */; };
 		0A6E0E6C22B72A300074E0CA /* GoPointState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6E0E6B22B72A300074E0CA /* GoPointState.swift */; };
 		0A88430B22D4444E00E5FF7B /* Set+Contains.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A88430A22D4444E00E5FF7B /* Set+Contains.swift */; };
-		0ADE1D8322D2945A004EF76C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0ADE1D8222D2945A004EF76C /* GoogleService-Info.plist */; };
+		0A88430D22D44AB200E5FF7B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0A88430C22D44AB200E5FF7B /* GoogleService-Info.plist */; };
 		0AF46461225AE50B00DE34EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46460225AE50B00DE34EA /* AppDelegate.swift */; };
 		0AF46463225AE50B00DE34EA /* GameBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46462225AE50B00DE34EA /* GameBoardViewController.swift */; };
 		0AF46466225AE50B00DE34EA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AF46464225AE50B00DE34EA /* Main.storyboard */; };
@@ -58,7 +58,7 @@
 		0A6E0E6922B6C1490074E0CA /* GoSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoSaver.swift; sourceTree = "<group>"; };
 		0A6E0E6B22B72A300074E0CA /* GoPointState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoPointState.swift; sourceTree = "<group>"; };
 		0A88430A22D4444E00E5FF7B /* Set+Contains.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Set+Contains.swift"; sourceTree = "<group>"; };
-		0ADE1D8222D2945A004EF76C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0A88430C22D44AB200E5FF7B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0AF4645D225AE50B00DE34EA /* Go.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Go.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0AF46460225AE50B00DE34EA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0AF46462225AE50B00DE34EA /* GameBoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBoardViewController.swift; sourceTree = "<group>"; };
@@ -214,8 +214,8 @@
 			children = (
 				0AF46460225AE50B00DE34EA /* AppDelegate.swift */,
 				0AF46467225AE50F00DE34EA /* Assets.xcassets */,
-				0ADE1D8222D2945A004EF76C /* GoogleService-Info.plist */,
 				0AF4646C225AE50F00DE34EA /* Info.plist */,
+				0A88430C22D44AB200E5FF7B /* GoogleService-Info.plist */,
 				0AF46469225AE50F00DE34EA /* LaunchScreen.storyboard */,
 				0AF46464225AE50B00DE34EA /* Main.storyboard */,
 			);
@@ -342,7 +342,7 @@
 			files = (
 				0AF4646B225AE50F00DE34EA /* LaunchScreen.storyboard in Resources */,
 				0AF46486226A79B900DE34EA /* GoCell.xib in Resources */,
-				0ADE1D8322D2945A004EF76C /* GoogleService-Info.plist in Resources */,
+				0A88430D22D44AB200E5FF7B /* GoogleService-Info.plist in Resources */,
 				0AF46468225AE50F00DE34EA /* Assets.xcassets in Resources */,
 				0AF46466225AE50B00DE34EA /* Main.storyboard in Resources */,
 			);
