@@ -10,7 +10,7 @@ import DifferenceKit
 import Foundation
 
 protocol GoDelegate: class {
-    func atariForPlayer()
+    func atariForPlayer(_ player: GoPlayer)
     func canUndoChanged(_ canUndo: Bool)
     func gameOver(result: GoEndGameResult, changeset: StagedChangeset<[GoPoint]>)
     func positionSelected(_ position: Int)
@@ -21,27 +21,15 @@ protocol GoDelegate: class {
 
 final class Go {
     
-    struct Group: Hashable {
-        let player: GoPlayer
-        let positions: Set<Int>
-        let liberties: Int
-    }
-    
-    struct SurroundedTerritory: Hashable {
-        let player: GoPlayer
-        let positions: Set<Int>
-    }
-    
-    enum PlayingError: Error {
-        case attemptedSuicide
-        case gameOver
-        case impossiblePosition
-        case positionTaken
-    }
-    
     // MARK: - Properties
     
+    typealias Board = GoBoard
+    typealias EndGameResult = GoEndGameResult
+    typealias Group = GoGroup
+    typealias Player = GoPlayer
+    typealias PlayingError = GoPlayingError
     typealias Point = GoPoint
+    typealias SurroundedTerritory = GoSurroundedTerritory
     let board: GoBoard
     weak var delegate: GoDelegate?
     var currentPoints: [Point] // top left -> bottom right
@@ -50,7 +38,7 @@ final class Go {
             canUndo = !pastPoints.isEmpty
         }
     }
-    private(set) var currentPlayer: GoPlayer {
+    private(set) var currentPlayer: Player {
         didSet {
             guard oldValue != currentPlayer else {
                 return
@@ -73,7 +61,7 @@ final class Go {
             delegate?.canUndoChanged(canUndo)
         }
     }
-    private (set)var endGameResult: GoEndGameResult?
+    private (set)var endGameResult: EndGameResult?
     private var passedCount: Int = 0 {
         didSet {
             if passedCount == 2 {
@@ -106,15 +94,15 @@ final class Go {
         self.currentPoints = currentPoints
     }
     
-    init(board: GoBoard,
+    init(board: Board,
          pastPoints: [[Point]] = [[]],
          currentPoints: [Point] = [],
-         currentPlayer: GoPlayer = .black,
+         currentPlayer: Player = .black,
          passedCount: Int = 0,
          blackCaptures: Int = 0,
          whiteCaptures: Int = 0,
          isOver: Bool = false,
-         endGameResult: GoEndGameResult? = nil) {
+         endGameResult: EndGameResult? = nil) {
         self.board = board
         self.pastPoints = pastPoints
         self.currentPoints = currentPoints
@@ -178,7 +166,7 @@ final class Go {
     
     // MARK: - Private Functions
     
-    private func getPlayerGroups(_ player: GoPlayer, for positions: Set<Int>) -> Set<Group> {
+    private func getPlayerGroups(_ player: Player, for positions: Set<Int>) -> Set<Group> {
         return Set(
             positions.compactMap {
                 guard case let .taken(byPlayer) = currentPoints[$0].state,
@@ -190,11 +178,11 @@ final class Go {
         )
     }
     
-    private func getGroup(startingAt position: Int, player: GoPlayer) -> Group? {
+    private func getGroup(startingAt position: Int, player: Player) -> Group? {
         var queue: [Int] = [position]
         var positions: Set<Int> = []
         var visited = [Int: Bool]()
-        var liberties = 0
+        var libertiesCount = 0
         
         while !queue.isEmpty {
             guard let stone = queue.popLast() else {
@@ -212,10 +200,10 @@ final class Go {
                         queue.append(neighbor)
                     }
                 case .open:
-                    liberties += 1
+                    libertiesCount += 1
                 case .captured(let capturedBy):
                     if capturedBy == player {
-                        liberties += 1
+                        libertiesCount += 1
                     }
                 case .surrounded:
                     continue
@@ -227,11 +215,11 @@ final class Go {
         return Group(
             player: player,
             positions: positions,
-            liberties: liberties
+            libertiesCount: libertiesCount
         )
     }
     
-    private func createGroup(from position: Int, player: GoPlayer) throws -> Group {
+    private func createGroup(from position: Int, player: Player) throws -> Group {
         guard !isOver else {
             throw PlayingError.gameOver
         }
@@ -248,9 +236,9 @@ final class Go {
                                   group: Group,
                                   groupNeighbors: Set<Int>,
                                   otherPlayerGroups: Set<Group> ) throws {
-        if group.liberties == 0,
+        if group.noLiberties,
             !otherPlayerGroups
-                .contains(where: { $0.liberties == 0 && $0.positions.containsElement(from: groupNeighbors) }) {
+                .contains(where: { $0.noLiberties && $0.positions.containsElement(from: groupNeighbors) }) {
             update(position: position, with: .open)
             throw PlayingError.attemptedSuicide
         }
@@ -271,11 +259,11 @@ final class Go {
     
     private func handleOtherPlayerGroups(_ otherPlayerGroups: Set<Group>) {
         for group in otherPlayerGroups {
-            switch group.liberties {
+            switch group.libertiesCount {
             case 0:
                 handleGroupCaptured(group)
             case 1:
-                delegate?.atariForPlayer()
+                delegate?.atariForPlayer(group.player)
             default:
                 continue
             }

@@ -18,6 +18,9 @@
 		0A6E0E6C22B72A300074E0CA /* GoPointState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6E0E6B22B72A300074E0CA /* GoPointState.swift */; };
 		0A88430B22D4444E00E5FF7B /* Set+Contains.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A88430A22D4444E00E5FF7B /* Set+Contains.swift */; };
 		0A88430D22D44AB200E5FF7B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0A88430C22D44AB200E5FF7B /* GoogleService-Info.plist */; };
+		0A88431122D57C7B00E5FF7B /* GoGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A88431022D57C7B00E5FF7B /* GoGroup.swift */; };
+		0A88431322D57C9F00E5FF7B /* GoSurroundedTerritory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A88431222D57C9F00E5FF7B /* GoSurroundedTerritory.swift */; };
+		0A88431522D57CAE00E5FF7B /* GoPlayingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A88431422D57CAE00E5FF7B /* GoPlayingError.swift */; };
 		0AF46461225AE50B00DE34EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46460225AE50B00DE34EA /* AppDelegate.swift */; };
 		0AF46463225AE50B00DE34EA /* GameBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46462225AE50B00DE34EA /* GameBoardViewController.swift */; };
 		0AF46466225AE50B00DE34EA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AF46464225AE50B00DE34EA /* Main.storyboard */; };
@@ -59,6 +62,9 @@
 		0A6E0E6B22B72A300074E0CA /* GoPointState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoPointState.swift; sourceTree = "<group>"; };
 		0A88430A22D4444E00E5FF7B /* Set+Contains.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Set+Contains.swift"; sourceTree = "<group>"; };
 		0A88430C22D44AB200E5FF7B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0A88431022D57C7B00E5FF7B /* GoGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoGroup.swift; sourceTree = "<group>"; };
+		0A88431222D57C9F00E5FF7B /* GoSurroundedTerritory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoSurroundedTerritory.swift; sourceTree = "<group>"; };
+		0A88431422D57CAE00E5FF7B /* GoPlayingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoPlayingError.swift; sourceTree = "<group>"; };
 		0AF4645D225AE50B00DE34EA /* Go.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Go.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0AF46460225AE50B00DE34EA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0AF46462225AE50B00DE34EA /* GameBoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBoardViewController.swift; sourceTree = "<group>"; };
@@ -202,9 +208,12 @@
 				0AF46480225AF04900DE34EA /* Go.swift */,
 				0AF46491226C01F800DE34EA /* GoBoard.swift */,
 				0A64ADEE22C5BC7D00989A9D /* GoEndGameResult.swift */,
+				0A88431022D57C7B00E5FF7B /* GoGroup.swift */,
 				0AF4648F226C01E200DE34EA /* GoPlayer.swift */,
+				0A88431422D57CAE00E5FF7B /* GoPlayingError.swift */,
 				0A634D1122ADF5C600FE10E0 /* GoPoint.swift */,
 				0A6E0E6B22B72A300074E0CA /* GoPointState.swift */,
+				0A88431222D57C9F00E5FF7B /* GoSurroundedTerritory.swift */,
 			);
 			path = Go;
 			sourceTree = "<group>";
@@ -463,11 +472,13 @@
 			files = (
 				0AF46463225AE50B00DE34EA /* GameBoardViewController.swift in Sources */,
 				0A634D0D22A8A4EA00FE10E0 /* UILabel+AnimateCallout.swift in Sources */,
+				0A88431322D57C9F00E5FF7B /* GoSurroundedTerritory.swift in Sources */,
 				0AF4648E226B922400DE34EA /* Styles.swift in Sources */,
 				0A64ADEF22C5BC7D00989A9D /* GoEndGameResult.swift in Sources */,
 				0A64ADED22C3152300989A9D /* UIColor+Hex.swift in Sources */,
 				0A6E0E6C22B72A300074E0CA /* GoPointState.swift in Sources */,
 				0A21BFBE226C144D004C54B9 /* GoCellViewModel.swift in Sources */,
+				0A88431122D57C7B00E5FF7B /* GoGroup.swift in Sources */,
 				0A88430B22D4444E00E5FF7B /* Set+Contains.swift in Sources */,
 				0A634D1222ADF5C600FE10E0 /* GoPoint.swift in Sources */,
 				0AF46488226A7F7E00DE34EA /* GoCell.swift in Sources */,
@@ -477,6 +488,7 @@
 				0AF46494226C05A600DE34EA /* Fonts.swift in Sources */,
 				0AF4648C226B8FB900DE34EA /* UICollectionView+Generic.swift in Sources */,
 				0A21BFC0226C1574004C54B9 /* GoCellViewModelFactory.swift in Sources */,
+				0A88431522D57CAE00E5FF7B /* GoPlayingError.swift in Sources */,
 				0A21BFB9226C134C004C54B9 /* UIView+IBInspectable.swift in Sources */,
 				0AF4648A226B8F9B00DE34EA /* StoryboardIdentifiable.swift in Sources */,
 				0AF46492226C01F800DE34EA /* GoBoard.swift in Sources */,

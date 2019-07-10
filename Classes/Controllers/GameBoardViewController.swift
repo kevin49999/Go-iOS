@@ -178,7 +178,7 @@ class GameBoardViewController: UIViewController {
 // MARK: - GoDelegate
 
 extension GameBoardViewController: GoDelegate {
-    func atariForPlayer() {
+    func atariForPlayer(_ player: GoPlayer) {
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
         actionLabel.animateCallout("🎯")
     }
