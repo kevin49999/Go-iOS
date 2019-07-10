@@ -34,7 +34,14 @@ struct GoEndGameResult: Codable {
     
     func gameOverDescription() -> String {
         if let winner = winner() {
-            return String(format: "%@ Wins 🏆 %@ %d %@ %d", winner.rawValue.capitalized, GoPlayer.black.string, blackScore, GoPlayer.white.string, whiteScore)
+            return String(
+                format: "%@ Wins 🏆 %@ %d %@ %d",
+                winner.rawValue.capitalized,
+                GoPlayer.black.string,
+                blackScore,
+                GoPlayer.white.string,
+                whiteScore
+            )
         }
         return "Tie Game"
     }

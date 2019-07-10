@@ -10,6 +10,6 @@ import Foundation
 
 extension Set {
     func containsElement(from other: Set<Element>) -> Bool {
-        return !intersection(other).isEmpty
+        return !intersection(other).isDisjoint(with: other)
     }
 }

@@ -42,6 +42,7 @@ identifier_name:
     - i
     - id
     - go
+    - by
 function_body_length:
   warning: 75
   error: 125
