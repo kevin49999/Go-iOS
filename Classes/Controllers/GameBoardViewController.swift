@@ -120,16 +120,7 @@ class GameBoardViewController: UIViewController {
             message: nil,
             preferredStyle: .actionSheet
         )
-        let noHandicap = UIAlertAction(
-            title: NSLocalizedString("\(0)", comment: ""),
-            style: .default,
-            handler: { [weak self] _ in
-                self?.go = Go(board: board, handicap: 0)
-            }
-        )
-        alert.addAction(noHandicap)
-        (2...board.maxHandicap).forEach {
-            let handicap = $0
+        for handicap in [0...0, 2...board.maxHandicap].joined() {
             let count = UIAlertAction(
                 title: NSLocalizedString("\(handicap)", comment: ""),
                 style: .default,

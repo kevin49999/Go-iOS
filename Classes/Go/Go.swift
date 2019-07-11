@@ -121,7 +121,7 @@ final class Go {
         do {
             let currentPlayerGroup = try createGroup(
                 from: position,
-                player: currentPlayer
+                for: currentPlayer
             )
             update(position: position, with: .taken(by: currentPlayer))
             let neighbors = getNeighbors(for: position)
@@ -219,7 +219,7 @@ final class Go {
         )
     }
     
-    private func createGroup(from position: Int, player: Player) throws -> Group {
+    private func createGroup(from position: Int, for player: Player) throws -> Group {
         guard !isOver else {
             throw PlayingError.gameOver
         }
