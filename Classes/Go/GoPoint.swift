@@ -9,7 +9,6 @@
 import DifferenceKit
 
 struct GoPoint: Differentiable, Codable {
-    
     typealias State = GoPointState
     let index: Int
     var state: State

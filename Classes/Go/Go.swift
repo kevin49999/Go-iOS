@@ -13,12 +13,13 @@ final class Go {
     
     // MARK: - Properties
     
-    let board: GoBoard
-    weak var delegate: GoDelegate?
+    let board: Board
+    weak var delegate: Delegate?
     var points: [Point] // top left -> bottom right
-    private(set) var pastPoints: [[Point]] {
+    var nextPastMove: MoveData?
+    private(set) var pastMoves: [MoveData] {
         didSet {
-            canUndo = !pastPoints.isEmpty
+            canUndo = !pastMoves.isEmpty
         }
     }
     private(set) var currentPlayer: Player {
@@ -52,18 +53,15 @@ final class Go {
             }
         }
     }
-    private var blackCaptures: Int = 0
-    private var whiteCaptures: Int = 0
     
     // MARK: - Init
     
     init(board: GoBoard,
          handicap: Int  = 0) {
         self.board = board
-        self.pastPoints = []
+        self.pastMoves = []
         var currentPoints = (0..<board.cells)
-            .map { Point(index: $0, state: .open)
-        }
+            .map { Point(index: $0, state: .open) }
         self.currentPlayer = .black
         if handicap > 0 {
             let handicapStoneIndexes = board.handicapStoneIndexes(for: handicap)
@@ -78,22 +76,18 @@ final class Go {
     }
     
     init(board: Board,
-         pastPoints: [[Point]] = [[]],
+         pastMoves: [MoveData] = [],
          points: [Point] = [],
          currentPlayer: Player = .black,
          passedCount: Int = 0,
-         blackCaptures: Int = 0,
-         whiteCaptures: Int = 0,
          isOver: Bool = false,
          endGameResult: EndGameResult? = nil) {
         self.board = board
-        self.pastPoints = pastPoints
+        self.pastMoves = pastMoves
         self.points = points
         self.currentPlayer = currentPlayer
-        self.canUndo = !pastPoints.isEmpty && !isOver
+        self.canUndo = !pastMoves.isEmpty && !isOver
         self.passedCount = passedCount
-        self.blackCaptures = blackCaptures
-        self.whiteCaptures = whiteCaptures
         self.isOver = isOver
         self.endGameResult = endGameResult
     }
@@ -106,6 +100,14 @@ final class Go {
                 from: position,
                 for: currentPlayer
             )
+            
+            ///
+            if let pastMove = nextPastMove {
+                pastMoves.append(pastMove)
+            } else if pastMoves.isEmpty {
+                pastMoves.append(.init(points: self.points))
+            }
+            
             update(position: position, with: .taken(by: currentPlayer))
             let neighbors = getNeighbors(for: position)
             let otherPlayerGroups = getPlayerGroups(
@@ -118,9 +120,41 @@ final class Go {
                 groupNeighbors: neighbors,
                 otherPlayerGroups: otherPlayerGroups
             )
-            handleOtherPlayerGroups(otherPlayerGroups)
+            
+            /// for now
+            var blackCaptures = 0
+            var whiteCaptures = 0 /// will only be one type,, should be able to init w/ Player and captures to create.. in any move data there aren't black+white captures, only one
+            for group in otherPlayerGroups {
+                switch group.libertiesCount {
+                case 0:
+                    switch group.player.opposite {
+                    case .black:
+                        blackCaptures += group.positions.count
+                    case .white:
+                        whiteCaptures += group.positions.count
+                    }
+                    group.positions.forEach {
+                        self.points[$0].state = .captured(by: group.player.opposite)
+                    }
+                    delegate?.positionsCaptured(group.positions)
+                case 1:
+                    delegate?.atariForPlayer(group.player)
+                default:
+                    continue
+                }
+            }
+
+            ///
+            let moveData = MoveData(
+                points: self.points,
+                blackCaptures: blackCaptures,
+                whiteCaptures: whiteCaptures
+            )
+            self.nextPastMove = moveData
+            
             togglePlayer()
         } catch let error as PlayingError {
+            //// undo pastMove?
             throw error
         } catch {
             assertionFailure()
@@ -128,23 +162,26 @@ final class Go {
     }
     
     func undoLast() {
-        guard let changingTo = pastPoints.last else {
+        guard let changingTo = pastMoves.last else {
             assertionFailure()
             return
         }
         
-        pastPoints.removeLast()
-        delegate?.undidLastMove(changeset: StagedChangeset(source: self.points, target: changingTo))
+        let changeset = StagedChangeset(
+            source: self.points,
+            target: changingTo.points
+        )
+        delegate?.undidLastMove(changeset: changeset)
+        pastMoves.removeLast()
         togglePlayer()
         if passedCount > 0 {
             passedCount -= 1
         }
     }
-    
     func passStone() {
         togglePlayer()
         passedCount += 1
-        pastPoints.append(self.points)
+        pastMoves.append(.init(points: self.points))
     }
     
     // MARK: - Private Functions
@@ -218,7 +255,7 @@ final class Go {
     private func suicideDetection(for position: Int,
                                   group: Group,
                                   groupNeighbors: Set<Int>,
-                                  otherPlayerGroups: Set<Group> ) throws {
+                                  otherPlayerGroups: Set<Group>) throws {
         if group.noLiberties,
             !otherPlayerGroups
                 .contains(where: { $0.noLiberties && $0.positions.containsElement(from: groupNeighbors) }) {
@@ -227,31 +264,21 @@ final class Go {
         }
     }
     
-    private func handleGroupCaptured(_ group: Group) {
-        switch group.player.opposite {
-        case .black:
-            blackCaptures += group.positions.count
-        case .white:
-            whiteCaptures += group.positions.count
-        }
-        group.positions.forEach {
-            points[$0].state = .captured(by: group.player.opposite)
-        }
-        delegate?.positionsCaptured(Array(group.positions))
-    }
-    
-    private func handleOtherPlayerGroups(_ otherPlayerGroups: Set<Group>) {
-        for group in otherPlayerGroups {
-            switch group.libertiesCount {
-            case 0:
-                handleGroupCaptured(group)
-            case 1:
-                delegate?.atariForPlayer(group.player)
-            default:
-                continue
-            }
-        }
-    }
+    //    private func handleGroupCaptured(_ group: Group) -> (blackCaptures: Int, whiteCaptures: Int) {
+    //        var blackCaptures = 0
+    //        var whiteCaptures = 0
+    //        switch group.player.opposite {
+    //        case .black:
+    //            blackCaptures += group.positions.count
+    //        case .white:
+    //            whiteCaptures += group.positions.count
+    //        }
+    //        group.positions.forEach {
+    //            points[$0].state = .captured(by: group.player.opposite)
+    //        }
+    //        delegate?.positionsCaptured(group.positions)
+    //        return (blackCaptures: blackCaptures, whiteCaptures: whiteCaptures)
+    //    }
     
     private func getSurroundTerritory(startingAt position: Int) -> SurroundedTerritory? {
         var queue: [Int] = [position]
@@ -305,11 +332,12 @@ final class Go {
                 }
         }
         
-        pastPoints.append(self.points)
+        pastMoves.append(.init(points: self.points)) /// no scores..?
         var beforeFinal = self.points
         for (i, point) in beforeFinal.enumerated()
             where point.state != .open {
-                beforeFinal[i].state = .open // want captured positions to reload as well, hacky way to do by reseting to open which adds it to changeset
+                // want captured positions to reload, hacky way to do by changing .open == added to changeset
+                beforeFinal[i].state = .open
         }
         
         var blackSurrounded = 0
@@ -326,6 +354,12 @@ final class Go {
             }
         }
         
+        let blackCaptures = pastMoves
+            .map { $0.blackCaptures }
+            .reduce(0, +)
+        let whiteCaptures = pastMoves
+            .map { $0.whiteCaptures }
+            .reduce(0, +)
         let result = GoEndGameResult(
             blackCaptured: blackCaptures,
             blackSurrounded: blackSurrounded,
@@ -375,9 +409,8 @@ final class Go {
     }
     
     private func update(position: Int, with state: Point.State) {
-        pastPoints.append(self.points)
-        points[position].state = state
-        passedCount = 0
+        self.points[position].state = state
+        passedCount = 0 // unrelated to func..
         delegate?.positionSelected(position)
     }
 }
@@ -388,7 +421,7 @@ extension Go: Codable {
     
     enum CodingKeys: String, CodingKey {
         case board
-        case pastPoints
+        case pastMoves
         case currentPlayer
         case points
         case passedCount
@@ -401,7 +434,7 @@ extension Go: Codable {
     convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let board = try container.decode(GoBoard.self, forKey: .board)
-        let pastPoints = try container.decode([[Point]].self, forKey: .pastPoints)
+        let pastMoves = try container.decode([MoveData].self, forKey: .pastMoves)
         let points = try container.decode([Point].self, forKey: .points)
         let currentPlayer = try container.decode(GoPlayer.self, forKey: .currentPlayer)
         let passedCount = try container.decode(Int.self, forKey: .passedCount)
@@ -411,12 +444,10 @@ extension Go: Codable {
         let endGameResult = try? container.decode(GoEndGameResult.self, forKey: .endGameResult)
         self.init(
             board: board,
-            pastPoints: pastPoints,
+            pastMoves: pastMoves,
             points: points,
             currentPlayer: currentPlayer,
             passedCount: passedCount,
-            blackCaptures: blackCaptures,
-            whiteCaptures: whiteCaptures,
             isOver: isOver,
             endGameResult: endGameResult
         )
@@ -425,25 +456,11 @@ extension Go: Codable {
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(board, forKey: .board)
-        try container.encode(pastPoints, forKey: .pastPoints)
+        try container.encode(pastMoves, forKey: .pastMoves)
         try container.encode(currentPlayer, forKey: .currentPlayer)
         try container.encode(points, forKey: .points)
         try container.encode(passedCount, forKey: .passedCount)
-        try container.encode(blackCaptures, forKey: .blackCaptures)
-        try container.encode(whiteCaptures, forKey: .whiteCaptures)
         try container.encode(isOver, forKey: .isOver)
         try container.encode(endGameResult, forKey: .endGameResult)
     }
-}
-
-// MARK: - Typealiases
-
-extension Go {
-    typealias Board = GoBoard
-    typealias EndGameResult = GoEndGameResult
-    typealias Group = GoGroup
-    typealias Player = GoPlayer
-    typealias PlayingError = GoPlayingError
-    typealias Point = GoPoint
-    typealias SurroundedTerritory = GoSurroundedTerritory
 }

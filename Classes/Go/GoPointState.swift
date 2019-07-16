@@ -14,8 +14,6 @@ enum GoPointState: Codable {
     case captured(by: Player)
     case surrounded(by: Player)
     
-    typealias Player = GoPlayer
-    
     enum CodingKeys: String, CodingKey {
         case index
         case taken

@@ -90,7 +90,7 @@ class GameBoardViewController: UIViewController {
             )
             alert.addAction(passStone)
         }
-        for board in GoBoard.allCases {
+        for board in Board.allCases {
             let title = "New \(board.rows)x\(board.rows)"
             let new = UIAlertAction(
                 title: NSLocalizedString(title, comment: ""),
@@ -114,7 +114,7 @@ class GameBoardViewController: UIViewController {
         present(alert, animated: true)
     }
     
-    private func presentHandicapStoneSelection(for board: GoBoard) {
+    private func presentHandicapStoneSelection(for board: Board) {
         let alert = UIAlertController(
             title: NSLocalizedString("Handicap Stones", comment: ""),
             message: nil,
@@ -169,12 +169,12 @@ class GameBoardViewController: UIViewController {
 // MARK: - GoDelegate
 
 extension GameBoardViewController: GoDelegate {
-    func atariForPlayer(_ player: GoPlayer) {
+    func atariForPlayer(_ player: Player) {
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
         actionLabel.animateCallout("🎯")
     }
     
-    func gameOver(result: GoEndGameResult, changeset: StagedChangeset<[GoPoint]>) {
+    func gameOver(result: GoEndGameResult, changeset: StagedChangeset<[Point]>) {
         let title = result.gameOverDescription()
         navigationItem.title = NSLocalizedString(title, comment: "")
         undoBarButtonItem.isEnabled = false
@@ -187,7 +187,7 @@ extension GameBoardViewController: GoDelegate {
         boardCollectionView.reloadItems(at: [IndexPath(row: position, section: 0)])
     }
     
-    func positionsCaptured(_ positions: [Int]) {
+    func positionsCaptured(_ positions: Set<Int>) {
         boardCollectionView.reloadItems(at: positions.map { IndexPath(row: $0, section: 0)})
         UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
         actionLabel.animateCallout("⚔️")
@@ -234,7 +234,7 @@ extension GameBoardViewController: UICollectionViewDelegate {
         do {
             try go.playPosition(indexPath.row)
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
-        } catch let error as Go.PlayingError {
+        } catch let error as PlayingError {
             switch error {
             case .attemptedSuicide:
                 playerAttemptedSuicide()

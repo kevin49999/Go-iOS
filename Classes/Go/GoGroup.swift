@@ -9,7 +9,6 @@
 import Foundation
 
 struct GoGroup: Hashable {
-    typealias Player = GoPlayer
     let player: Player
     let positions: Set<Int>
     let libertiesCount: Int

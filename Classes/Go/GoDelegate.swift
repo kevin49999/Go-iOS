@@ -10,11 +10,11 @@ import DifferenceKit
 import Foundation
 
 protocol GoDelegate: class {
-    func atariForPlayer(_ player: GoPlayer)
+    func atariForPlayer(_ player: Player)
     func canUndoChanged(_ canUndo: Bool)
-    func gameOver(result: GoEndGameResult, changeset: StagedChangeset<[GoPoint]>)
+    func gameOver(result: EndGameResult, changeset: StagedChangeset<[Point]>)
     func positionSelected(_ position: Int)
-    func positionsCaptured(_ positions: [Int])
-    func switchedToPlayer(_ player: GoPlayer)
-    func undidLastMove(changeset: StagedChangeset<[GoPoint]>)
+    func positionsCaptured(_ positions: Set<Int>)
+    func switchedToPlayer(_ player: Player)
+    func undidLastMove(changeset: StagedChangeset<[Point]>)
 }
