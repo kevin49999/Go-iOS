@@ -120,7 +120,7 @@ class GameBoardViewController: UIViewController {
             message: nil,
             preferredStyle: .actionSheet
         )
-        for handicap in [0...0, 2...board.maxHandicap].joined() {
+        for handicap in board.handicapRange() {
             let count = UIAlertAction(
                 title: NSLocalizedString("\(handicap)", comment: ""),
                 style: .default,
@@ -179,7 +179,7 @@ extension GameBoardViewController: GoDelegate {
         navigationItem.title = NSLocalizedString(title, comment: "")
         undoBarButtonItem.isEnabled = false
         boardCollectionView.reload(using: changeset) { points in
-            self.go.currentPoints = points
+            self.go.points = points
         }
     }
     
@@ -195,7 +195,7 @@ extension GameBoardViewController: GoDelegate {
     
     func undidLastMove(changeset: StagedChangeset<[GoPoint]>) {
         boardCollectionView.reload(using: changeset) { points in
-            self.go.currentPoints = points
+            self.go.points = points
         }
     }
     
@@ -219,7 +219,7 @@ extension GameBoardViewController: UICollectionViewDataSource {
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: GoCell = collectionView.dequeueReusableCell(for: indexPath)
         let viewModel = viewModelFactory.create(
-            for: go.currentPoints[indexPath.row],
+            for: go.points[indexPath.row],
             isOver: go.isOver
         )
         cell.configure(with: viewModel)

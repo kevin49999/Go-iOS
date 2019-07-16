@@ -13,7 +13,8 @@ enum GoBoard: Int, CaseIterable, Codable {
     case nineXNine = 9
     case thirteenXThirteen = 13
     case nineteenXNineteen = 19
-    
+}
+extension GoBoard {
     var rows: Int {
         return rawValue
     }
@@ -84,5 +85,9 @@ enum GoBoard: Int, CaseIterable, Codable {
                 fatalError()
             }
         }
+    }
+    
+    func handicapRange() -> [Int] {
+        return Array([0...0, 2...maxHandicap].joined())
     }
 }
