@@ -38,11 +38,12 @@ class GameBoardViewController: UIViewController {
         actionLabel.adjustsFontForContentSizeCategory = true
         self.go = goSaver.getSavedGo() ?? Go(board: .nineXNine)
         NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(applicationQuitting),
-            name: UIApplication.willTerminateNotification,
-            object: nil
-        )
+            forName: UIApplication.willResignActiveNotification,
+            object: nil,
+            queue: .main
+        ) { _ in
+            try? self.goSaver.saveGo(self.go)
+        }
     }
     
     // MARK: - Initializing Game
@@ -157,12 +158,6 @@ class GameBoardViewController: UIViewController {
         guard previous != current else { return }
         
         boardCollectionView.reloadData()
-    }
-    
-    // MARK: - Notifications
-    
-    @objc private func applicationQuitting(notification: Notification) {
-        try? goSaver.saveGo(go)
     }
 }
 
