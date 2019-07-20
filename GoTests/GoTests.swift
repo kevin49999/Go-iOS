@@ -11,22 +11,19 @@ import XCTest
 
 class GoTests: XCTestCase {
     
-    var go: Go!
-
     override func setUp() {
-        super.setUp()
         
-        go = Go(board: .nineXNine)
+        super.setUp()
     }
 
     override func tearDown() {
-        super.tearDown()
         
-        go = nil
+        super.tearDown()
     }
 
     // https://www.britgo.org/intro/intro2.html - Diagram 1
     func testPlayThroughBritishGoExample() {
+        let go = Go(board: .nineXNine)
         do {
             try go.playPosition(1)
             try go.playPosition(0)
@@ -90,6 +87,33 @@ class GoTests: XCTestCase {
             XCTAssertEqual(result?.whiteSurrounded, 17)
             XCTAssertEqual(result?.whiteCaptured, 0)
             XCTAssertEqual(result?.whiteScore, 17)
+        } catch let error as GoPlayingError {
+            XCTFail(error.localizedDescription)
+        } catch {
+            XCTFail()
+        }
+    }
+    
+    func testUndoCornerCaptureTieGame() {
+        let go = Go(board: .fiveXFive)
+        do {
+            /// FAILS because in my integration, the delegate updates self.points directly! (didn't want to do it this way.. but collection has to update model directly w/ this changeset setup)
+            try go.playPosition(19)
+            try go.playPosition(24)
+            try go.playPosition(23)
+            go.undoLast()
+            try go.playPosition(23)
+            go.undoLast()
+            try go.playPosition(23)
+            go.undoLast()
+            
+            go.passStone()
+            go.passStone()
+            
+            XCTAssertTrue(go.isOver)
+            let result = go.endGameResult
+            XCTAssertEqual(result?.blackScore, 0)
+            XCTAssertEqual(result?.whiteScore, 0)
         } catch let error as GoPlayingError {
             XCTFail(error.localizedDescription)
         } catch {

@@ -231,6 +231,7 @@ extension GameBoardViewController: UICollectionViewDataSource {
 
 extension GameBoardViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(indexPath.row)
         do {
             try go.playPosition(indexPath.row)
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
