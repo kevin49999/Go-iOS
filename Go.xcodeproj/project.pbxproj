@@ -18,7 +18,6 @@
 		0A6E0E6C22B72A300074E0CA /* GoPointState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6E0E6B22B72A300074E0CA /* GoPointState.swift */; };
 		0A70A5A822DD617400F8BD34 /* GoDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A70A5A722DD617400F8BD34 /* GoDelegate.swift */; };
 		0A70A5AA22DD651800F8BD34 /* Typealiases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A70A5A922DD651800F8BD34 /* Typealiases.swift */; };
-		0A70A5AC22DD657B00F8BD34 /* GoMoveData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A70A5AB22DD657B00F8BD34 /* GoMoveData.swift */; };
 		0A88430B22D4444E00E5FF7B /* Set+Contains.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A88430A22D4444E00E5FF7B /* Set+Contains.swift */; };
 		0A88430D22D44AB200E5FF7B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0A88430C22D44AB200E5FF7B /* GoogleService-Info.plist */; };
 		0A88431122D57C7B00E5FF7B /* GoGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A88431022D57C7B00E5FF7B /* GoGroup.swift */; };
@@ -65,7 +64,6 @@
 		0A6E0E6B22B72A300074E0CA /* GoPointState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoPointState.swift; sourceTree = "<group>"; };
 		0A70A5A722DD617400F8BD34 /* GoDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoDelegate.swift; sourceTree = "<group>"; };
 		0A70A5A922DD651800F8BD34 /* Typealiases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typealiases.swift; sourceTree = "<group>"; };
-		0A70A5AB22DD657B00F8BD34 /* GoMoveData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoMoveData.swift; sourceTree = "<group>"; };
 		0A88430A22D4444E00E5FF7B /* Set+Contains.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Set+Contains.swift"; sourceTree = "<group>"; };
 		0A88430C22D44AB200E5FF7B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0A88431022D57C7B00E5FF7B /* GoGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoGroup.swift; sourceTree = "<group>"; };
@@ -217,7 +215,6 @@
 				0A70A5A722DD617400F8BD34 /* GoDelegate.swift */,
 				0A64ADEE22C5BC7D00989A9D /* GoEndGameResult.swift */,
 				0A88431022D57C7B00E5FF7B /* GoGroup.swift */,
-				0A70A5AB22DD657B00F8BD34 /* GoMoveData.swift */,
 				0AF4648F226C01E200DE34EA /* GoPlayer.swift */,
 				0A88431422D57CAE00E5FF7B /* GoPlayingError.swift */,
 				0A634D1122ADF5C600FE10E0 /* GoPoint.swift */,
@@ -503,7 +500,6 @@
 				0A21BFB9226C134C004C54B9 /* UIView+IBInspectable.swift in Sources */,
 				0AF4648A226B8F9B00DE34EA /* StoryboardIdentifiable.swift in Sources */,
 				0AF46492226C01F800DE34EA /* GoBoard.swift in Sources */,
-				0A70A5AC22DD657B00F8BD34 /* GoMoveData.swift in Sources */,
 				0A6E0E6A22B6C1490074E0CA /* GoSaver.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
