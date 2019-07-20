@@ -9,7 +9,6 @@
 import Foundation
 
 typealias Board = GoBoard
-typealias Delegate = GoDelegate
 typealias EndGameResult = GoEndGameResult
 typealias Group = GoGroup
 typealias MoveData = GoMoveData
