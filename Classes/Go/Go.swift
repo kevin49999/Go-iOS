@@ -278,24 +278,14 @@ final class Go {
     }
     
     private func endGame() {
-        var surroundedTerritories: Set<SurroundedTerritory> = []
+        /// split into function
+        var surroundedTerritories = Set<SurroundedTerritory>()
         for (i, point) in points.enumerated()
             where point.state == .open {
                 if let surrounded = getSurroundTerritory(startingAt: i) {
                     surroundedTerritories.insert(surrounded)
                 }
         }
-        
-        pastPoints.append(self.points)
-        var beforeFinal = self.points
-        for (i, point) in beforeFinal.enumerated()
-            where point.state != .open {
-                // want captured positions to reload
-                // hacky way to do this is by reseting the position to open
-                // -> adds it to changeset
-                beforeFinal[i].state = .open
-        }
-        
         var blackSurrounded = 0
         var whiteSurrounded = 0
         for surrounded in surroundedTerritories {
@@ -311,16 +301,25 @@ final class Go {
         }
         
         let result = GoEndGameResult(
-            blackCaptured: captures(for: .black, past: pastPoints),
+            blackCaptured: captures(for: .black, past: self.pastPoints),
             blackSurrounded: blackSurrounded,
-            whiteCaptured: captures(for: .white, past: pastPoints),
+            whiteCaptured: captures(for: .white, past: self.pastPoints),
             whiteSurrounded: whiteSurrounded
         )
+        self.endGameResult = result
+        
+        var beforeFinal = self.points
+        for (i, point) in beforeFinal.enumerated()
+            where point.state != .open {
+                // want captured positions to reload
+                // hacky way to do this is by reseting the position to open
+                // -> adds it to changeset
+                beforeFinal[i].state = .open
+        }
         let changeset = StagedChangeset(
             source: beforeFinal,
             target: self.points
         )
-        self.endGameResult = result
         delegate?.gameOver(
             result: result,
             changeset: changeset
@@ -373,15 +372,13 @@ final class Go {
     }
     
     private func captures(for player: Player, past: [[Point]]) -> Int {
-        let positions: [Int] = past
-            .compactMap {
-                for (i, point) in $0.enumerated()
-                    where point.state == .captured(by: player) {
-                    return i
-                }
-                return nil
+        var positions = Set<Int>()
+        for points in past {
+            for (i, point) in points.enumerated() where point.state == .captured(by: player) {
+                positions.insert(i)
+            }
         }
-        return Set(positions).count
+        return positions.count
     }
 }
 
