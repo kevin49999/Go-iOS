@@ -34,24 +34,52 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="vrr-Gh-4MH">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" maximumZoomScale="5" translatesAutoresizingMaskIntoConstraints="NO" id="1vJ-A6-cpn">
                                 <rect key="frame" x="8" y="154" width="359" height="359"/>
-                                <color key="backgroundColor" red="0.97254901959999995" green="0.95686274510000002" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vTu-Qx-YG2" userLabel="Zoom View">
+                                        <rect key="frame" x="0.0" y="0.0" width="359" height="359"/>
+                                        <subviews>
+                                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="vrr-Gh-4MH">
+                                                <rect key="frame" x="0.0" y="0.0" width="359" height="359"/>
+                                                <color key="backgroundColor" red="0.97254901959999995" green="0.95686274510000002" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="vrr-Gh-4MH" secondAttribute="height" multiplier="1:1" id="M8w-zY-kUg"/>
+                                                </constraints>
+                                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="3js-96-w52">
+                                                    <size key="itemSize" width="131" height="126"/>
+                                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                </collectionViewFlowLayout>
+                                                <cells/>
+                                                <connections>
+                                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="dv2-hA-RdD"/>
+                                                    <outlet property="delegate" destination="BYZ-38-t0r" id="c35-Mu-mJW"/>
+                                                </connections>
+                                            </collectionView>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.97254901959999995" green="0.95686274510000002" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="vrr-Gh-4MH" firstAttribute="top" secondItem="vTu-Qx-YG2" secondAttribute="top" id="6pm-vC-J8r"/>
+                                            <constraint firstAttribute="bottom" secondItem="vrr-Gh-4MH" secondAttribute="bottom" id="KwF-ef-FA5"/>
+                                            <constraint firstAttribute="trailing" secondItem="vrr-Gh-4MH" secondAttribute="trailing" id="txm-Je-BlH"/>
+                                            <constraint firstItem="vrr-Gh-4MH" firstAttribute="leading" secondItem="vTu-Qx-YG2" secondAttribute="leading" id="xwv-u4-ygp"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="vrr-Gh-4MH" secondAttribute="height" multiplier="1:1" id="ez7-hy-q06"/>
+                                    <constraint firstItem="vTu-Qx-YG2" firstAttribute="width" secondItem="1vJ-A6-cpn" secondAttribute="width" id="7bL-r8-SfL"/>
+                                    <constraint firstItem="vTu-Qx-YG2" firstAttribute="top" secondItem="1vJ-A6-cpn" secondAttribute="top" id="KOo-Y5-vTh"/>
+                                    <constraint firstItem="vTu-Qx-YG2" firstAttribute="height" secondItem="1vJ-A6-cpn" secondAttribute="height" id="Ka3-gM-VDV"/>
+                                    <constraint firstAttribute="bottom" secondItem="vTu-Qx-YG2" secondAttribute="bottom" id="qbl-l3-CbV"/>
+                                    <constraint firstItem="vTu-Qx-YG2" firstAttribute="leading" secondItem="1vJ-A6-cpn" secondAttribute="leading" id="rbA-Vf-8RM"/>
+                                    <constraint firstAttribute="trailing" secondItem="vTu-Qx-YG2" secondAttribute="trailing" id="xzh-Bx-nMh"/>
                                 </constraints>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="3js-96-w52">
-                                    <size key="itemSize" width="131" height="126"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells/>
                                 <connections>
-                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="dv2-hA-RdD"/>
-                                    <outlet property="delegate" destination="BYZ-38-t0r" id="c35-Mu-mJW"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="5Sw-Zg-8Cq"/>
                                 </connections>
-                            </collectionView>
+                            </scrollView>
                             <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Action!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RV2-mQ-4yE">
                                 <rect key="frame" x="20" y="126.5" width="335" height="19.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -61,13 +89,12 @@
                         </subviews>
                         <color key="backgroundColor" red="0.97254901960784312" green="0.95686274509803926" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="vrr-Gh-4MH" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="3b3-SI-qDo"/>
-                            <constraint firstItem="vrr-Gh-4MH" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="FFN-HM-IYX"/>
-                            <constraint firstItem="vrr-Gh-4MH" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="X4i-HO-4Aa"/>
-                            <constraint firstItem="vrr-Gh-4MH" firstAttribute="top" secondItem="RV2-mQ-4yE" secondAttribute="bottom" constant="8" symbolic="YES" id="aXB-gT-2eN"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="vrr-Gh-4MH" secondAttribute="trailing" constant="8" id="cRv-ak-5Jf"/>
+                            <constraint firstAttribute="trailing" secondItem="1vJ-A6-cpn" secondAttribute="trailing" constant="8" id="HsK-9c-FE3"/>
+                            <constraint firstItem="1vJ-A6-cpn" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="8" id="Ptx-8I-wnI"/>
+                            <constraint firstItem="1vJ-A6-cpn" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="W6p-Vu-iIB"/>
                             <constraint firstItem="RV2-mQ-4yE" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="hTA-8B-gLz"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="RV2-mQ-4yE" secondAttribute="trailing" constant="20" id="iPC-aK-TmS"/>
+                            <constraint firstItem="1vJ-A6-cpn" firstAttribute="top" secondItem="RV2-mQ-4yE" secondAttribute="bottom" constant="8" symbolic="YES" id="iU8-og-4PO"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -88,6 +115,8 @@
                     <connections>
                         <outlet property="actionLabel" destination="RV2-mQ-4yE" id="Ho3-8y-OO9"/>
                         <outlet property="boardCollectionView" destination="vrr-Gh-4MH" id="8dQ-xm-j8J"/>
+                        <outlet property="boardScrollView" destination="1vJ-A6-cpn" id="bWq-ZV-1OX"/>
+                        <outlet property="boardZoomView" destination="vTu-Qx-YG2" id="eUv-OZ-kxB"/>
                         <outlet property="undoBarButtonItem" destination="3Jc-NA-MpC" id="bda-GT-Ap2"/>
                     </connections>
                 </viewController>
