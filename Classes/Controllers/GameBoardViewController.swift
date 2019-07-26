@@ -26,6 +26,8 @@ class GameBoardViewController: UIViewController {
     
     @IBOutlet weak private var undoBarButtonItem: UIBarButtonItem!
     @IBOutlet weak private var boardCollectionView: UICollectionView!
+    @IBOutlet weak private var boardZoomView: UIView!
+    @IBOutlet weak private var boardScrollView: UIScrollView!
     @IBOutlet weak private var actionLabel: UILabel!
     
     // MARK: - View Lifecycle
@@ -252,5 +254,16 @@ extension GameBoardViewController: UICollectionViewDelegateFlowLayout {
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         let side = collectionView.frame.width / CGFloat(go.board.rows)
         return CGSize(width: side, height: side)
+    }
+}
+
+// MARK: - UIScrollViewDelegate
+
+extension GameBoardViewController: UIScrollViewDelegate {
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        guard scrollView == boardScrollView else {
+            return nil
+        }
+        return boardZoomView
     }
 }
