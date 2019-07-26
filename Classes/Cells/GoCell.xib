@@ -20,42 +20,42 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q4p-Fe-fSh" userLabel="Top Vertical Line">
-                        <rect key="frame" x="29.5" y="-1" width="1" height="30"/>
+                        <rect key="frame" x="29.5" y="-1" width="1" height="30.5"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="1" id="3AC-K8-x4z"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6XL-WN-AHT" userLabel="Bottom Vertical Line">
-                        <rect key="frame" x="29.5" y="31" width="1" height="30"/>
+                        <rect key="frame" x="29.5" y="30.5" width="1" height="30.5"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="1" id="7Sd-l8-k8X"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="laA-OI-mqZ" userLabel="Left Horizontal Line">
-                        <rect key="frame" x="-1" y="29.5" width="30" height="1"/>
+                        <rect key="frame" x="-1" y="29.5" width="30.5" height="1"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="1" id="lrV-lW-Uro"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xco-ot-lv2" userLabel="Right Horizontal Line">
-                        <rect key="frame" x="31" y="29.5" width="30" height="1"/>
+                        <rect key="frame" x="30.5" y="29.5" width="30.5" height="1"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="1" id="DkE-Ay-pNj"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s0n-zt-vkE" userLabel="Center Pixel">
-                        <rect key="frame" x="29" y="29" width="2" height="2"/>
+                        <rect key="frame" x="29.5" y="29.5" width="1" height="1"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="2" id="MCB-uD-qIK"/>
-                            <constraint firstAttribute="width" constant="2" id="gbL-Wf-qIg"/>
+                            <constraint firstAttribute="height" constant="1" id="MCB-uD-qIK"/>
+                            <constraint firstAttribute="width" constant="1" id="gbL-Wf-qIg"/>
                         </constraints>
                     </view>
-                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="apt-5h-Bkl" userLabel="Center Dot View">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="apt-5h-Bkl" userLabel="Center Dot View">
                         <rect key="frame" x="27" y="27" width="6" height="6"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -105,6 +105,8 @@
                 <outlet property="bottomVerticalLine" destination="6XL-WN-AHT" id="mni-np-dxW"/>
                 <outlet property="bottomVerticalLineSize" destination="7Sd-l8-k8X" id="NWO-kz-Lqa"/>
                 <outlet property="centerDotView" destination="apt-5h-Bkl" id="a0d-UU-3Rq"/>
+                <outlet property="centerPixelHeightConstraint" destination="MCB-uD-qIK" id="UPc-zi-pUd"/>
+                <outlet property="centerPixelWidthConstraint" destination="gbL-Wf-qIg" id="J0x-a2-Nur"/>
                 <outlet property="leftHorizontalLine" destination="laA-OI-mqZ" id="kIB-u1-Vd6"/>
                 <outlet property="leftHorizontalLineSize" destination="lrV-lW-Uro" id="588-eC-p1V"/>
                 <outlet property="rightHorizontalLine" destination="Xco-ot-lv2" id="eL7-TU-RtM"/>
