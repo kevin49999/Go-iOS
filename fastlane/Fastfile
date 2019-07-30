@@ -18,7 +18,12 @@ default_platform(:ios)
 platform :ios do
   desc "Push a new release build to the App Store"
   lane :release do
-    build_app(workspace: "Go.xcworkspace", scheme: "Go")
-    upload_to_app_store
+    match(type: "appstore", app_identifier: ["com.ffr.go"], readonly: true)
+    gym(scheme: "Go")
+    deliver(
+      force: true, # Skip HTMl report verification
+      skip_metadata: true,
+      skip_screenshots: true
+    )
   end
 end
