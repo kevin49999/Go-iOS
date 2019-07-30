@@ -6,7 +6,7 @@ Using Go does not require an account and we do not support accounts at this time
 
 ### Google Firebase
 
-Go collects **anonymous** statistics about the number of people using the app, crash reports, and other usage data
+Go uses Firebase to collect **anonymous** data about people using the app (daily active users for example), crash reports, and other usage statistics
 
 ## Contacting Us
 
@@ -16,4 +16,4 @@ If you have questions regarding this privacy policy, you may open an issue in ou
 
 Changes to this policy will be noted here:
 
-- July 29, 2019: First published
+- **July 29, 2019**: First published
