@@ -1,21 +1,25 @@
 # Uncomment the next line to define a global platform for your project
 # platform :ios, '9.0'
+use_frameworks!
+
+def shared
+  pod 'DifferenceKit'
+  pod 'SwiftLint'
+end
 
 target 'Go' do
-  # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
-  use_frameworks!
-
-  # Pods for Go
-
+  shared
   pod 'Crashlytics'
-  pod 'DifferenceKit'
   pod 'Fabric'
   pod 'Firebase/Core'
-  pod 'SwiftLint'
 
   target 'GoTests' do
     inherit! :search_paths
     # Pods for testing
   end
 
+end
+
+target 'Go QA' do
+  shared
 end
