@@ -23,6 +23,36 @@
 		0A88431122D57C7B00E5FF7B /* GoGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A88431022D57C7B00E5FF7B /* GoGroup.swift */; };
 		0A88431322D57C9F00E5FF7B /* GoSurroundedTerritory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A88431222D57C9F00E5FF7B /* GoSurroundedTerritory.swift */; };
 		0A88431522D57CAE00E5FF7B /* GoPlayingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A88431422D57CAE00E5FF7B /* GoPlayingError.swift */; };
+		0AF1FB2F22F66A0F00BB2564 /* GameBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46462225AE50B00DE34EA /* GameBoardViewController.swift */; };
+		0AF1FB3022F66A0F00BB2564 /* UILabel+AnimateCallout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A634D0C22A8A4EA00FE10E0 /* UILabel+AnimateCallout.swift */; };
+		0AF1FB3122F66A0F00BB2564 /* Typealiases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A70A5A922DD651800F8BD34 /* Typealiases.swift */; };
+		0AF1FB3222F66A0F00BB2564 /* GoSurroundedTerritory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A88431222D57C9F00E5FF7B /* GoSurroundedTerritory.swift */; };
+		0AF1FB3322F66A0F00BB2564 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF4648D226B922400DE34EA /* Styles.swift */; };
+		0AF1FB3422F66A0F00BB2564 /* GoEndGameResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A64ADEE22C5BC7D00989A9D /* GoEndGameResult.swift */; };
+		0AF1FB3522F66A0F00BB2564 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A64ADEC22C3152300989A9D /* UIColor+Hex.swift */; };
+		0AF1FB3622F66A0F00BB2564 /* GoPointState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6E0E6B22B72A300074E0CA /* GoPointState.swift */; };
+		0AF1FB3722F66A0F00BB2564 /* GoCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A21BFBD226C144D004C54B9 /* GoCellViewModel.swift */; };
+		0AF1FB3822F66A0F00BB2564 /* GoGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A88431022D57C7B00E5FF7B /* GoGroup.swift */; };
+		0AF1FB3922F66A0F00BB2564 /* Set+Contains.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A88430A22D4444E00E5FF7B /* Set+Contains.swift */; };
+		0AF1FB3A22F66A0F00BB2564 /* GoPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A634D1122ADF5C600FE10E0 /* GoPoint.swift */; };
+		0AF1FB3B22F66A0F00BB2564 /* GoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46487226A7F7E00DE34EA /* GoCell.swift */; };
+		0AF1FB3C22F66A0F00BB2564 /* GoDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A70A5A722DD617400F8BD34 /* GoDelegate.swift */; };
+		0AF1FB3D22F66A0F00BB2564 /* Go.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46480225AF04900DE34EA /* Go.swift */; };
+		0AF1FB3E22F66A0F00BB2564 /* GoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF4648F226C01E200DE34EA /* GoPlayer.swift */; };
+		0AF1FB3F22F66A0F00BB2564 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46460225AE50B00DE34EA /* AppDelegate.swift */; };
+		0AF1FB4022F66A0F00BB2564 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46493226C05A600DE34EA /* Fonts.swift */; };
+		0AF1FB4122F66A0F00BB2564 /* UICollectionView+Generic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF4648B226B8FB900DE34EA /* UICollectionView+Generic.swift */; };
+		0AF1FB4222F66A0F00BB2564 /* GoCellViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A21BFBF226C1574004C54B9 /* GoCellViewModelFactory.swift */; };
+		0AF1FB4322F66A0F00BB2564 /* GoPlayingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A88431422D57CAE00E5FF7B /* GoPlayingError.swift */; };
+		0AF1FB4422F66A0F00BB2564 /* UIView+IBInspectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A21BFB8226C134C004C54B9 /* UIView+IBInspectable.swift */; };
+		0AF1FB4522F66A0F00BB2564 /* StoryboardIdentifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46489226B8F9B00DE34EA /* StoryboardIdentifiable.swift */; };
+		0AF1FB4622F66A0F00BB2564 /* GoBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46491226C01F800DE34EA /* GoBoard.swift */; };
+		0AF1FB4722F66A0F00BB2564 /* GoSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6E0E6922B6C1490074E0CA /* GoSaver.swift */; };
+		0AF1FB4B22F66A0F00BB2564 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AF46469225AE50F00DE34EA /* LaunchScreen.storyboard */; };
+		0AF1FB4C22F66A0F00BB2564 /* GoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0AF46485226A79B900DE34EA /* GoCell.xib */; };
+		0AF1FB4D22F66A0F00BB2564 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0A88430C22D44AB200E5FF7B /* GoogleService-Info.plist */; };
+		0AF1FB4E22F66A0F00BB2564 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0AF46467225AE50F00DE34EA /* Assets.xcassets */; };
+		0AF1FB4F22F66A0F00BB2564 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AF46464225AE50B00DE34EA /* Main.storyboard */; };
 		0AF46461225AE50B00DE34EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46460225AE50B00DE34EA /* AppDelegate.swift */; };
 		0AF46463225AE50B00DE34EA /* GameBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46462225AE50B00DE34EA /* GameBoardViewController.swift */; };
 		0AF46466225AE50B00DE34EA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AF46464225AE50B00DE34EA /* Main.storyboard */; };
@@ -38,7 +68,8 @@
 		0AF46490226C01E200DE34EA /* GoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF4648F226C01E200DE34EA /* GoPlayer.swift */; };
 		0AF46492226C01F800DE34EA /* GoBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46491226C01F800DE34EA /* GoBoard.swift */; };
 		0AF46494226C05A600DE34EA /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46493226C05A600DE34EA /* Fonts.swift */; };
-		5E0E6B7FA13513148A248471 /* Pods_Go.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9756D892091F8B3AA09871CE /* Pods_Go.framework */; };
+		5E0E6B7FA13513148A248471 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		64B42E79C55BF83C8DF0D009 /* Pods_Go_QA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C515C2FDC10C2FAF62FBCA96 /* Pods_Go_QA.framework */; };
 		9CACA21B81D68966D49125AF /* Pods_GoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4804208AE748C05926085DA1 /* Pods_GoTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -69,6 +100,8 @@
 		0A88431022D57C7B00E5FF7B /* GoGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoGroup.swift; sourceTree = "<group>"; };
 		0A88431222D57C9F00E5FF7B /* GoSurroundedTerritory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoSurroundedTerritory.swift; sourceTree = "<group>"; };
 		0A88431422D57CAE00E5FF7B /* GoPlayingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoPlayingError.swift; sourceTree = "<group>"; };
+		0AF1FB5622F66A0F00BB2564 /* Go QA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Go QA.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0AF1FB5722F66A0F00BB2564 /* Go QA.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Go QA.plist"; path = "/Users/Kevin/Desktop/Projects/Go-iOS/Go QA.plist"; sourceTree = "<absolute>"; };
 		0AF4645D225AE50B00DE34EA /* Go.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Go.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0AF46460225AE50B00DE34EA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0AF46462225AE50B00DE34EA /* GameBoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBoardViewController.swift; sourceTree = "<group>"; };
@@ -88,20 +121,30 @@
 		0AF4648F226C01E200DE34EA /* GoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoPlayer.swift; sourceTree = "<group>"; };
 		0AF46491226C01F800DE34EA /* GoBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoBoard.swift; sourceTree = "<group>"; };
 		0AF46493226C05A600DE34EA /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
+		4450D5E8595090DCDE49BACF /* Pods-Go QA.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Go QA.debug.xcconfig"; path = "Target Support Files/Pods-Go QA/Pods-Go QA.debug.xcconfig"; sourceTree = "<group>"; };
 		4804208AE748C05926085DA1 /* Pods_GoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6ECD90480DC9A92BF6D39F44 /* Pods-GoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GoTests.debug.xcconfig"; path = "Target Support Files/Pods-GoTests/Pods-GoTests.debug.xcconfig"; sourceTree = "<group>"; };
-		9756D892091F8B3AA09871CE /* Pods_Go.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Go.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B8E9FDBB2F21AC8D94FC7F82 /* Pods-Go QA.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Go QA.release.xcconfig"; path = "Target Support Files/Pods-Go QA/Pods-Go QA.release.xcconfig"; sourceTree = "<group>"; };
 		BEB4F4D149F44093FA1AB870 /* Pods-Go.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Go.release.xcconfig"; path = "Target Support Files/Pods-Go/Pods-Go.release.xcconfig"; sourceTree = "<group>"; };
+		C515C2FDC10C2FAF62FBCA96 /* Pods_Go_QA.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Go_QA.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB7E18E2AF8A0A48EBD62B91 /* Pods-GoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GoTests.release.xcconfig"; path = "Target Support Files/Pods-GoTests/Pods-GoTests.release.xcconfig"; sourceTree = "<group>"; };
 		E0532517DA81D613E31D698E /* Pods-Go.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Go.debug.xcconfig"; path = "Target Support Files/Pods-Go/Pods-Go.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		0AF1FB4822F66A0F00BB2564 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				64B42E79C55BF83C8DF0D009 /* Pods_Go_QA.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		0AF4645A225AE50B00DE34EA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5E0E6B7FA13513148A248471 /* Pods_Go.framework in Frameworks */,
+				5E0E6B7FA13513148A248471 /* (null) in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -171,6 +214,7 @@
 			children = (
 				0AF4645D225AE50B00DE34EA /* Go.app */,
 				0AF46471225AE50F00DE34EA /* GoTests.xctest */,
+				0AF1FB5622F66A0F00BB2564 /* Go QA.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -230,6 +274,7 @@
 				0AF46460225AE50B00DE34EA /* AppDelegate.swift */,
 				0AF46467225AE50F00DE34EA /* Assets.xcassets */,
 				0AF4646C225AE50F00DE34EA /* Info.plist */,
+				0AF1FB5722F66A0F00BB2564 /* Go QA.plist */,
 				0A88430C22D44AB200E5FF7B /* GoogleService-Info.plist */,
 				0AF46469225AE50F00DE34EA /* LaunchScreen.storyboard */,
 				0AF46464225AE50B00DE34EA /* Main.storyboard */,
@@ -250,8 +295,8 @@
 		873886C4A6EEB41676291603 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				9756D892091F8B3AA09871CE /* Pods_Go.framework */,
 				4804208AE748C05926085DA1 /* Pods_GoTests.framework */,
+				C515C2FDC10C2FAF62FBCA96 /* Pods_Go_QA.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -263,6 +308,8 @@
 				BEB4F4D149F44093FA1AB870 /* Pods-Go.release.xcconfig */,
 				6ECD90480DC9A92BF6D39F44 /* Pods-GoTests.debug.xcconfig */,
 				CB7E18E2AF8A0A48EBD62B91 /* Pods-GoTests.release.xcconfig */,
+				4450D5E8595090DCDE49BACF /* Pods-Go QA.debug.xcconfig */,
+				B8E9FDBB2F21AC8D94FC7F82 /* Pods-Go QA.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -270,6 +317,27 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		0AF1FB2C22F66A0F00BB2564 /* Go QA */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0AF1FB5322F66A0F00BB2564 /* Build configuration list for PBXNativeTarget "Go QA" */;
+			buildPhases = (
+				0AF1FB2D22F66A0F00BB2564 /* [CP] Check Pods Manifest.lock */,
+				0AF1FB2E22F66A0F00BB2564 /* Sources */,
+				0AF1FB4822F66A0F00BB2564 /* Frameworks */,
+				0AF1FB4A22F66A0F00BB2564 /* Resources */,
+				0AF1FB5022F66A0F00BB2564 /* [CP] Embed Pods Frameworks */,
+				0AF1FB5122F66A0F00BB2564 /* ShellScript */,
+				0AF1FB5222F66A0F00BB2564 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Go QA";
+			productName = Go;
+			productReference = 0AF1FB5622F66A0F00BB2564 /* Go QA.app */;
+			productType = "com.apple.product-type.application";
+		};
 		0AF4645C225AE50B00DE34EA /* Go */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0AF4647A225AE50F00DE34EA /* Build configuration list for PBXNativeTarget "Go" */;
@@ -346,11 +414,24 @@
 			targets = (
 				0AF4645C225AE50B00DE34EA /* Go */,
 				0AF46470225AE50F00DE34EA /* GoTests */,
+				0AF1FB2C22F66A0F00BB2564 /* Go QA */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		0AF1FB4A22F66A0F00BB2564 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0AF1FB4B22F66A0F00BB2564 /* LaunchScreen.storyboard in Resources */,
+				0AF1FB4C22F66A0F00BB2564 /* GoCell.xib in Resources */,
+				0AF1FB4D22F66A0F00BB2564 /* GoogleService-Info.plist in Resources */,
+				0AF1FB4E22F66A0F00BB2564 /* Assets.xcassets in Resources */,
+				0AF1FB4F22F66A0F00BB2564 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		0AF4645B225AE50B00DE34EA /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -391,6 +472,80 @@
 			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
 		};
 		0ADE1D8422D29537004EF76C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\"\n";
+		};
+		0AF1FB2D22F66A0F00BB2564 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Go QA-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		0AF1FB5022F66A0F00BB2564 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Go QA/Pods-Go QA-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Go QA/Pods-Go QA-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Go QA/Pods-Go QA-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		0AF1FB5122F66A0F00BB2564 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
+		0AF1FB5222F66A0F00BB2564 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -472,6 +627,38 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		0AF1FB2E22F66A0F00BB2564 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0AF1FB2F22F66A0F00BB2564 /* GameBoardViewController.swift in Sources */,
+				0AF1FB3022F66A0F00BB2564 /* UILabel+AnimateCallout.swift in Sources */,
+				0AF1FB3122F66A0F00BB2564 /* Typealiases.swift in Sources */,
+				0AF1FB3222F66A0F00BB2564 /* GoSurroundedTerritory.swift in Sources */,
+				0AF1FB3322F66A0F00BB2564 /* Styles.swift in Sources */,
+				0AF1FB3422F66A0F00BB2564 /* GoEndGameResult.swift in Sources */,
+				0AF1FB3522F66A0F00BB2564 /* UIColor+Hex.swift in Sources */,
+				0AF1FB3622F66A0F00BB2564 /* GoPointState.swift in Sources */,
+				0AF1FB3722F66A0F00BB2564 /* GoCellViewModel.swift in Sources */,
+				0AF1FB3822F66A0F00BB2564 /* GoGroup.swift in Sources */,
+				0AF1FB3922F66A0F00BB2564 /* Set+Contains.swift in Sources */,
+				0AF1FB3A22F66A0F00BB2564 /* GoPoint.swift in Sources */,
+				0AF1FB3B22F66A0F00BB2564 /* GoCell.swift in Sources */,
+				0AF1FB3C22F66A0F00BB2564 /* GoDelegate.swift in Sources */,
+				0AF1FB3D22F66A0F00BB2564 /* Go.swift in Sources */,
+				0AF1FB3E22F66A0F00BB2564 /* GoPlayer.swift in Sources */,
+				0AF1FB3F22F66A0F00BB2564 /* AppDelegate.swift in Sources */,
+				0AF1FB4022F66A0F00BB2564 /* Fonts.swift in Sources */,
+				0AF1FB4122F66A0F00BB2564 /* UICollectionView+Generic.swift in Sources */,
+				0AF1FB4222F66A0F00BB2564 /* GoCellViewModelFactory.swift in Sources */,
+				0AF1FB4322F66A0F00BB2564 /* GoPlayingError.swift in Sources */,
+				0AF1FB4422F66A0F00BB2564 /* UIView+IBInspectable.swift in Sources */,
+				0AF1FB4522F66A0F00BB2564 /* StoryboardIdentifiable.swift in Sources */,
+				0AF1FB4622F66A0F00BB2564 /* GoBoard.swift in Sources */,
+				0AF1FB4722F66A0F00BB2564 /* GoSaver.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		0AF46459225AE50B00DE34EA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -542,6 +729,48 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		0AF1FB5422F66A0F00BB2564 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4450D5E8595090DCDE49BACF /* Pods-Go QA.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = X6XFU66KA9;
+				INFOPLIST_FILE = "Go QA.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				OTHER_CFLAGS = "";
+				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -D QA";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ffr.go.qa;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		0AF1FB5522F66A0F00BB2564 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B8E9FDBB2F21AC8D94FC7F82 /* Pods-Go QA.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = X6XFU66KA9;
+				INFOPLIST_FILE = "Go QA.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				OTHER_CFLAGS = "";
+				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -D QA";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ffr.go.qa;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		0AF46478225AE50F00DE34EA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -670,6 +899,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -D PRODUCTION";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ffr.go;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -689,6 +919,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -D PRODUCTION";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ffr.go;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -743,6 +974,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		0AF1FB5322F66A0F00BB2564 /* Build configuration list for PBXNativeTarget "Go QA" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0AF1FB5422F66A0F00BB2564 /* Debug */,
+				0AF1FB5522F66A0F00BB2564 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		0AF46458225AE50B00DE34EA /* Build configuration list for PBXProject "Go" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

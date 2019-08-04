@@ -7,7 +7,9 @@
 //
 
 import UIKit
+#if PRODUCTION
 import Firebase
+#endif
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,8 +19,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        // TODO: #if PROD, need two targets
+        #if PRODUCTION
         FirebaseApp.configure()
+        #endif
         
         return true
     }
