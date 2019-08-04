@@ -19,10 +19,10 @@
 		0A70A5A822DD617400F8BD34 /* GoDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A70A5A722DD617400F8BD34 /* GoDelegate.swift */; };
 		0A70A5AA22DD651800F8BD34 /* Typealiases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A70A5A922DD651800F8BD34 /* Typealiases.swift */; };
 		0A88430B22D4444E00E5FF7B /* Set+Contains.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A88430A22D4444E00E5FF7B /* Set+Contains.swift */; };
-		0A88430D22D44AB200E5FF7B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0A88430C22D44AB200E5FF7B /* GoogleService-Info.plist */; };
 		0A88431122D57C7B00E5FF7B /* GoGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A88431022D57C7B00E5FF7B /* GoGroup.swift */; };
 		0A88431322D57C9F00E5FF7B /* GoSurroundedTerritory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A88431222D57C9F00E5FF7B /* GoSurroundedTerritory.swift */; };
 		0A88431522D57CAE00E5FF7B /* GoPlayingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A88431422D57CAE00E5FF7B /* GoPlayingError.swift */; };
+		0AEEB2B222F670220007604F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0AEEB2B122F670220007604F /* GoogleService-Info.plist */; };
 		0AF1FB2F22F66A0F00BB2564 /* GameBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46462225AE50B00DE34EA /* GameBoardViewController.swift */; };
 		0AF1FB3022F66A0F00BB2564 /* UILabel+AnimateCallout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A634D0C22A8A4EA00FE10E0 /* UILabel+AnimateCallout.swift */; };
 		0AF1FB3122F66A0F00BB2564 /* Typealiases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A70A5A922DD651800F8BD34 /* Typealiases.swift */; };
@@ -50,7 +50,6 @@
 		0AF1FB4722F66A0F00BB2564 /* GoSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6E0E6922B6C1490074E0CA /* GoSaver.swift */; };
 		0AF1FB4B22F66A0F00BB2564 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AF46469225AE50F00DE34EA /* LaunchScreen.storyboard */; };
 		0AF1FB4C22F66A0F00BB2564 /* GoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0AF46485226A79B900DE34EA /* GoCell.xib */; };
-		0AF1FB4D22F66A0F00BB2564 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0A88430C22D44AB200E5FF7B /* GoogleService-Info.plist */; };
 		0AF1FB4E22F66A0F00BB2564 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0AF46467225AE50F00DE34EA /* Assets.xcassets */; };
 		0AF1FB4F22F66A0F00BB2564 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AF46464225AE50B00DE34EA /* Main.storyboard */; };
 		0AF46461225AE50B00DE34EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46460225AE50B00DE34EA /* AppDelegate.swift */; };
@@ -96,10 +95,10 @@
 		0A70A5A722DD617400F8BD34 /* GoDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoDelegate.swift; sourceTree = "<group>"; };
 		0A70A5A922DD651800F8BD34 /* Typealiases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typealiases.swift; sourceTree = "<group>"; };
 		0A88430A22D4444E00E5FF7B /* Set+Contains.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Set+Contains.swift"; sourceTree = "<group>"; };
-		0A88430C22D44AB200E5FF7B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0A88431022D57C7B00E5FF7B /* GoGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoGroup.swift; sourceTree = "<group>"; };
 		0A88431222D57C9F00E5FF7B /* GoSurroundedTerritory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoSurroundedTerritory.swift; sourceTree = "<group>"; };
 		0A88431422D57CAE00E5FF7B /* GoPlayingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoPlayingError.swift; sourceTree = "<group>"; };
+		0AEEB2B122F670220007604F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0AF1FB5622F66A0F00BB2564 /* Go QA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Go QA.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0AF1FB5722F66A0F00BB2564 /* Go QA.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Go QA.plist"; path = "/Users/Kevin/Desktop/Projects/Go-iOS/Go QA.plist"; sourceTree = "<absolute>"; };
 		0AF4645D225AE50B00DE34EA /* Go.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Go.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -273,9 +272,9 @@
 			children = (
 				0AF46460225AE50B00DE34EA /* AppDelegate.swift */,
 				0AF46467225AE50F00DE34EA /* Assets.xcassets */,
-				0AF4646C225AE50F00DE34EA /* Info.plist */,
 				0AF1FB5722F66A0F00BB2564 /* Go QA.plist */,
-				0A88430C22D44AB200E5FF7B /* GoogleService-Info.plist */,
+				0AEEB2B122F670220007604F /* GoogleService-Info.plist */,
+				0AF4646C225AE50F00DE34EA /* Info.plist */,
 				0AF46469225AE50F00DE34EA /* LaunchScreen.storyboard */,
 				0AF46464225AE50B00DE34EA /* Main.storyboard */,
 			);
@@ -327,7 +326,6 @@
 				0AF1FB4A22F66A0F00BB2564 /* Resources */,
 				0AF1FB5022F66A0F00BB2564 /* [CP] Embed Pods Frameworks */,
 				0AF1FB5122F66A0F00BB2564 /* ShellScript */,
-				0AF1FB5222F66A0F00BB2564 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -426,7 +424,6 @@
 			files = (
 				0AF1FB4B22F66A0F00BB2564 /* LaunchScreen.storyboard in Resources */,
 				0AF1FB4C22F66A0F00BB2564 /* GoCell.xib in Resources */,
-				0AF1FB4D22F66A0F00BB2564 /* GoogleService-Info.plist in Resources */,
 				0AF1FB4E22F66A0F00BB2564 /* Assets.xcassets in Resources */,
 				0AF1FB4F22F66A0F00BB2564 /* Main.storyboard in Resources */,
 			);
@@ -438,7 +435,7 @@
 			files = (
 				0AF4646B225AE50F00DE34EA /* LaunchScreen.storyboard in Resources */,
 				0AF46486226A79B900DE34EA /* GoCell.xib in Resources */,
-				0A88430D22D44AB200E5FF7B /* GoogleService-Info.plist in Resources */,
+				0AEEB2B222F670220007604F /* GoogleService-Info.plist in Resources */,
 				0AF46468225AE50F00DE34EA /* Assets.xcassets in Resources */,
 				0AF46466225AE50B00DE34EA /* Main.storyboard in Resources */,
 			);
@@ -544,24 +541,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
-		};
-		0AF1FB5222F66A0F00BB2564 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Fabric/run\"\n";
 		};
 		19565C5DBCB1B68491C3E2A1 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
