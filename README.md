@@ -20,6 +20,16 @@ Anyone is welcome to contribute! I am not the most knowledgeable Go player, so I
 - [ ] Invert colors
 - [ ] + more
 
+## Installation
+
+```
+git clone https://github.com/longhorn499/Go-iOS.git
+cd Go-iOS
+pod install
+open Go.xcworkspace
+```
+Switch to the `Go QA` target and run :fast_forward:
+
 ## Why
 
 - Have a blank app to implement Accessibility features I/we have not done before
