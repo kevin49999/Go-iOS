@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum GoPointState: Codable {
+enum GoPointState: Codable, Hashable {
     case taken(by: Player)
     case open
     case captured(by: Player)

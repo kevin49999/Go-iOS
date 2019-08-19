@@ -6,17 +6,10 @@
 //  Copyright © 2019 Kevin Johnson. All rights reserved.
 //
 
-import DifferenceKit
+import Foundation
 
-struct GoPoint: Differentiable, Codable {
+struct GoPoint: Codable, Equatable, Hashable {
     typealias State = GoPointState
     let index: Int
     var state: State
-    var differenceIdentifier: Int {
-        return index
-    }
-    
-    func isContentEqual(to source: GoPoint) -> Bool {
-        return self.state == source.state
-    }
 }

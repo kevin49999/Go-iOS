@@ -6,11 +6,17 @@
 //  Copyright © 2019 Kevin Johnson. All rights reserved.
 //
 
-import DifferenceKit
+import DiffableDataSources
 import StoreKit
 import UIKit
 
 class GameBoardViewController: UIViewController {
+    
+    // MARK: - Section
+    
+    enum Section {
+        case main
+    }
     
     // MARK: - Properties
     
@@ -21,6 +27,15 @@ class GameBoardViewController: UIViewController {
         }
     }
     private var viewModelFactory: GoCellViewModelFactory!
+    private lazy var dataSource = CollectionViewDiffableDataSource<Section, GoPoint>(collectionView: self.boardCollectionView) { collectionView, indexPath, node in
+        let cell: GoCell = collectionView.dequeueReusableCell(for: indexPath)
+        let viewModel = self.viewModelFactory.create(
+            for: self.go.points[indexPath.row],
+            isOver: self.go.isOver
+        )
+        cell.configure(with: viewModel)
+        return cell
+    }
     
     // MARK: - IBOutlet
     
@@ -39,6 +54,7 @@ class GameBoardViewController: UIViewController {
         actionLabel.font = Fonts.System.ofSize(32.0, weight: .semibold, textStyle: .callout)
         actionLabel.adjustsFontForContentSizeCategory = true
         self.go = goSaver.getSavedGo() ?? Go(board: .nineXNine)
+        
         NotificationCenter.default.addObserver(
             forName: UIApplication.willResignActiveNotification,
             object: nil,
@@ -48,7 +64,7 @@ class GameBoardViewController: UIViewController {
         }
     }
     
-    // MARK: - Initializing Game
+    // MARK: - Game
     
     private func goGameInitialized(_ go: Go) {
         go.delegate = self
@@ -64,7 +80,14 @@ class GameBoardViewController: UIViewController {
         }
         navigationItem.title = NSLocalizedString(title, comment: "")
         undoBarButtonItem.isEnabled = go.canUndo
-        boardCollectionView.reloadData()
+        applyDataSnapshot()
+    }
+    
+    private func applyDataSnapshot() {
+        let snapshot = DiffableDataSourceSnapshot<Section, GoPoint>()
+        snapshot.appendSections([.main])
+        snapshot.appendItems(go.points)
+        dataSource.apply(snapshot)
     }
     
     // MARK: - Playing Actions
@@ -151,7 +174,7 @@ class GameBoardViewController: UIViewController {
         let current = traitCollection.preferredContentSizeCategory.isAccessibilityCategory
         guard previous != current else { return }
         
-        boardCollectionView.reloadData()
+        applyDataSnapshot()
     }
 }
 
@@ -163,29 +186,17 @@ extension GameBoardViewController: GoDelegate {
         actionLabel.animateCallout("🎯")
     }
     
-    func gameOver(result: GoEndGameResult, changeset: StagedChangeset<[Point]>) {
-        let title = result.gameOverDescription()
-        navigationItem.title = NSLocalizedString(title, comment: "")
+    func gameOver(result: GoEndGameResult) {
+        navigationItem.title = NSLocalizedString(
+            result.gameOverDescription(),
+            comment: ""
+        )
         undoBarButtonItem.isEnabled = false
-        boardCollectionView.reload(using: changeset) { points in
-            self.go.points = points
-        }
-    }
-    
-    func positionSelected(_ position: Int) {
-        boardCollectionView.reloadItems(at: [IndexPath(row: position, section: 0)])
     }
     
     func positionsCaptured(_ positions: Set<Int>) {
-        boardCollectionView.reloadItems(at: positions.map { IndexPath(row: $0, section: 0)})
         UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
         actionLabel.animateCallout("⚔️")
-    }
-    
-    func undidLastMove(changeset: StagedChangeset<[GoPoint]>) {
-        boardCollectionView.reload(using: changeset) { points in
-            self.go.points = points
-        }
     }
     
     func canUndoChanged(_ canUndo: Bool) {
@@ -195,24 +206,9 @@ extension GameBoardViewController: GoDelegate {
     func switchedToPlayer(_ player: GoPlayer) {
         navigationItem.title = NSLocalizedString("Go \(player.string)", comment: "")
     }
-}
-
-// MARK: - UICollectionViewDataSource
-
-extension GameBoardViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return go.board.cells
-    }
     
-    func collectionView(_ collectionView: UICollectionView,
-                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: GoCell = collectionView.dequeueReusableCell(for: indexPath)
-        let viewModel = viewModelFactory.create(
-            for: go.points[indexPath.row],
-            isOver: go.isOver
-        )
-        cell.configure(with: viewModel)
-        return cell
+    func goPointsUpdated() {
+        applyDataSnapshot()
     }
 }
 

@@ -39,9 +39,9 @@ extension GoPlayer {
     var surroundedString: String {
         switch self {
         case .black:
-            return "b🧱"
+            return "b🛡"
         case .white:
-            return "w🧱"
+            return "w🛡"
         }
     }
 }
