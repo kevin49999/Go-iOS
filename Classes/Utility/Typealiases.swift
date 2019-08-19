@@ -11,7 +11,6 @@ import Foundation
 typealias Board = GoBoard
 typealias EndGameResult = GoEndGameResult
 typealias Group = GoGroup
-typealias MoveData = GoMoveData
 typealias Player = GoPlayer
 typealias PlayingError = GoPlayingError
 typealias Point = GoPoint

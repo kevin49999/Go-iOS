@@ -26,6 +26,8 @@ class GameBoardViewController: UIViewController {
     
     @IBOutlet weak private var undoBarButtonItem: UIBarButtonItem!
     @IBOutlet weak private var boardCollectionView: UICollectionView!
+    @IBOutlet weak private var boardZoomView: UIView!
+    @IBOutlet weak private var boardScrollView: UIScrollView!
     @IBOutlet weak private var actionLabel: UILabel!
     
     // MARK: - View Lifecycle
@@ -38,11 +40,12 @@ class GameBoardViewController: UIViewController {
         actionLabel.adjustsFontForContentSizeCategory = true
         self.go = goSaver.getSavedGo() ?? Go(board: .nineXNine)
         NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(applicationQuitting),
-            name: UIApplication.willTerminateNotification,
-            object: nil
-        )
+            forName: UIApplication.willResignActiveNotification,
+            object: nil,
+            queue: .main
+        ) { _ in
+            try? self.goSaver.saveGo(self.go)
+        }
     }
     
     // MARK: - Initializing Game
@@ -105,11 +108,7 @@ class GameBoardViewController: UIViewController {
             )
             alert.addAction(new)
         }
-        let cancel = UIAlertAction(
-            title: NSLocalizedString("Cancel", comment: ""),
-            style: .cancel
-        )
-        alert.addAction(cancel)
+        alert.addAction(UIAlertAction.cancel())
         alert.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
         present(alert, animated: true)
     }
@@ -130,11 +129,7 @@ class GameBoardViewController: UIViewController {
             )
             alert.addAction(count)
         }
-        let cancel = UIAlertAction(
-            title: NSLocalizedString("Cancel", comment: ""),
-            style: .cancel
-        )
-        alert.addAction(cancel)
+        alert.addAction(UIAlertAction.cancel())
         alert.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
         present(alert, animated: true)
     }
@@ -157,12 +152,6 @@ class GameBoardViewController: UIViewController {
         guard previous != current else { return }
         
         boardCollectionView.reloadData()
-    }
-    
-    // MARK: - Notifications
-    
-    @objc private func applicationQuitting(notification: Notification) {
-        try? goSaver.saveGo(go)
     }
 }
 
@@ -258,5 +247,16 @@ extension GameBoardViewController: UICollectionViewDelegateFlowLayout {
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         let side = collectionView.frame.width / CGFloat(go.board.rows)
         return CGSize(width: side, height: side)
+    }
+}
+
+// MARK: - UIScrollViewDelegate
+
+extension GameBoardViewController: UIScrollViewDelegate {
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        guard scrollView == boardScrollView else {
+            return nil
+        }
+        return boardZoomView
     }
 }

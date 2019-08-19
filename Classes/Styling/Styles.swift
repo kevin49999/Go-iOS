@@ -9,12 +9,7 @@
 import UIKit
 
 enum Styles {
-    
-    static func bootstrap() {
-        UINavigationBar.appearance()
-            .titleTextAttributes = [.font: Fonts.System.ofSize(weight: .semibold, textStyle: .headline)]
-    }
-    
+        
     enum Colors {
         static let boardLight: UIColor = .fromHex("f8f4ee")
     }

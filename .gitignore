@@ -68,4 +68,4 @@ fastlane/screenshots/**/*.png
 fastlane/test_output
 
 # Secret
-Classes/Supporting Files/GoogleService-Info.plist
+*GoogleService-Info.plist*
