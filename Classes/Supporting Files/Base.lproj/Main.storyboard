@@ -54,7 +54,6 @@
                                                 </collectionViewFlowLayout>
                                                 <cells/>
                                                 <connections>
-                                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="dv2-hA-RdD"/>
                                                     <outlet property="delegate" destination="BYZ-38-t0r" id="c35-Mu-mJW"/>
                                                 </connections>
                                             </collectionView>

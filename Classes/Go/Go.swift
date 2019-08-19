@@ -6,7 +6,6 @@
 //  Copyright © 2019 Kevin Johnson. All rights reserved.
 //
 
-import DifferenceKit
 import Foundation
 
 final class Go {
@@ -15,7 +14,11 @@ final class Go {
     
     let board: GoBoard
     weak var delegate: GoDelegate?
-    var points: [Point] // top left -> bottom right
+    var points: [Point] { // top left -> bottom right
+        didSet {
+            delegate?.goPointsUpdated()
+        }
+    }
     private(set) var pastPoints: [[Point]] {
         didSet {
             canUndo = !pastPoints.isEmpty
@@ -128,14 +131,7 @@ final class Go {
         }
         
         pastPoints.removeLast()
-        if delegate != nil {
-            delegate?.undidLastMove(changeset: StagedChangeset(
-                source: self.points,
-                target: changingTo
-            ))
-        } else {
-            self.points = changingTo
-        }
+        self.points = changingTo
         togglePlayer()
         if passedCount > 0 {
             passedCount -= 1
@@ -285,7 +281,7 @@ final class Go {
     }
     
     private func endGame() {
-        /// split into function
+        // FIXME: split into function
         var surroundedTerritories = Set<SurroundedTerritory>()
         for (i, point) in points.enumerated()
             where point.state == .open {
@@ -315,22 +311,18 @@ final class Go {
         )
         self.endGameResult = result
         
+        let final = self.points
         var beforeFinal = self.points
         for (i, point) in beforeFinal.enumerated()
-            where point.state != .open {
+            where point.state == .captured(by: .black) || point.state == .captured(by: .white) {
                 // want captured positions to reload
                 // hacky way to do this is by reseting the position to open
                 // -> adds it to changeset
                 beforeFinal[i].state = .open
         }
-        let changeset = StagedChangeset(
-            source: beforeFinal,
-            target: self.points
-        )
-        delegate?.gameOver(
-            result: result,
-            changeset: changeset
-        )
+        self.points = beforeFinal
+        self.points = final
+        delegate?.gameOver(result: result)
     }
     
     private func getNeighbors(for position: Int) -> Set<Int> {
@@ -368,7 +360,6 @@ final class Go {
         pastPoints.append(self.points)
         points[position].state = state
         passedCount = 0
-        delegate?.positionSelected(position)
     }
     
     private func handleGroupCaptured(_ group: Group) {

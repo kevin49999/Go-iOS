@@ -3,7 +3,7 @@
 use_frameworks!
 
 def shared
-  pod 'DifferenceKit'
+  pod 'DiffableDataSources'
   pod 'SwiftLint'
 end
 
