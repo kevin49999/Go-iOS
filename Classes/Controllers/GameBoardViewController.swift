@@ -108,11 +108,7 @@ class GameBoardViewController: UIViewController {
             )
             alert.addAction(new)
         }
-        let cancel = UIAlertAction(
-            title: NSLocalizedString("Cancel", comment: ""),
-            style: .cancel
-        )
-        alert.addAction(cancel)
+        alert.addAction(UIAlertAction.cancel())
         alert.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
         present(alert, animated: true)
     }
@@ -133,11 +129,7 @@ class GameBoardViewController: UIViewController {
             )
             alert.addAction(count)
         }
-        let cancel = UIAlertAction(
-            title: NSLocalizedString("Cancel", comment: ""),
-            style: .cancel
-        )
-        alert.addAction(cancel)
+        alert.addAction(UIAlertAction.cancel())
         alert.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
         present(alert, animated: true)
     }

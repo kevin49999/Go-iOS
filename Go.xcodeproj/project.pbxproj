@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A09854F230B0AB800BA1881 /* UIAlertController+AddActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A09854E230B0AB800BA1881 /* UIAlertController+AddActions.swift */; };
+		0A098550230B0AB800BA1881 /* UIAlertController+AddActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A09854E230B0AB800BA1881 /* UIAlertController+AddActions.swift */; };
+		0A098552230B0D9D00BA1881 /* UIAlertAction+Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A098551230B0D9D00BA1881 /* UIAlertAction+Defaults.swift */; };
+		0A098553230B0D9D00BA1881 /* UIAlertAction+Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A098551230B0D9D00BA1881 /* UIAlertAction+Defaults.swift */; };
 		0A21BFB9226C134C004C54B9 /* UIView+IBInspectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A21BFB8226C134C004C54B9 /* UIView+IBInspectable.swift */; };
 		0A21BFBE226C144D004C54B9 /* GoCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A21BFBD226C144D004C54B9 /* GoCellViewModel.swift */; };
 		0A21BFC0226C1574004C54B9 /* GoCellViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A21BFBF226C1574004C54B9 /* GoCellViewModelFactory.swift */; };
@@ -83,6 +87,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0A09854E230B0AB800BA1881 /* UIAlertController+AddActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+AddActions.swift"; sourceTree = "<group>"; };
+		0A098551230B0D9D00BA1881 /* UIAlertAction+Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertAction+Defaults.swift"; sourceTree = "<group>"; };
 		0A21BFB8226C134C004C54B9 /* UIView+IBInspectable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+IBInspectable.swift"; sourceTree = "<group>"; };
 		0A21BFBD226C144D004C54B9 /* GoCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoCellViewModel.swift; sourceTree = "<group>"; };
 		0A21BFBF226C1574004C54B9 /* GoCellViewModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoCellViewModelFactory.swift; sourceTree = "<group>"; };
@@ -172,10 +178,12 @@
 		0A21BFBB226C13D8004C54B9 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				0A88430A22D4444E00E5FF7B /* Set+Contains.swift */,
+				0A098551230B0D9D00BA1881 /* UIAlertAction+Defaults.swift */,
+				0A09854E230B0AB800BA1881 /* UIAlertController+AddActions.swift */,
 				0AF4648B226B8FB900DE34EA /* UICollectionView+Generic.swift */,
 				0A634D0C22A8A4EA00FE10E0 /* UILabel+AnimateCallout.swift */,
 				0A21BFB8226C134C004C54B9 /* UIView+IBInspectable.swift */,
-				0A88430A22D4444E00E5FF7B /* Set+Contains.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -610,10 +618,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A098550230B0AB800BA1881 /* UIAlertController+AddActions.swift in Sources */,
 				0AF1FB2F22F66A0F00BB2564 /* GameBoardViewController.swift in Sources */,
 				0AF1FB3022F66A0F00BB2564 /* UILabel+AnimateCallout.swift in Sources */,
 				0AF1FB3122F66A0F00BB2564 /* Typealiases.swift in Sources */,
 				0AF1FB3222F66A0F00BB2564 /* GoSurroundedTerritory.swift in Sources */,
+				0A098553230B0D9D00BA1881 /* UIAlertAction+Defaults.swift in Sources */,
 				0AF1FB3322F66A0F00BB2564 /* Styles.swift in Sources */,
 				0AF1FB3422F66A0F00BB2564 /* GoEndGameResult.swift in Sources */,
 				0AF1FB3522F66A0F00BB2564 /* UIColor+Hex.swift in Sources */,
@@ -642,10 +652,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A09854F230B0AB800BA1881 /* UIAlertController+AddActions.swift in Sources */,
 				0AF46463225AE50B00DE34EA /* GameBoardViewController.swift in Sources */,
 				0A634D0D22A8A4EA00FE10E0 /* UILabel+AnimateCallout.swift in Sources */,
 				0A70A5AA22DD651800F8BD34 /* Typealiases.swift in Sources */,
 				0A88431322D57C9F00E5FF7B /* GoSurroundedTerritory.swift in Sources */,
+				0A098552230B0D9D00BA1881 /* UIAlertAction+Defaults.swift in Sources */,
 				0AF4648E226B922400DE34EA /* Styles.swift in Sources */,
 				0A64ADEF22C5BC7D00989A9D /* GoEndGameResult.swift in Sources */,
 				0A64ADED22C3152300989A9D /* UIColor+Hex.swift in Sources */,
