@@ -128,7 +128,14 @@ final class Go {
         }
         
         pastPoints.removeLast()
-        delegate?.undidLastMove(changeset: StagedChangeset(source: self.points, target: changingTo))
+        if delegate != nil {
+            delegate?.undidLastMove(changeset: StagedChangeset(
+                source: self.points,
+                target: changingTo
+            ))
+        } else {
+            self.points = changingTo
+        }
         togglePlayer()
         if passedCount > 0 {
             passedCount -= 1
