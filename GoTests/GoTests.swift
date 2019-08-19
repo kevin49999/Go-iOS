@@ -97,7 +97,6 @@ class GoTests: XCTestCase {
     func testUndoCornerCaptureTieGame() {
         let go = Go(board: .fiveXFive)
         do {
-            /// FAILS because in my integration, the delegate updates self.points directly! (didn't want to do it this way.. but collection has to update model directly w/ this changeset setup)
             try go.playPosition(19)
             try go.playPosition(24)
             try go.playPosition(23)
