@@ -12,12 +12,10 @@ import XCTest
 class GoTests: XCTestCase {
     
     override func setUp() {
-        
         super.setUp()
     }
 
     override func tearDown() {
-        
         super.tearDown()
     }
 
@@ -118,5 +116,20 @@ class GoTests: XCTestCase {
         } catch {
             XCTFail()
         }
+    }
+    
+    func testNoPlayingInCaptured() {
+        let go = Go(board: .fiveXFive)
+        try? go.playPosition(4)
+        try? go.playPosition(9)
+        try? go.playPosition(8)
+        try? go.playPosition(14)
+        try? go.playPosition(13)
+        try? go.playPosition(20)
+        try? go.playPosition(19)
+        try? go.playPosition(14) // captured by black
+        try? go.playPosition(9)  // ""
+        XCTAssertEqual(go.points[9].state, .captured(by: .black))
+        XCTAssertEqual(go.points[14].state, .captured(by: .black))
     }
 }

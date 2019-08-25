@@ -14,7 +14,7 @@ final class Go {
     
     let board: GoBoard
     weak var delegate: GoDelegate?
-    var points: [Point] { // top left -> bottom right
+    private(set)var points: [Point] { // top left -> bottom right
         didSet {
             delegate?.goPointsUpdated()
         }
@@ -103,6 +103,7 @@ final class Go {
                 from: position,
                 for: currentPlayer
             )
+            let previousState = points[position].state
             update(position: position, with: .taken(by: currentPlayer))
             let neighbors = getNeighbors(for: position)
             let otherPlayerGroups = getPlayerGroups(
@@ -111,12 +112,14 @@ final class Go {
             )
             try suicideDetection(
                 for: position,
+                previousState: previousState,
                 group: currentPlayerGroup,
                 groupNeighbors: neighbors,
                 otherPlayerGroups: otherPlayerGroups
             )
             handleOtherPlayerGroups(otherPlayerGroups)
             togglePlayer()
+            passedCount = 0
         } catch let error as PlayingError {
             throw error
         } catch {
@@ -213,13 +216,14 @@ final class Go {
     }
     
     private func suicideDetection(for position: Int,
+                                  previousState: GoPointState,
                                   group: Group,
                                   groupNeighbors: Set<Int>,
-                                  otherPlayerGroups: Set<Group> ) throws {
+                                  otherPlayerGroups: Set<Group>) throws {
         if group.noLiberties,
             !otherPlayerGroups
                 .contains(where: { $0.noLiberties && $0.positions.containsElement(from: groupNeighbors) }) {
-            update(position: position, with: .open)
+            update(position: position, with: previousState)
             throw PlayingError.attemptedSuicide
         }
     }
@@ -359,7 +363,6 @@ final class Go {
     private func update(position: Int, with state: Point.State) {
         pastPoints.append(self.points)
         points[position].state = state
-        passedCount = 0
     }
     
     private func handleGroupCaptured(_ group: Group) {
