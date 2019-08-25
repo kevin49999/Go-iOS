@@ -25,6 +25,12 @@ class GoCell: UICollectionViewCell {
     @IBOutlet weak private var rightHorizontalLine: UIView!
     @IBOutlet weak private var rightHorizontalLineSize: NSLayoutConstraint!
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        stoneLabel.adjustsFontForContentSizeCategory = true
+    }
+    
     func configure(with viewModel: ViewModel = ViewModel()) {
         stoneLabel.font = Fonts.System.ofSize(viewModel.labelSize, weight: .semibold, textStyle: .body)
         stoneLabel.isHidden = !viewModel.showLabel

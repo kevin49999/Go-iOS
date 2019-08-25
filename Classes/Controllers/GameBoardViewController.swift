@@ -68,26 +68,20 @@ class GameBoardViewController: UIViewController {
     
     private func goGameInitialized(_ go: Go) {
         go.delegate = self
+        undoBarButtonItem.isEnabled = go.canUndo
         viewModelFactory = GoCellViewModelFactory(
             go: go,
             collectionView: boardCollectionView
         )
-        let title: String
-        if let endGameResult = go.endGameResult {
-            title = endGameResult.gameOverDescription()
-        } else {
-            title = "Go \(go.currentPlayer.string)"
-        }
-        navigationItem.title = NSLocalizedString(title, comment: "")
-        undoBarButtonItem.isEnabled = go.canUndo
-        applyDataSnapshot()
-    }
-    
-    private func applyDataSnapshot() {
+        navigationItem.title = NSLocalizedString(
+            go.endGameResult?.gameOverDescription() ?? "Go \(go.currentPlayer.string)",
+            comment: ""
+        )
         let snapshot = DiffableDataSourceSnapshot<Section, GoPoint>()
         snapshot.appendSections([.main])
         snapshot.appendItems(go.points)
-        dataSource.apply(snapshot)
+        snapshot.reloadItems(go.points)
+        dataSource.apply(snapshot, animatingDifferences: false)
     }
     
     // MARK: - Playing Actions
@@ -166,16 +160,6 @@ class GameBoardViewController: UIViewController {
     @IBAction func tappedAction(_ sender: Any) {
         presentGameActionAlert()
     }
-    
-    // MARK: - Trait Collection
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        let previous = previousTraitCollection?.preferredContentSizeCategory.isAccessibilityCategory
-        let current = traitCollection.preferredContentSizeCategory.isAccessibilityCategory
-        guard previous != current else { return }
-        
-        applyDataSnapshot()
-    }
 }
 
 // MARK: - GoDelegate
@@ -208,7 +192,10 @@ extension GameBoardViewController: GoDelegate {
     }
     
     func goPointsUpdated() {
-        applyDataSnapshot()
+        let snapshot = DiffableDataSourceSnapshot<Section, GoPoint>()
+        snapshot.appendSections([.main])
+        snapshot.appendItems(go.points)
+        dataSource.apply(snapshot)
     }
 }
 
