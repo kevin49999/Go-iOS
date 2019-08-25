@@ -54,14 +54,12 @@ class GameBoardViewController: UIViewController {
         actionLabel.font = Fonts.System.ofSize(32.0, weight: .semibold, textStyle: .callout)
         actionLabel.adjustsFontForContentSizeCategory = true
         self.go = goSaver.getSavedGo() ?? Go(board: .nineXNine)
-        
         NotificationCenter.default.addObserver(
-            forName: UIApplication.willResignActiveNotification,
-            object: nil,
-            queue: .main
-        ) { _ in
-            try? self.goSaver.saveGo(self.go)
-        }
+            self,
+            selector: #selector(willResignActive),
+            name: UIApplication.willResignActiveNotification,
+            object: nil
+        )
     }
     
     // MARK: - Game
@@ -159,6 +157,12 @@ class GameBoardViewController: UIViewController {
     
     @IBAction func tappedAction(_ sender: Any) {
         presentGameActionAlert()
+    }
+    
+    // MARK: - Notifications
+    
+    @objc func willResignActive() {
+        try? goSaver.saveGo(go)
     }
 }
 
