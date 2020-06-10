@@ -75,7 +75,7 @@ class GameBoardViewController: UIViewController {
             go.endGameResult?.gameOverDescription() ?? "Go \(go.currentPlayer.string)",
             comment: ""
         )
-        let snapshot = DiffableDataSourceSnapshot<Section, GoPoint>()
+        var snapshot = DiffableDataSourceSnapshot<Section, GoPoint>()
         snapshot.appendSections([.main])
         snapshot.appendItems(go.points)
         snapshot.reloadItems(go.points)
@@ -196,7 +196,7 @@ extension GameBoardViewController: GoDelegate {
     }
     
     func goPointsUpdated() {
-        let snapshot = DiffableDataSourceSnapshot<Section, GoPoint>()
+        var snapshot = DiffableDataSourceSnapshot<Section, GoPoint>()
         snapshot.appendSections([.main])
         snapshot.appendItems(go.points)
         dataSource.apply(snapshot)

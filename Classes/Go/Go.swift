@@ -99,6 +99,7 @@ final class Go {
     
     func playPosition(_ position: Int) throws {
         do {
+            print("positin:", position)
             let currentPlayerGroup = try createGroup(
                 from: position,
                 for: currentPlayer
@@ -167,19 +168,13 @@ final class Go {
         var visited = [Int: Bool]()
         var libertiesCount = 0
         
-        while !queue.isEmpty {
-            guard let stone = queue.popLast() else {
-                assertionFailure()
-                break
-            }
-            
-            if visited[stone] == true {
-                continue
-            }
+        while let stone = queue.popLast() {
+            if visited[stone] == true { continue }
+
             for neighbor in getNeighbors(for: stone) {
                 switch points[neighbor].state {
                 case .taken(let takenPlayer):
-                    if takenPlayer == player {
+                    if takenPlayer == player, visited[neighbor] != true {
                         queue.append(neighbor)
                     }
                 case .open:
@@ -215,14 +210,16 @@ final class Go {
         return currentPlayerGroup
     }
     
-    private func suicideDetection(for position: Int,
-                                  previousState: GoPointState,
-                                  group: Group,
-                                  groupNeighbors: Set<Int>,
-                                  otherPlayerGroups: Set<Group>) throws {
-        if group.noLiberties,
-            !otherPlayerGroups
-                .contains(where: { $0.noLiberties && $0.positions.containsElement(from: groupNeighbors) }) {
+    private func suicideDetection(
+        for position: Int,
+        previousState: GoPointState,
+        group: Group,
+        groupNeighbors: Set<Int>,
+        otherPlayerGroups: Set<Group>
+    ) throws {
+        if group.noLiberties, !otherPlayerGroups.contains(where: {
+            $0.noLiberties && $0.positions.containsElement(from: groupNeighbors)
+        }) {
             update(position: position, with: previousState)
             throw PlayingError.attemptedSuicide
         }
@@ -247,15 +244,9 @@ final class Go {
         var visited = [Int: Bool]()
         var surroundingPlayer: GoPlayer?
         
-        while !queue.isEmpty {
-            guard let stone = queue.popLast() else {
-                assertionFailure()
-                break
-            }
-            
-            if visited[stone] == true {
-                continue
-            }
+        while let stone = queue.popLast() {
+            if visited[stone] == true { continue }
+
             for neighbor in getNeighbors(for: stone) {
                 switch points[neighbor].state {
                 case .taken(let player):
@@ -265,7 +256,9 @@ final class Go {
                     }
                     surroundingPlayer = player
                 case .open:
-                    queue.append(neighbor)
+                    if visited[neighbor] != true {
+                        queue.append(neighbor)
+                    }
                 case .captured, .surrounded:
                     continue
                 }
@@ -285,13 +278,11 @@ final class Go {
     }
     
     private func endGame() {
-        // FIXME: split into function
         var surroundedTerritories = Set<SurroundedTerritory>()
-        for (i, point) in points.enumerated()
-            where point.state == .open {
-                if let surrounded = getSurroundTerritory(startingAt: i) {
-                    surroundedTerritories.insert(surrounded)
-                }
+        for (i, point) in points.enumerated() where point.state == .open {
+            if let surrounded = getSurroundTerritory(startingAt: i) {
+                surroundedTerritories.insert(surrounded)
+            }
         }
         var blackSurrounded = 0
         var whiteSurrounded = 0
@@ -317,12 +308,11 @@ final class Go {
         
         let final = self.points
         var beforeFinal = self.points
-        for (i, point) in beforeFinal.enumerated()
-            where point.state == .captured(by: .black) || point.state == .captured(by: .white) {
-                // want captured positions to reload
-                // hacky way to do this is by reseting the position to open
-                // -> adds it to changeset
-                beforeFinal[i].state = .open
+        for (i, point) in beforeFinal.enumerated() where point.state == .captured(by: .black) || point.state == .captured(by: .white) {
+            // want captured positions to reload
+            // hacky way to do this is by reseting the position to open
+            // -> adds it to changeset
+            beforeFinal[i].state = .open
         }
         self.points = beforeFinal
         self.points = final

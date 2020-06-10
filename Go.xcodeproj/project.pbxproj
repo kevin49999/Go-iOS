@@ -71,7 +71,7 @@
 		0AF46490226C01E200DE34EA /* GoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF4648F226C01E200DE34EA /* GoPlayer.swift */; };
 		0AF46492226C01F800DE34EA /* GoBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46491226C01F800DE34EA /* GoBoard.swift */; };
 		0AF46494226C05A600DE34EA /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46493226C05A600DE34EA /* Fonts.swift */; };
-		5E0E6B7FA13513148A248471 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		5E0E6B7FA13513148A248471 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		64B42E79C55BF83C8DF0D009 /* Pods_Go_QA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C515C2FDC10C2FAF62FBCA96 /* Pods_Go_QA.framework */; };
 		9CACA21B81D68966D49125AF /* Pods_GoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4804208AE748C05926085DA1 /* Pods_GoTests.framework */; };
 		B6007642FF9D337DAC6255A5 /* Pods_Go.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7373EF7434F1D0EBC81CC605 /* Pods_Go.framework */; };
@@ -84,6 +84,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 0AF4645C225AE50B00DE34EA;
 			remoteInfo = Go;
+		};
+		52BF4F9E24915D8600830217 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0AF46455225AE50B00DE34EA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0AF1FB2C22F66A0F00BB2564;
+			remoteInfo = "Go QA";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -151,7 +158,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5E0E6B7FA13513148A248471 /* BuildFile in Frameworks */,
+				5E0E6B7FA13513148A248471 /* (null) in Frameworks */,
 				B6007642FF9D337DAC6255A5 /* Pods_Go.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -382,6 +389,7 @@
 			);
 			dependencies = (
 				0AF46473225AE50F00DE34EA /* PBXTargetDependency */,
+				52BF4F9F24915D8600830217 /* PBXTargetDependency */,
 			);
 			name = GoTests;
 			productName = GoTests;
@@ -701,6 +709,11 @@
 			isa = PBXTargetDependency;
 			target = 0AF4645C225AE50B00DE34EA /* Go */;
 			targetProxy = 0AF46472225AE50F00DE34EA /* PBXContainerItemProxy */;
+		};
+		52BF4F9F24915D8600830217 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0AF1FB2C22F66A0F00BB2564 /* Go QA */;
+			targetProxy = 52BF4F9E24915D8600830217 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
