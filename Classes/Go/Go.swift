@@ -307,11 +307,12 @@ final class Go {
         
         let final = self.points
         var beforeFinal = self.points
-        for (i, point) in beforeFinal.enumerated() where point.state == .captured(by: .black) || point.state == .captured(by: .white) {
-            // want captured positions to reload
-            // hacky way to do this is by reseting the position to open
-            // -> adds it to changeset
-            beforeFinal[i].state = .open
+        for (i, point) in beforeFinal.enumerated()
+            where point.state == .captured(by: .black) || point.state == .captured(by: .white) {
+                // want captured positions to reload
+                // hacky way to do this is by reseting the position to open
+                // -> adds it to changeset
+                beforeFinal[i].state = .open
         }
         self.points = beforeFinal
         self.points = final

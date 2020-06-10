@@ -12,7 +12,7 @@ import UIKit
 extension UIColor {
     
     // http://stackoverflow.com/a/27203691/940936
-    public static func fromHex(_ hex: String) -> UIColor {
+    static func fromHex(_ hex: String) -> UIColor {
         var cString = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
         
         if cString.hasPrefix("#") {
@@ -23,8 +23,8 @@ extension UIColor {
             return .gray
         }
         
-        var rgbValue: UInt32 = 0
-        Scanner(string: cString).scanHexInt32(&rgbValue)
+        var rgbValue: UInt64 = 0
+        Scanner(string: cString).scanHexInt64(&rgbValue)
         
         return UIColor(
             red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,

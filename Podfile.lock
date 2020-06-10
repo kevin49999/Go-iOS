@@ -1,12 +1,6 @@
 PODS:
   - Crashlytics (3.14.0):
     - Fabric (~> 1.10.2)
-  - DiffableDataSources (0.4.0):
-    - DifferenceKit/AppKitExtension (~> 1.1)
-    - DifferenceKit/UIKitExtension (~> 1.1)
-  - DifferenceKit/Core (1.1.5)
-  - DifferenceKit/UIKitExtension (1.1.5):
-    - DifferenceKit/Core
   - Fabric (1.10.2)
   - Firebase/Core (6.26.0):
     - Firebase/CoreOnly
@@ -78,7 +72,6 @@ PODS:
 
 DEPENDENCIES:
   - Crashlytics
-  - DiffableDataSources
   - Fabric
   - Firebase/Core
   - SwiftLint
@@ -86,8 +79,6 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Crashlytics
-    - DiffableDataSources
-    - DifferenceKit
     - Fabric
     - Firebase
     - FirebaseAnalytics
@@ -105,8 +96,6 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
-  DiffableDataSources: 80396cec405c9b29e1e07b55c9be7d11b46c8741
-  DifferenceKit: 516f12e336ed65a3a0665847b5c3cb5cad4bd4ea
   Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
   Firebase: 7cf5f9c67f03cb3b606d1d6535286e1080e57eb6
   FirebaseAnalytics: 96634d356482d4f3af8fe459a0ebf19a99c71b75
@@ -122,6 +111,6 @@ SPEC CHECKSUMS:
   PromisesObjC: b48e0338dbbac2207e611750777895f7a5811b75
   SwiftLint: 22ccbbe3b8008684be5955693bab135e0ed6a447
 
-PODFILE CHECKSUM: 49027c8afd5de86ddc794b5fedf27c9ae911fc4f
+PODFILE CHECKSUM: 5fbc03d9732cd454ebe464bbe634bc4c6d20a4cb
 
 COCOAPODS: 1.9.3

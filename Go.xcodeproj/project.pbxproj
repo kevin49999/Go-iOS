@@ -71,7 +71,7 @@
 		0AF46490226C01E200DE34EA /* GoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF4648F226C01E200DE34EA /* GoPlayer.swift */; };
 		0AF46492226C01F800DE34EA /* GoBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46491226C01F800DE34EA /* GoBoard.swift */; };
 		0AF46494226C05A600DE34EA /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46493226C05A600DE34EA /* Fonts.swift */; };
-		5E0E6B7FA13513148A248471 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		5E0E6B7FA13513148A248471 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		64B42E79C55BF83C8DF0D009 /* Pods_Go_QA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C515C2FDC10C2FAF62FBCA96 /* Pods_Go_QA.framework */; };
 		9CACA21B81D68966D49125AF /* Pods_GoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4804208AE748C05926085DA1 /* Pods_GoTests.framework */; };
 		B6007642FF9D337DAC6255A5 /* Pods_Go.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7373EF7434F1D0EBC81CC605 /* Pods_Go.framework */; };
@@ -158,7 +158,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5E0E6B7FA13513148A248471 /* (null) in Frameworks */,
+				5E0E6B7FA13513148A248471 /* BuildFile in Frameworks */,
 				B6007642FF9D337DAC6255A5 /* Pods_Go.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -343,7 +343,6 @@
 				0AF1FB2E22F66A0F00BB2564 /* Sources */,
 				0AF1FB4822F66A0F00BB2564 /* Frameworks */,
 				0AF1FB4A22F66A0F00BB2564 /* Resources */,
-				0AF1FB5022F66A0F00BB2564 /* [CP] Embed Pods Frameworks */,
 				0AF1FB5122F66A0F00BB2564 /* ShellScript */,
 			);
 			buildRules = (
@@ -526,23 +525,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		0AF1FB5022F66A0F00BB2564 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Go QA/Pods-Go QA-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Go QA/Pods-Go QA-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Go QA/Pods-Go QA-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		0AF1FB5122F66A0F00BB2564 /* ShellScript */ = {
@@ -830,7 +812,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -885,7 +867,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

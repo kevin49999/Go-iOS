@@ -25,11 +25,17 @@ enum GoPointState: Codable, Hashable {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        if try container.decodeIfPresent(String.self, forKey: .taken) != nil, let playerString = try container.decodeIfPresent(String.self, forKey: .player), let player = Player(rawValue: playerString) {
+        if try container.decodeIfPresent(String.self, forKey: .taken) != nil,
+            let playerString = try container.decodeIfPresent(String.self, forKey: .player),
+            let player = Player(rawValue: playerString) {
             self = .taken(by: player)
-        } else if try container.decodeIfPresent(String.self, forKey: .captured) != nil, let playerString = try container.decodeIfPresent(String.self, forKey: .player), let player = Player(rawValue: playerString) {
+        } else if try container.decodeIfPresent(String.self, forKey: .captured) != nil,
+            let playerString = try container.decodeIfPresent(String.self, forKey: .player),
+            let player = Player(rawValue: playerString) {
             self = .captured(by: player)
-        } else if try container.decodeIfPresent(String.self, forKey: .surrounded) != nil, let playerString = try container.decodeIfPresent(String.self, forKey: .player), let player = Player(rawValue: playerString) {
+        } else if try container.decodeIfPresent(String.self, forKey: .surrounded) != nil,
+            let playerString = try container.decodeIfPresent(String.self, forKey: .player),
+            let player = Player(rawValue: playerString) {
             self = .surrounded(by: player)
         } else {
             _ = try container.decode(String.self, forKey: .open)

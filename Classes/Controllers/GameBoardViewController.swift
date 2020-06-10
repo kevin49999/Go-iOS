@@ -6,7 +6,6 @@
 //  Copyright © 2019 Kevin Johnson. All rights reserved.
 //
 
-import DiffableDataSources
 import StoreKit
 import UIKit
 
@@ -27,7 +26,9 @@ class GameBoardViewController: UIViewController {
         }
     }
     private var viewModelFactory: GoCellViewModelFactory!
-    private lazy var dataSource = CollectionViewDiffableDataSource<Section, GoPoint>(collectionView: self.boardCollectionView) { collectionView, indexPath, _ in
+    private lazy var dataSource = UICollectionViewDiffableDataSource<Section, GoPoint>(
+        collectionView: self.boardCollectionView
+    ) { collectionView, indexPath, _ in
         let cell: GoCell = collectionView.dequeueReusableCell(for: indexPath)
         let viewModel = self.viewModelFactory.create(
             for: self.go.points[indexPath.row],
@@ -75,7 +76,7 @@ class GameBoardViewController: UIViewController {
             go.endGameResult?.gameOverDescription() ?? "Go \(go.currentPlayer.string)",
             comment: ""
         )
-        var snapshot = DiffableDataSourceSnapshot<Section, GoPoint>()
+        var snapshot = NSDiffableDataSourceSnapshot<Section, GoPoint>()
         snapshot.appendSections([.main])
         snapshot.appendItems(go.points)
         snapshot.reloadItems(go.points)
@@ -196,7 +197,7 @@ extension GameBoardViewController: GoDelegate {
     }
     
     func goPointsUpdated() {
-        var snapshot = DiffableDataSourceSnapshot<Section, GoPoint>()
+        var snapshot = NSDiffableDataSourceSnapshot<Section, GoPoint>()
         snapshot.appendSections([.main])
         snapshot.appendItems(go.points)
         dataSource.apply(snapshot)
@@ -228,9 +229,11 @@ extension GameBoardViewController: UICollectionViewDelegate {
 // MARK: - UICollectionViewDelegateFlowLayout
 
 extension GameBoardViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
         let side = collectionView.frame.width / CGFloat(go.board.rows)
         return CGSize(width: side, height: side)
     }

@@ -3,7 +3,6 @@
 use_frameworks!
 
 def shared
-  pod 'DiffableDataSources'
   pod 'SwiftLint'
 end
 
