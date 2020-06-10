@@ -99,7 +99,6 @@ final class Go {
     
     func playPosition(_ position: Int) throws {
         do {
-            print("positin:", position)
             let currentPlayerGroup = try createGroup(
                 from: position,
                 for: currentPlayer
