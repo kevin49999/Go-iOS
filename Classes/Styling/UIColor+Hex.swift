@@ -14,12 +14,11 @@ extension UIColor {
     // http://stackoverflow.com/a/27203691/940936
     static func fromHex(_ hex: String) -> UIColor {
         var cString = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
-        
         if cString.hasPrefix("#") {
             cString.remove(at: cString.startIndex)
         }
-        
         if cString.count != 6 {
+            assertionFailure("Invalid Hex String")
             return .gray
         }
         
