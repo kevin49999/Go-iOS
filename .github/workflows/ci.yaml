@@ -11,9 +11,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Bundle install
     - run: bundle install
-    - name: Pod install
     - run: pod install
     - name: Xcodebuild test
       run: xcodebuild clean test -project 'Go.xcodeproj' -scheme 'Go' -destination 'platform=iOS Simulator,name=iPhone 12'
