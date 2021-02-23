@@ -44,6 +44,6 @@ identifier_name:
     - go
     - by
 function_body_length:
-  warning: 75
+  warning: 100
   error: 125
 reporter: "xcode" # reporter type (xcode, json, csv, checkstyle, junit, html, emoji, sonarqube, markdown)

@@ -28,7 +28,10 @@ class GameBoardViewController: UIViewController {
     private var viewModelFactory: GoCellViewModelFactory!
     private lazy var dataSource = UICollectionViewDiffableDataSource<Section, GoPoint>(
         collectionView: self.boardCollectionView
-    ) { collectionView, indexPath, _ in
+    ) { [weak self] collectionView, indexPath, _ in
+        guard let `self` = self else {
+            return nil
+        }
         let cell: GoCell = collectionView.dequeueReusableCell(for: indexPath)
         let viewModel = self.viewModelFactory.create(
             for: self.go.points[indexPath.row],
@@ -54,7 +57,7 @@ class GameBoardViewController: UIViewController {
         boardCollectionView.register(cell: GoCell.self)
         actionLabel.font = Fonts.System.ofSize(32.0, weight: .semibold, textStyle: .callout)
         actionLabel.adjustsFontForContentSizeCategory = true
-        self.go = goSaver.getSavedGo() ?? Go(board: .nineXNine)
+        self.go = goSaver.getSaved() ?? Go(board: .nineXNine)
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(willResignActive),
@@ -163,7 +166,7 @@ class GameBoardViewController: UIViewController {
     // MARK: - Notifications
     
     @objc func willResignActive() {
-        try? goSaver.saveGo(go)
+        try? goSaver.save(go: go)
     }
 }
 

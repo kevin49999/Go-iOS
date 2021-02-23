@@ -29,12 +29,14 @@ struct GoCellViewModel {
     let handicapDotColor: UIColor
     let borderStyle: BorderStyle
     
-    init(showLabel: Bool = false,
-         labelString: String? = nil,
-         labelSize: CGFloat = 24.0,
-         showHandicapDot: Bool = false,
-         handicapDotColor: UIColor = .black,
-         borderStyle: BorderStyle = .default) {
+    init(
+        showLabel: Bool = false,
+        labelString: String? = nil,
+        labelSize: CGFloat = 24.0,
+        showHandicapDot: Bool = false,
+        handicapDotColor: UIColor = .black,
+        borderStyle: BorderStyle = .default
+    ) {
         self.showLabel = showLabel
         self.labelString = labelString
         self.labelSize = labelSize

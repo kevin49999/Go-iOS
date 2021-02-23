@@ -36,10 +36,10 @@ class GoCell: UICollectionViewCell {
         stoneLabel.isHidden = !viewModel.showLabel
         stoneLabel.text = viewModel.labelString
         centerDotView.isHidden = !viewModel.showHandicapDot
-        configureBorder(with: viewModel.borderStyle)
+        configureBorder(style: viewModel.borderStyle)
     }
     
-    private func configureBorder(with style: ViewModel.BorderStyle) {
+    private func configureBorder(style: ViewModel.BorderStyle) {
         switch style {
         case .topLeft:
             topVerticalLine.isHidden = true

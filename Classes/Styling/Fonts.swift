@@ -11,9 +11,11 @@ import UIKit
 struct Fonts {
     
     struct System {
-        static func ofSize(_ size: CGFloat = 17.0,
-                           weight: UIFont.Weight,
-                           textStyle: UIFont.TextStyle) -> UIFont {
+        static func ofSize(
+            _ size: CGFloat = 17.0,
+            weight: UIFont.Weight,
+            textStyle: UIFont.TextStyle
+        ) -> UIFont {
             return UIFont.systemFont(ofSize: size, weight: weight).scaledFontforTextStyle(textStyle)
         }
     }
