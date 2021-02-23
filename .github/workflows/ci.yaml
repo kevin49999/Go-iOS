@@ -12,4 +12,4 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Xcodebuild test
-      run: xcodebuild clean test -project 'Go.xcodeproj' -scheme 'Go QA' -destination 'platform=iOS Simulator,name=iPhone 12'
+      run: xcodebuild clean test -project 'Go.xcodeproj' -scheme 'Go' -destination 'platform=iOS Simulator,name=iPhone 12'
