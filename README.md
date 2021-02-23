@@ -2,7 +2,7 @@
 
 Play the ancient  game of Go on your iPhone/iPad :iphone:
 
-![screenshot](/screenshots/board1.png)
+![screenshot](/images/screenshots/board1.png)
 
 ## Contributing
 
