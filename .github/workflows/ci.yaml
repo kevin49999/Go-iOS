@@ -11,6 +11,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: Bundle install
+    - run: bundle install
     - name: Pod install
     - run: pod install
     - name: Xcodebuild test
