@@ -71,7 +71,9 @@
 		0AF46490226C01E200DE34EA /* GoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF4648F226C01E200DE34EA /* GoPlayer.swift */; };
 		0AF46492226C01F800DE34EA /* GoBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46491226C01F800DE34EA /* GoBoard.swift */; };
 		0AF46494226C05A600DE34EA /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46493226C05A600DE34EA /* Fonts.swift */; };
-		5E0E6B7FA13513148A248471 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		523FBF4425E49FCB00D4EC83 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 523FBF4325E49FCB00D4EC83 /* README.md */; };
+		523FBF4525E49FCB00D4EC83 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 523FBF4325E49FCB00D4EC83 /* README.md */; };
+		5E0E6B7FA13513148A248471 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		64B42E79C55BF83C8DF0D009 /* Pods_Go_QA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C515C2FDC10C2FAF62FBCA96 /* Pods_Go_QA.framework */; };
 		9CACA21B81D68966D49125AF /* Pods_GoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4804208AE748C05926085DA1 /* Pods_GoTests.framework */; };
 		B6007642FF9D337DAC6255A5 /* Pods_Go.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7373EF7434F1D0EBC81CC605 /* Pods_Go.framework */; };
@@ -136,6 +138,7 @@
 		0AF46493226C05A600DE34EA /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		4450D5E8595090DCDE49BACF /* Pods-Go QA.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Go QA.debug.xcconfig"; path = "Target Support Files/Pods-Go QA/Pods-Go QA.debug.xcconfig"; sourceTree = "<group>"; };
 		4804208AE748C05926085DA1 /* Pods_GoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		523FBF4325E49FCB00D4EC83 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		6ECD90480DC9A92BF6D39F44 /* Pods-GoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GoTests.debug.xcconfig"; path = "Target Support Files/Pods-GoTests/Pods-GoTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7373EF7434F1D0EBC81CC605 /* Pods_Go.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Go.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8E9FDBB2F21AC8D94FC7F82 /* Pods-Go QA.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Go QA.release.xcconfig"; path = "Target Support Files/Pods-Go QA/Pods-Go QA.release.xcconfig"; sourceTree = "<group>"; };
@@ -158,7 +161,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5E0E6B7FA13513148A248471 /* BuildFile in Frameworks */,
+				5E0E6B7FA13513148A248471 /* (null) in Frameworks */,
 				B6007642FF9D337DAC6255A5 /* Pods_Go.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -218,6 +221,7 @@
 		0AF46454225AE50B00DE34EA = {
 			isa = PBXGroup;
 			children = (
+				523FBF4325E49FCB00D4EC83 /* README.md */,
 				0AF4645F225AE50B00DE34EA /* Classes */,
 				0AF46474225AE50F00DE34EA /* GoTests */,
 				0AF4645E225AE50B00DE34EA /* Products */,
@@ -443,6 +447,7 @@
 			files = (
 				0AF1FB4B22F66A0F00BB2564 /* LaunchScreen.storyboard in Resources */,
 				0AF1FB4C22F66A0F00BB2564 /* GoCell.xib in Resources */,
+				523FBF4525E49FCB00D4EC83 /* README.md in Resources */,
 				0AF1FB4E22F66A0F00BB2564 /* Assets.xcassets in Resources */,
 				0AF1FB4F22F66A0F00BB2564 /* Main.storyboard in Resources */,
 			);
@@ -452,6 +457,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				523FBF4425E49FCB00D4EC83 /* README.md in Resources */,
 				0AF4646B225AE50F00DE34EA /* LaunchScreen.storyboard in Resources */,
 				0AF46486226A79B900DE34EA /* GoCell.xib in Resources */,
 				0AEEB2B222F670220007604F /* GoogleService-Info.plist in Resources */,
