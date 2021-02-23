@@ -15,19 +15,21 @@ class GoSaver {
     private let jsonEncoder: JSONEncoder = JSONEncoder()
     private let jsonDecoder: JSONDecoder = JSONDecoder()
     
-    init(defaults: UserDefaults = UserDefaults.standard,
-         key: String = "SavedGo") {
+    init(
+        defaults: UserDefaults = UserDefaults.standard,
+        key: String = "SavedGo"
+    ) {
         self.defaults = defaults
         self.key = key
     }
     
-    func saveGo(_ go: Go) throws {
+    func save(go: Go) throws {
         let goData = try jsonEncoder.encode(go)
         defaults.set(goData, forKey: key)
         defaults.synchronize()
     }
     
-    func getSavedGo() -> Go? {
+    func getSaved() -> Go? {
         guard let goData = defaults.value(forKey: key) as? Data else {
             return nil
         }

@@ -1,6 +1,6 @@
 # Go-iOS
 
-Play the ancient  game of Go on your iPhone/iPad :iphone:
+Play Go on your iPhone/iPad :iphone:
 
 ![screenshot](/images/screenshots/board1.png)
 

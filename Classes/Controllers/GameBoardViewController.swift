@@ -57,7 +57,7 @@ class GameBoardViewController: UIViewController {
         boardCollectionView.register(cell: GoCell.self)
         actionLabel.font = Fonts.System.ofSize(32.0, weight: .semibold, textStyle: .callout)
         actionLabel.adjustsFontForContentSizeCategory = true
-        self.go = goSaver.getSavedGo() ?? Go(board: .nineXNine)
+        self.go = goSaver.getSaved() ?? Go(board: .nineXNine)
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(willResignActive),
@@ -166,7 +166,7 @@ class GameBoardViewController: UIViewController {
     // MARK: - Notifications
     
     @objc func willResignActive() {
-        try? goSaver.saveGo(go)
+        try? goSaver.save(go: go)
     }
 }
 
