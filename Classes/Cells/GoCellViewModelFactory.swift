@@ -14,8 +14,10 @@ struct GoCellViewModelFactory {
     private let cells: Int
     private let availableHandicapIndexes: [Int]
     
-    init(go: Go,
-         collectionView: UICollectionView) {
+    init(
+        go: Go,
+        collectionView: UICollectionView
+    ) {
         self.rows = go.board.rows
         self.cells = go.board.cells
         self.availableHandicapIndexes = go.board.availableHandicapIndexes

@@ -28,7 +28,10 @@ class GameBoardViewController: UIViewController {
     private var viewModelFactory: GoCellViewModelFactory!
     private lazy var dataSource = UICollectionViewDiffableDataSource<Section, GoPoint>(
         collectionView: self.boardCollectionView
-    ) { collectionView, indexPath, _ in
+    ) { [weak self] collectionView, indexPath, _ in
+        guard let `self` = self else {
+            return nil
+        }
         let cell: GoCell = collectionView.dequeueReusableCell(for: indexPath)
         let viewModel = self.viewModelFactory.create(
             for: self.go.points[indexPath.row],
