@@ -13,13 +13,8 @@ Anyone is welcome to contribute 🤝
 - [ ] Save previous games for later study and walkthrough
 - [ ] Localize in Chinese and other languages
 - [ ] Better zoom and features (ex: hold + drag to place stone) for playing a large board game on a small phone
-- [ ] Play against a computer with varying skill level :robot:
+- [ ] Game Center setup for networked games
 - [ ] Improve design/board backgrounds (wood, marble, etc.)
-
-### Accessibility
-
-- [ ] VoiceOver :star:
-- [ ] + a lot more
 
 ## Installation
 
