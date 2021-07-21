@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol GoDelegate: class {
+protocol GoDelegate: AnyObject {
     func atariForPlayer(_ player: Player)
     func canUndoChanged(_ canUndo: Bool)
     func gameOver(result: EndGameResult)
