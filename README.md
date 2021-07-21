@@ -21,10 +21,8 @@ Anyone is welcome to contribute 🤝
 ```
 git clone https://github.com/longhorn499/Go-iOS.git
 cd Go-iOS
-pod install
-open Go.xcworkspace
+open Go.xcodeproj
 ```
-Switch to the `Go QA` target and run :fast_forward:
 
 ## Credits
 
