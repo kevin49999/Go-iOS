@@ -26,7 +26,6 @@
 		0A88431122D57C7B00E5FF7B /* GoGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A88431022D57C7B00E5FF7B /* GoGroup.swift */; };
 		0A88431322D57C9F00E5FF7B /* GoSurroundedTerritory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A88431222D57C9F00E5FF7B /* GoSurroundedTerritory.swift */; };
 		0A88431522D57CAE00E5FF7B /* GoPlayingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A88431422D57CAE00E5FF7B /* GoPlayingError.swift */; };
-		0AEEB2B222F670220007604F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0AEEB2B122F670220007604F /* GoogleService-Info.plist */; };
 		0AF1FB2F22F66A0F00BB2564 /* GameBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46462225AE50B00DE34EA /* GameBoardViewController.swift */; };
 		0AF1FB3022F66A0F00BB2564 /* UILabel+AnimateCallout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A634D0C22A8A4EA00FE10E0 /* UILabel+AnimateCallout.swift */; };
 		0AF1FB3122F66A0F00BB2564 /* Typealiases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A70A5A922DD651800F8BD34 /* Typealiases.swift */; };
@@ -110,7 +109,6 @@
 		0A88431022D57C7B00E5FF7B /* GoGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoGroup.swift; sourceTree = "<group>"; };
 		0A88431222D57C9F00E5FF7B /* GoSurroundedTerritory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoSurroundedTerritory.swift; sourceTree = "<group>"; };
 		0A88431422D57CAE00E5FF7B /* GoPlayingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoPlayingError.swift; sourceTree = "<group>"; };
-		0AEEB2B122F670220007604F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0AF1FB5622F66A0F00BB2564 /* Go QA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Go QA.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0AF4645D225AE50B00DE34EA /* Go.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Go.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0AF46460225AE50B00DE34EA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -184,17 +182,10 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		0A21BFBC226C13F0004C54B9 /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-				0AF46489226B8F9B00DE34EA /* StoryboardIdentifiable.swift */,
-			);
-			path = Protocols;
-			sourceTree = "<group>";
-		};
 		0A6E0E6822B6BFE10074E0CA /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				0AF46489226B8F9B00DE34EA /* StoryboardIdentifiable.swift */,
 				0A6E0E6922B6C1490074E0CA /* GoSaver.swift */,
 				0A70A5A922DD651800F8BD34 /* Typealiases.swift */,
 			);
@@ -228,7 +219,6 @@
 				0AF46482225AF72F00DE34EA /* Controllers */,
 				0A21BFBB226C13D8004C54B9 /* Extensions */,
 				0AF46483225AF73500DE34EA /* Go */,
-				0A21BFBC226C13F0004C54B9 /* Protocols */,
 				0AF99360226C097D006DC49C /* Styling */,
 				0AF46484225AF73D00DE34EA /* Supporting Files */,
 				0A6E0E6822B6BFE10074E0CA /* Utility */,
@@ -276,7 +266,6 @@
 				0AF46460225AE50B00DE34EA /* AppDelegate.swift */,
 				0AF46467225AE50F00DE34EA /* Assets.xcassets */,
 				523FBF7725E4A17500D4EC83 /* Go QA.plist */,
-				0AEEB2B122F670220007604F /* GoogleService-Info.plist */,
 				0AF4646C225AE50F00DE34EA /* Info.plist */,
 				0AF46469225AE50F00DE34EA /* LaunchScreen.storyboard */,
 				0AF46464225AE50B00DE34EA /* Main.storyboard */,
@@ -411,7 +400,6 @@
 				523FBF4425E49FCB00D4EC83 /* README.md in Resources */,
 				0AF4646B225AE50F00DE34EA /* LaunchScreen.storyboard in Resources */,
 				0AF46486226A79B900DE34EA /* GoCell.xib in Resources */,
-				0AEEB2B222F670220007604F /* GoogleService-Info.plist in Resources */,
 				0AF46468225AE50F00DE34EA /* Assets.xcassets in Resources */,
 				0AF46466225AE50B00DE34EA /* Main.storyboard in Resources */,
 			);
