@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -21,35 +21,35 @@
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q4p-Fe-fSh" userLabel="Top Vertical Line">
                         <rect key="frame" x="29.5" y="-1" width="1" height="30.5"/>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="labelColor"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="1" id="3AC-K8-x4z"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6XL-WN-AHT" userLabel="Bottom Vertical Line">
                         <rect key="frame" x="29.5" y="30.5" width="1" height="30.5"/>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="labelColor"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="1" id="7Sd-l8-k8X"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="laA-OI-mqZ" userLabel="Left Horizontal Line">
                         <rect key="frame" x="-1" y="29.5" width="30.5" height="1"/>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="labelColor"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="1" id="lrV-lW-Uro"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xco-ot-lv2" userLabel="Right Horizontal Line">
                         <rect key="frame" x="30.5" y="29.5" width="30.5" height="1"/>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="labelColor"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="1" id="DkE-Ay-pNj"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s0n-zt-vkE" userLabel="Center Pixel">
                         <rect key="frame" x="29.5" y="29.5" width="1" height="1"/>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="labelColor"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="1" id="MCB-uD-qIK"/>
                             <constraint firstAttribute="width" constant="1" id="gbL-Wf-qIg"/>
@@ -57,7 +57,7 @@
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="apt-5h-Bkl" userLabel="Center Dot View">
                         <rect key="frame" x="27" y="27" width="6" height="6"/>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="labelColor"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="6" id="eeD-5f-FKl"/>
                             <constraint firstAttribute="width" constant="6" id="n0h-Xd-f8G"/>
@@ -76,7 +76,8 @@
                     </label>
                 </subviews>
             </view>
-            <color key="backgroundColor" red="0.97254901959999995" green="0.95686274510000002" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <viewLayoutGuide key="safeArea" id="7GR-TM-tBX"/>
+            <color key="backgroundColor" name="Board"/>
             <constraints>
                 <constraint firstItem="s0n-zt-vkE" firstAttribute="centerY" secondItem="EbK-ER-FPF" secondAttribute="centerY" id="137-hr-fsX"/>
                 <constraint firstItem="6XL-WN-AHT" firstAttribute="top" secondItem="s0n-zt-vkE" secondAttribute="bottom" id="3CZ-hb-a4g"/>
@@ -99,7 +100,6 @@
                 <constraint firstItem="6XL-WN-AHT" firstAttribute="centerX" secondItem="EbK-ER-FPF" secondAttribute="centerX" id="tNT-Di-GKS"/>
                 <constraint firstAttribute="bottom" secondItem="6XL-WN-AHT" secondAttribute="bottom" constant="-1" id="wua-1v-XIj"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="7GR-TM-tBX"/>
             <size key="customSize" width="57" height="48"/>
             <connections>
                 <outlet property="bottomVerticalLine" destination="6XL-WN-AHT" id="mni-np-dxW"/>
@@ -118,4 +118,12 @@
             <point key="canvasLocation" x="-345.60000000000002" y="1.7991004497751126"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <namedColor name="Board">
+            <color red="0.97254901960784312" green="0.95686274509803926" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>
