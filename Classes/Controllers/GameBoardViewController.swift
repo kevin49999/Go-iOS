@@ -184,6 +184,8 @@ extension GameBoardViewController: GoDelegate {
             comment: ""
         )
         undoBarButtonItem.isEnabled = false
+        // request review
+        SKStoreReviewController.requestReviewInWindow()
     }
     
     func positionsCaptured(_ positions: Set<Int>) {

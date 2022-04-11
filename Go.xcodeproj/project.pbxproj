@@ -39,6 +39,7 @@
 		0AF46494226C05A600DE34EA /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46493226C05A600DE34EA /* Fonts.swift */; };
 		523FBF4425E49FCB00D4EC83 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 523FBF4325E49FCB00D4EC83 /* README.md */; };
 		523FBF9025E4A20B00D4EC83 /* GoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523FBF8F25E4A20B00D4EC83 /* GoCell.swift */; };
+		52B209A628047D6F0084892C /* SKStoreReviewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B209A528047D6F0084892C /* SKStoreReviewController+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +89,7 @@
 		0AF46493226C05A600DE34EA /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		523FBF4325E49FCB00D4EC83 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		523FBF8F25E4A20B00D4EC83 /* GoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoCell.swift; sourceTree = "<group>"; };
+		52B209A528047D6F0084892C /* SKStoreReviewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SKStoreReviewController+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				0A88430A22D4444E00E5FF7B /* Set+Contains.swift */,
+				52B209A528047D6F0084892C /* SKStoreReviewController+Extensions.swift */,
 				0A098551230B0D9D00BA1881 /* UIAlertAction+Defaults.swift */,
 				0A09854E230B0AB800BA1881 /* UIAlertController+AddActions.swift */,
 				0AF4648B226B8FB900DE34EA /* UICollectionView+Generic.swift */,
@@ -349,6 +352,7 @@
 				0A88430B22D4444E00E5FF7B /* Set+Contains.swift in Sources */,
 				0A634D1222ADF5C600FE10E0 /* GoPoint.swift in Sources */,
 				0A70A5A822DD617400F8BD34 /* GoDelegate.swift in Sources */,
+				52B209A628047D6F0084892C /* SKStoreReviewController+Extensions.swift in Sources */,
 				0AF46481225AF04900DE34EA /* Go.swift in Sources */,
 				0AF46490226C01E200DE34EA /* GoPlayer.swift in Sources */,
 				0AF46461225AE50B00DE34EA /* AppDelegate.swift in Sources */,
@@ -454,7 +458,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -510,7 +514,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -525,6 +529,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = X6XFU66KA9;
 				INFOPLIST_FILE = "$(SRCROOT)/Classes/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -545,6 +550,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = X6XFU66KA9;
 				INFOPLIST_FILE = "$(SRCROOT)/Classes/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
