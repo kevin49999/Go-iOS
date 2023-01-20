@@ -16,14 +16,6 @@ Anyone is welcome to contribute 🤝
 - [ ] Game Center setup for networked games
 - [ ] Improve design/board backgrounds (wood, marble, etc.)
 
-## Installation
-
-```
-git clone https://github.com/longhorn499/Go-iOS.git
-cd Go-iOS
-open Go.xcodeproj
-```
-
 ## Credits
 
 - Coding Go logic/group calculation: [React beginner tutorial: implementing the board game Go](http://cjlarose.com/2014/01/09/react-board-game-tutorial.html)
