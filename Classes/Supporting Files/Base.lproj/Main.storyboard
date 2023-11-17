@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="WY6-Hy-Fuf">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="WY6-Hy-Fuf">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -15,8 +15,9 @@
             <objects>
                 <navigationController id="WY6-Hy-Fuf" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="mTG-Pe-rPj">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" systemColor="labelColor"/>
                     </navigationBar>
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="fqv-kV-xOP"/>
@@ -98,18 +99,27 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Go" id="apy-4b-8xf">
+                        <barButtonItem key="backBarButtonItem" title=" " id="Eyk-3t-WXU"/>
                         <barButtonItem key="leftBarButtonItem" enabled="NO" systemItem="reply" id="3Jc-NA-MpC">
                             <color key="tintColor" systemColor="labelColor"/>
                             <connections>
                                 <action selector="tappedUndo:" destination="BYZ-38-t0r" id="EGS-CL-jog"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="Ilt-2I-kV9">
-                            <color key="tintColor" systemColor="labelColor"/>
-                            <connections>
-                                <action selector="tappedAction:" destination="BYZ-38-t0r" id="EmI-cE-A4l"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem title="Item" image="gear" catalog="system" id="Ilt-2I-kV9">
+                                <color key="tintColor" systemColor="labelColor"/>
+                                <connections>
+                                    <segue destination="U9f-XZ-pbt" kind="show" id="ER3-Ke-oHI"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="action" id="mY1-4g-iTZ">
+                                <color key="tintColor" systemColor="labelColor"/>
+                                <connections>
+                                    <action selector="tappedAction:" destination="BYZ-38-t0r" id="VzC-bY-lLY"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="actionLabel" destination="RV2-mQ-4yE" id="Ho3-8y-OO9"/>
@@ -121,10 +131,70 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53.600000000000001" y="43.628185907046479"/>
+            <point key="canvasLocation" x="62" y="44"/>
+        </scene>
+        <!--Settings-->
+        <scene sceneID="Ucb-Q8-Nlx">
+            <objects>
+                <tableViewController id="U9f-XZ-pbt" customClass="SettingsViewController" customModule="Go" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="72" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="RJn-dl-h1i">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" name="Board"/>
+                        <sections>
+                            <tableViewSection id="ygX-jd-m6t">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="59" id="Bui-RZ-zy3">
+                                        <rect key="frame" x="0.0" y="50" width="375" height="59"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Bui-RZ-zy3" id="24Q-VJ-2ud" userLabel="emoji setting">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="59"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Emoji Feedback" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pMN-8W-xbZ">
+                                                    <rect key="frame" x="24" y="20" width="274" height="19"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aGh-M2-1mG">
+                                                    <rect key="frame" x="306" y="14" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="didTapToggleEmojiFeedback:" destination="U9f-XZ-pbt" eventType="valueChanged" id="yVA-xo-8J8"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <color key="backgroundColor" name="Board"/>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="pMN-8W-xbZ" secondAttribute="bottom" priority="999" constant="20" symbolic="YES" id="8Hs-Hz-jOz"/>
+                                                <constraint firstItem="aGh-M2-1mG" firstAttribute="centerY" secondItem="pMN-8W-xbZ" secondAttribute="centerY" id="97y-AB-NS2"/>
+                                                <constraint firstAttribute="trailing" secondItem="aGh-M2-1mG" secondAttribute="trailing" constant="20" symbolic="YES" id="JKK-cJ-0bV"/>
+                                                <constraint firstItem="aGh-M2-1mG" firstAttribute="leading" secondItem="pMN-8W-xbZ" secondAttribute="trailing" constant="8" symbolic="YES" id="c6X-VH-dTa"/>
+                                                <constraint firstItem="pMN-8W-xbZ" firstAttribute="top" secondItem="24Q-VJ-2ud" secondAttribute="top" constant="20" symbolic="YES" id="dB6-9E-AVR"/>
+                                                <constraint firstItem="pMN-8W-xbZ" firstAttribute="leading" secondItem="24Q-VJ-2ud" secondAttribute="leading" constant="24" id="zKF-vQ-d2N"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="U9f-XZ-pbt" id="a8g-H4-uf3"/>
+                            <outlet property="delegate" destination="U9f-XZ-pbt" id="Xnj-Zn-McL"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Settings" id="hft-nf-3op"/>
+                    <connections>
+                        <outlet property="emojiFeedbackSwitch" destination="aGh-M2-1mG" id="YGn-c8-sSW"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wGo-5B-xlm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="868" y="43.628185907046479"/>
         </scene>
     </scenes>
     <resources>
+        <image name="gear" catalog="system" width="128" height="122"/>
         <namedColor name="Board">
             <color red="0.97254901960784312" green="0.95686274509803926" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

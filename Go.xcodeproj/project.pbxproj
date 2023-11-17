@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		0A09854F230B0AB800BA1881 /* UIAlertController+AddActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A09854E230B0AB800BA1881 /* UIAlertController+AddActions.swift */; };
 		0A098552230B0D9D00BA1881 /* UIAlertAction+Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A098551230B0D9D00BA1881 /* UIAlertAction+Defaults.swift */; };
+		0A2074E12B082C0E00C28A62 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2074E02B082C0E00C28A62 /* SettingsViewController.swift */; };
+		0A2074E72B08315300C28A62 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2074E62B08315300C28A62 /* Settings.swift */; };
 		0A21BFB9226C134C004C54B9 /* UIView+IBInspectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A21BFB8226C134C004C54B9 /* UIView+IBInspectable.swift */; };
 		0A21BFBE226C144D004C54B9 /* GoCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A21BFBD226C144D004C54B9 /* GoCellViewModel.swift */; };
 		0A21BFC0226C1574004C54B9 /* GoCellViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A21BFBF226C1574004C54B9 /* GoCellViewModelFactory.swift */; };
@@ -55,6 +57,8 @@
 /* Begin PBXFileReference section */
 		0A09854E230B0AB800BA1881 /* UIAlertController+AddActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+AddActions.swift"; sourceTree = "<group>"; };
 		0A098551230B0D9D00BA1881 /* UIAlertAction+Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertAction+Defaults.swift"; sourceTree = "<group>"; };
+		0A2074E02B082C0E00C28A62 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		0A2074E62B08315300C28A62 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		0A21BFB8226C134C004C54B9 /* UIView+IBInspectable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+IBInspectable.swift"; sourceTree = "<group>"; };
 		0A21BFBD226C144D004C54B9 /* GoCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoCellViewModel.swift; sourceTree = "<group>"; };
 		0A21BFBF226C1574004C54B9 /* GoCellViewModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoCellViewModelFactory.swift; sourceTree = "<group>"; };
@@ -138,8 +142,9 @@
 		0A6E0E6822B6BFE10074E0CA /* Utility */ = {
 			isa = PBXGroup;
 			children = (
-				0AF46489226B8F9B00DE34EA /* StoryboardIdentifiable.swift */,
 				0A6E0E6922B6C1490074E0CA /* GoSaver.swift */,
+				0A2074E62B08315300C28A62 /* Settings.swift */,
+				0AF46489226B8F9B00DE34EA /* StoryboardIdentifiable.swift */,
 				0A70A5A922DD651800F8BD34 /* Typealiases.swift */,
 			);
 			path = Utility;
@@ -191,6 +196,7 @@
 			isa = PBXGroup;
 			children = (
 				0AF46462225AE50B00DE34EA /* GameBoardViewController.swift */,
+				0A2074E02B082C0E00C28A62 /* SettingsViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -361,6 +367,8 @@
 				0A21BFC0226C1574004C54B9 /* GoCellViewModelFactory.swift in Sources */,
 				523FBF9025E4A20B00D4EC83 /* GoCell.swift in Sources */,
 				0A88431522D57CAE00E5FF7B /* GoPlayingError.swift in Sources */,
+				0A2074E72B08315300C28A62 /* Settings.swift in Sources */,
+				0A2074E12B082C0E00C28A62 /* SettingsViewController.swift in Sources */,
 				0A21BFB9226C134C004C54B9 /* UIView+IBInspectable.swift in Sources */,
 				0AF4648A226B8F9B00DE34EA /* StoryboardIdentifiable.swift in Sources */,
 				0AF46492226C01F800DE34EA /* GoBoard.swift in Sources */,
