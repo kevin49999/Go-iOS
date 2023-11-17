@@ -2,7 +2,7 @@
 
 Play Go on your iPhone/iPad :iphone:
 
-![screenshot](/images/screenshots/board1.png)
+![Screenshot 2023-11-17 at 5 13 52 PM](https://github.com/kevin49999/Go-iOS/assets/17791511/dc496415-4c1c-4041-b3d8-656025f0ecda)
 
 ## Contributing
 
