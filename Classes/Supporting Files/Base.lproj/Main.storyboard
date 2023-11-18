@@ -151,7 +151,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="59"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Emoji Feedback" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pMN-8W-xbZ">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Emoji Feedback 🎯" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pMN-8W-xbZ">
                                                     <rect key="frame" x="24" y="20" width="274" height="19"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
@@ -185,6 +185,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Settings" id="hft-nf-3op"/>
                     <connections>
+                        <outlet property="emojiFeedbackLabel" destination="pMN-8W-xbZ" id="xPM-cu-lVb"/>
                         <outlet property="emojiFeedbackSwitch" destination="aGh-M2-1mG" id="YGn-c8-sSW"/>
                     </connections>
                 </tableViewController>

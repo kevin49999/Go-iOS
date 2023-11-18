@@ -9,7 +9,7 @@
 import UIKit
 
 class SettingsViewController: UITableViewController {
-    
+    @IBOutlet weak var emojiFeedbackLabel: UILabel!
     @IBOutlet weak var emojiFeedbackSwitch: UISwitch!
     
     override func viewDidLoad() {

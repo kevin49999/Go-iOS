@@ -9,10 +9,9 @@
 import UIKit
 
 struct Fonts {
-    
     struct System {
         static func ofSize(
-            _ size: CGFloat = 17.0,
+            _ size: CGFloat = 16.0,
             weight: UIFont.Weight,
             textStyle: UIFont.TextStyle
         ) -> UIFont {
