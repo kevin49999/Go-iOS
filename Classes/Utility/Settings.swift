@@ -16,8 +16,8 @@ class Settings {
 
     static func emojiFeedback(defaults: UserDefaults = .standard) -> Bool {
         // not using `bool(forKey:)` because it defaults to `false` if missing a value
-        if let hide = defaults.value(forKey: Items.emojiFeedback.rawValue) as? Bool {
-            return hide
+        if let emojiFeedback = defaults.value(forKey: Items.emojiFeedback.rawValue) as? Bool {
+            return emojiFeedback
         }
         return true
     }
