@@ -10,6 +10,7 @@ import UIKit
 
 extension UILabel {
     func animateCallout(_ callout: String) {
+        guard Settings.emojiFeedback() else { return }
         self.alpha = 0.0
         self.text = NSLocalizedString(callout, comment: "")
         UIView.animate(

@@ -9,7 +9,6 @@
 import Foundation
 
 class GoSaver {
-    
     private let defaults: UserDefaults
     private let key: String
     private let jsonEncoder: JSONEncoder = JSONEncoder()

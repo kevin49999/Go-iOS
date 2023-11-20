@@ -89,7 +89,6 @@ class GameBoardViewController: UIViewController {
     // MARK: - Playing Actions
     
     func playerAttemptedSuicide() {
-        UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
         actionLabel.animateCallout("☠️")
     }
     
@@ -174,7 +173,6 @@ class GameBoardViewController: UIViewController {
 
 extension GameBoardViewController: GoDelegate {
     func atariForPlayer(_ player: Player) {
-        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
         actionLabel.animateCallout("🎯")
     }
     
@@ -189,7 +187,6 @@ extension GameBoardViewController: GoDelegate {
     }
     
     func positionsCaptured(_ positions: Set<Int>) {
-        UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
         actionLabel.animateCallout("⚔️")
     }
     
