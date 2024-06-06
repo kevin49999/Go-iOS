@@ -158,4 +158,7 @@ class GoTests: XCTestCase {
         XCTAssertEqual(go.points[16].state, .taken(by: .black))
         XCTAssertEqual(go.points[10].state, .open)
     }
+    
+    // TODO: add test for corner/multi-stone suicide detection
+    // look @ eye rules - add to rules/settings
 }

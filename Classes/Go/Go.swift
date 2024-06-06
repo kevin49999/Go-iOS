@@ -100,21 +100,20 @@ final class Go {
     
     func playPosition(_ position: Int) throws {
         do {
-            let currentPlayerGroup = try createGroup(
-                from: position,
-                for: currentPlayer
-            )
-            let neighbors = getNeighbors(for: position)
-            
             var copy = points
             copy[position].state = .taken(by: currentPlayer)
+            let currentPlayerGroup = try createGroup(
+                from: position,
+                for: currentPlayer,
+                board: copy
+            )
+            let neighbors = getNeighbors(for: position)
             let otherPlayerGroups = getPlayerGroups(
                 player: currentPlayer.opposite,
                 board: copy,
                 positions: neighbors
             )
             try suicideDetection(
-                for: position,
                 group: currentPlayerGroup,
                 groupNeighbors: neighbors,
                 otherPlayerGroups: otherPlayerGroups
@@ -206,21 +205,20 @@ final class Go {
         )
     }
     
-    private func createGroup(from position: Int, for player: Player) throws -> Group {
+    private func createGroup(from position: Int, for player: Player, board: [Point]) throws -> Group {
         guard !isOver else {
             throw PlayingError.gameOver
         }
         if case .taken = points[position].state {
             throw PlayingError.positionTaken
         }
-        guard let currentPlayerGroup = getGroup(startingAt: position, player: player, board: points) else {
+        guard let currentPlayerGroup = getGroup(startingAt: position, player: player, board: board) else {
             throw PlayingError.impossiblePosition
         }
         return currentPlayerGroup
     }
     
     private func suicideDetection(
-        for position: Int,
         group: Group,
         groupNeighbors: Set<Int>,
         otherPlayerGroups: Set<Group>
