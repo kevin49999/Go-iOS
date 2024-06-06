@@ -9,16 +9,21 @@
 import UIKit
 
 class SettingsViewController: UITableViewController {
-    @IBOutlet weak var emojiFeedbackLabel: UILabel!
     @IBOutlet weak var emojiFeedbackSwitch: UISwitch!
+    @IBOutlet weak var suicideDetectionSwitch: UISwitch!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         emojiFeedbackSwitch.isOn = Settings.emojiFeedback()
+        suicideDetectionSwitch.isOn = Settings.suicide()
     }
     
     @IBAction func didTapToggleEmojiFeedback(_ sender: UISwitch) {
         Settings.configure(setting: .emojiFeedback, on: sender.isOn)
+    }
+    
+    @IBAction func didTapToggleSuicideDetection(_ sender: UISwitch) {
+        Settings.configure(setting: .suicide, on: sender.isOn)
     }
 }

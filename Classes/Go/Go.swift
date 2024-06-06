@@ -122,7 +122,8 @@ final class Go {
             pastPoints.append(points)
             // move on
             points[position].state = .taken(by: currentPlayer)
-            handleOtherPlayerGroups(otherPlayerGroups)
+            processGroupsEndOfTurn(groups: otherPlayerGroups)
+            processGroupsEndOfTurn(groups: [currentPlayerGroup])
             togglePlayer()
             passedCount = 0
         } catch let error as PlayingError {
@@ -226,12 +227,14 @@ final class Go {
         if group.noLiberties, !otherPlayerGroups.contains(where: {
             $0.noLiberties && $0.positions.containsElement(from: groupNeighbors)
         }) {
-            throw PlayingError.attemptedSuicide
+            if Settings.suicide() {
+                throw PlayingError.attemptedSuicide
+            }
         }
     }
     
-    private func handleOtherPlayerGroups(_ otherPlayerGroups: Set<Group>) {
-        for group in otherPlayerGroups {
+    private func processGroupsEndOfTurn(groups: Set<Group>) {
+        for group in groups {
             switch group.libertiesCount {
             case 0:
                 handleGroupCaptured(group)

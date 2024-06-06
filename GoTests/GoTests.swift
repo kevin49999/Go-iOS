@@ -161,4 +161,5 @@ class GoTests: XCTestCase {
     
     // TODO: add test for corner/multi-stone suicide detection
     // look @ eye rules - add to rules/settings
+    // turn off suicide detection that group just gets killed
 }
