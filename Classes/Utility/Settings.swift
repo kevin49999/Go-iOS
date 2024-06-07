@@ -11,7 +11,8 @@ import Foundation
 class Settings {
     enum Items: String {
         case emojiFeedback = "emoji-feedback"
-        // case haptics?
+        case suicide
+        // case ko, haptics
     }
 
     static func emojiFeedback(defaults: UserDefaults = .standard) -> Bool {
@@ -20,6 +21,11 @@ class Settings {
             return emojiFeedback
         }
         return true
+    }
+    
+    static func suicide(defaults: UserDefaults = .standard) -> Bool {
+        // defaults to false
+        defaults.bool(forKey: Items.suicide.rawValue)
     }
 
     static func configure(setting: Items, on: Bool, defaults: UserDefaults = .standard) {

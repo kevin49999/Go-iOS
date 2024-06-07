@@ -10,13 +10,10 @@ import XCTest
 @testable import Go
 
 class GoTests: XCTestCase {
-    
     override func setUp() {
         super.setUp()
-    }
-
-    override func tearDown() {
-        super.tearDown()
+        Settings.configure(setting: .suicide, on: false)
+        Settings.configure(setting: .emojiFeedback, on: false)
     }
 
     // https://www.britgo.org/intro/intro2.html - Diagram 1
@@ -131,5 +128,67 @@ class GoTests: XCTestCase {
         try? go.playPosition(9)  // ""
         XCTAssertEqual(go.points[9].state, .captured(by: .black))
         XCTAssertEqual(go.points[14].state, .captured(by: .black))
+    }
+    
+    func testSuicidePlusUndo() {
+        let go = Go(board: .fiveXFive)
+        try? go.playPosition(6)
+        try? go.playPosition(4)
+        try? go.playPosition(12)
+        try? go.playPosition(9)
+        try? go.playPosition(16)
+        try? go.playPosition(14)
+        try? go.playPosition(10)
+        do {
+            try go.playPosition(11)
+            XCTFail()
+        } catch let error as PlayingError {
+            XCTAssertEqual(error, PlayingError.attemptedSuicide)
+        } catch {
+            XCTFail()
+        }
+        
+        go.undoLast()
+        
+        XCTAssertEqual(go.points[6].state, .taken(by: .black))
+        XCTAssertEqual(go.points[12].state, .taken(by: .black))
+        XCTAssertEqual(go.points[16].state, .taken(by: .black))
+        XCTAssertEqual(go.points[10].state, .open)
+    }
+    
+    func testSuicideCornerMultiStoneGroup() {
+        let go = Go(board: .fiveXFive)
+        try? go.playPosition(1)
+        try? go.playPosition(5)
+        try? go.playPosition(6)
+        try? go.playPosition(4)
+        try? go.playPosition(10)
+        do {
+            try go.playPosition(0)
+            XCTFail()
+        } catch let error as PlayingError {
+            XCTAssertEqual(error, PlayingError.attemptedSuicide)
+        } catch {
+            XCTFail()
+        }
+    }
+    
+    func testSuicideOffCornerMultiStoneGroup() {
+        Settings.configure(setting: .suicide, on: true)
+        let go = Go(board: .fiveXFive)
+        try? go.playPosition(1)
+        try? go.playPosition(5)
+        try? go.playPosition(6)
+        try? go.playPosition(4)
+        try? go.playPosition(10)
+        do {
+            try go.playPosition(0)
+            // succeeds!
+        } catch {
+            XCTFail()
+        }
+        
+        XCTAssertEqual(go.points[0].state, .captured(by: .black))
+        XCTAssertEqual(go.points[5].state, .captured(by: .black))
     }
 }

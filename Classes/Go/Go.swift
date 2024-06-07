@@ -58,8 +58,7 @@ final class Go {
     
     // MARK: - Init
     
-    init(board: GoBoard,
-         handicap: Int  = 0) {
+    init(board: GoBoard, handicap: Int  = 0) {
         self.board = board
         self.pastPoints = []
         var currentPoints = (0..<board.cells)
@@ -78,13 +77,15 @@ final class Go {
         self.points = currentPoints
     }
     
-    init(board: Board,
-         pastPoints: [[Point]] = [[]],
-         points: [Point] = [],
-         currentPlayer: Player = .black,
-         passedCount: Int = 0,
-         isOver: Bool = false,
-         endGameResult: EndGameResult? = nil) {
+    init(
+        board: Board,
+        pastPoints: [[Point]] = [[]],
+        points: [Point] = [],
+        currentPlayer: Player = .black,
+        passedCount: Int = 0,
+        isOver: Bool = false,
+        endGameResult: EndGameResult? = nil
+    ) {
         self.board = board
         self.pastPoints = pastPoints
         self.points = points
@@ -99,25 +100,30 @@ final class Go {
     
     func playPosition(_ position: Int) throws {
         do {
+            var copy = points
+            copy[position].state = .taken(by: currentPlayer)
             let currentPlayerGroup = try createGroup(
                 from: position,
-                for: currentPlayer
+                for: currentPlayer,
+                board: copy
             )
-            let previousState = points[position].state
-            update(position: position, with: .taken(by: currentPlayer))
             let neighbors = getNeighbors(for: position)
             let otherPlayerGroups = getPlayerGroups(
-                currentPlayer.opposite,
-                for: neighbors
+                player: currentPlayer.opposite,
+                board: copy,
+                positions: neighbors
             )
             try suicideDetection(
-                for: position,
-                previousState: previousState,
                 group: currentPlayerGroup,
                 groupNeighbors: neighbors,
                 otherPlayerGroups: otherPlayerGroups
             )
-            handleOtherPlayerGroups(otherPlayerGroups)
+            // keep history
+            pastPoints.append(points)
+            // move on
+            points[position].state = .taken(by: currentPlayer)
+            processGroupsEndOfTurn(groups: otherPlayerGroups)
+            processGroupsEndOfTurn(groups: [currentPlayerGroup])
             togglePlayer()
             passedCount = 0
         } catch let error as PlayingError {
@@ -149,19 +155,23 @@ final class Go {
     
     // MARK: - Private Functions
     
-    private func getPlayerGroups(_ player: Player, for positions: Set<Int>) -> Set<Group> {
-        return Set(
-            positions.compactMap {
-                guard case let .taken(byPlayer) = points[$0].state,
-                    byPlayer == player else {
-                        return nil
+    private func getPlayerGroups(
+        player: Player,
+        board: [Point],
+        positions: Set<Int>
+    ) -> Set<Group> {
+        var result: Set<Group> = .init()
+        for position in positions {
+            if case .taken(let other) = board[position].state, other == player {
+                if let group = getGroup(startingAt: position, player: player, board: board) {
+                    result.insert(group)
                 }
-                return getGroup(startingAt: $0, player: player)
             }
-        )
+        }
+        return result
     }
     
-    private func getGroup(startingAt position: Int, player: Player) -> Group? {
+    private func getGroup(startingAt position: Int, player: Player, board: [Point]) -> Group? {
         var queue: [Int] = [position]
         var positions: Set<Int> = []
         var visited = [Int: Bool]()
@@ -171,7 +181,7 @@ final class Go {
             if visited[stone] == true { continue }
 
             for neighbor in getNeighbors(for: stone) {
-                switch points[neighbor].state {
+                switch board[neighbor].state {
                 case .taken(let takenPlayer):
                     if takenPlayer == player, visited[neighbor] != true {
                         queue.append(neighbor)
@@ -196,22 +206,20 @@ final class Go {
         )
     }
     
-    private func createGroup(from position: Int, for player: Player) throws -> Group {
+    private func createGroup(from position: Int, for player: Player, board: [Point]) throws -> Group {
         guard !isOver else {
             throw PlayingError.gameOver
         }
         if case .taken = points[position].state {
             throw PlayingError.positionTaken
         }
-        guard let currentPlayerGroup = getGroup(startingAt: position, player: player) else {
+        guard let currentPlayerGroup = getGroup(startingAt: position, player: player, board: board) else {
             throw PlayingError.impossiblePosition
         }
         return currentPlayerGroup
     }
     
     private func suicideDetection(
-        for position: Int,
-        previousState: GoPointState,
         group: Group,
         groupNeighbors: Set<Int>,
         otherPlayerGroups: Set<Group>
@@ -219,13 +227,14 @@ final class Go {
         if group.noLiberties, !otherPlayerGroups.contains(where: {
             $0.noLiberties && $0.positions.containsElement(from: groupNeighbors)
         }) {
-            update(position: position, with: previousState)
-            throw PlayingError.attemptedSuicide
+            if !Settings.suicide() {
+                throw PlayingError.attemptedSuicide
+            }
         }
     }
     
-    private func handleOtherPlayerGroups(_ otherPlayerGroups: Set<Group>) {
-        for group in otherPlayerGroups {
+    private func processGroupsEndOfTurn(groups: Set<Group>) {
+        for group in groups {
             switch group.libertiesCount {
             case 0:
                 handleGroupCaptured(group)
@@ -348,11 +357,6 @@ final class Go {
     
     private func togglePlayer() {
         currentPlayer = currentPlayer.opposite
-    }
-    
-    private func update(position: Int, with state: Point.State) {
-        pastPoints.append(self.points)
-        points[position].state = state
     }
     
     private func handleGroupCaptured(_ group: Group) {
