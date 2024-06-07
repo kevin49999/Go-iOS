@@ -99,7 +99,6 @@ final class Go {
     // MARK: - Public Functions
     
     func playPosition(_ position: Int) throws {
-        print(position)
         do {
             var copy = points
             copy[position].state = .taken(by: currentPlayer)
