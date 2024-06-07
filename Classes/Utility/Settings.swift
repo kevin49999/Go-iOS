@@ -24,11 +24,8 @@ class Settings {
     }
     
     static func suicide(defaults: UserDefaults = .standard) -> Bool {
-        // ""
-        if let suicide = defaults.value(forKey: Items.suicide.rawValue) as? Bool {
-            return suicide
-        }
-        return true
+        // defaults to false
+        defaults.bool(forKey: Items.suicide.rawValue)
     }
 
     static func configure(setting: Items, on: Bool, defaults: UserDefaults = .standard) {

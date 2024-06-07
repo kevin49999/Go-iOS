@@ -10,13 +10,10 @@ import XCTest
 @testable import Go
 
 class GoTests: XCTestCase {
-    
     override func setUp() {
         super.setUp()
-    }
-
-    override func tearDown() {
-        super.tearDown()
+        Settings.configure(setting: .suicide, on: false)
+        Settings.configure(setting: .emojiFeedback, on: false)
     }
 
     // https://www.britgo.org/intro/intro2.html - Diagram 1
@@ -159,7 +156,39 @@ class GoTests: XCTestCase {
         XCTAssertEqual(go.points[10].state, .open)
     }
     
-    // TODO: add test for corner/multi-stone suicide detection
-    // look @ eye rules - add to rules/settings
-    // turn off suicide detection that group just gets killed
+    func testSuicideCornerMultiStoneGroup() {
+        let go = Go(board: .fiveXFive)
+        try? go.playPosition(1)
+        try? go.playPosition(5)
+        try? go.playPosition(6)
+        try? go.playPosition(4)
+        try? go.playPosition(10)
+        do {
+            try go.playPosition(0)
+            XCTFail()
+        } catch let error as PlayingError {
+            XCTAssertEqual(error, PlayingError.attemptedSuicide)
+        } catch {
+            XCTFail()
+        }
+    }
+    
+    func testSuicideOffCornerMultiStoneGroup() {
+        Settings.configure(setting: .suicide, on: true)
+        let go = Go(board: .fiveXFive)
+        try? go.playPosition(1)
+        try? go.playPosition(5)
+        try? go.playPosition(6)
+        try? go.playPosition(4)
+        try? go.playPosition(10)
+        do {
+            try go.playPosition(0)
+            // succeeds!
+        } catch {
+            XCTFail()
+        }
+        
+        XCTAssertEqual(go.points[0].state, .captured(by: .black))
+        XCTAssertEqual(go.points[5].state, .captured(by: .black))
+    }
 }

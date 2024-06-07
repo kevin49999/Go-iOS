@@ -99,6 +99,7 @@ final class Go {
     // MARK: - Public Functions
     
     func playPosition(_ position: Int) throws {
+        print(position)
         do {
             var copy = points
             copy[position].state = .taken(by: currentPlayer)
@@ -227,7 +228,7 @@ final class Go {
         if group.noLiberties, !otherPlayerGroups.contains(where: {
             $0.noLiberties && $0.positions.containsElement(from: groupNeighbors)
         }) {
-            if Settings.suicide() {
+            if !Settings.suicide() {
                 throw PlayingError.attemptedSuicide
             }
         }
