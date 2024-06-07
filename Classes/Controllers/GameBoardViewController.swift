@@ -211,7 +211,7 @@ extension GameBoardViewController: GoDelegate {
 extension GameBoardViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         do {
-            try go.playPosition(indexPath.row)
+            try go.play(indexPath.row)
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
         } catch let error as PlayingError {
             switch error {

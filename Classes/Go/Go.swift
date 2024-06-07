@@ -98,9 +98,14 @@ final class Go {
     
     // MARK: - Public Functions
     
-    func playPosition(_ position: Int) throws {
+    func play(_ position: Int) throws {
+        guard !isOver else { throw PlayingError.gameOver }
+        
         do {
             var copy = points
+            if case .taken = copy[position].state {
+                throw PlayingError.positionTaken
+            }
             copy[position].state = .taken(by: currentPlayer)
             let currentPlayerGroup = try createGroup(
                 from: position,
@@ -120,10 +125,14 @@ final class Go {
             )
             // keep history
             pastPoints.append(points)
-            // move on
+            // update live board
             points[position].state = .taken(by: currentPlayer)
+            // handle capture
             processGroupsEndOfTurn(groups: otherPlayerGroups)
-            processGroupsEndOfTurn(groups: [currentPlayerGroup])
+            // only if suicide? already throw above though
+            let updatedCurrentPlayerGroup = try createGroup(from: position, for: currentPlayer, board: points)
+            processGroupsEndOfTurn(groups: [updatedCurrentPlayerGroup])
+            // toggle
             togglePlayer()
             passedCount = 0
         } catch let error as PlayingError {
@@ -207,16 +216,11 @@ final class Go {
     }
     
     private func createGroup(from position: Int, for player: Player, board: [Point]) throws -> Group {
-        guard !isOver else {
-            throw PlayingError.gameOver
-        }
-        if case .taken = points[position].state {
-            throw PlayingError.positionTaken
-        }
-        guard let currentPlayerGroup = getGroup(startingAt: position, player: player, board: board) else {
+        if let group = getGroup(startingAt: position, player: player, board: board) {
+            return group
+        } else {
             throw PlayingError.impossiblePosition
         }
-        return currentPlayerGroup
     }
     
     private func suicideDetection(
@@ -360,8 +364,8 @@ final class Go {
     }
     
     private func handleGroupCaptured(_ group: Group) {
-        group.positions.forEach {
-            points[$0].state = .captured(by: group.player.opposite)
+        for p in group.positions {
+            points[p].state = .captured(by: group.player.opposite)
         }
         delegate?.positionsCaptured(group.positions)
     }
