@@ -178,17 +178,17 @@
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="59" id="9mF-sb-0Mb">
                                         <rect key="frame" x="0.0" y="109" width="375" height="59"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9mF-sb-0Mb" id="kj7-CA-aIa" userLabel="suicide cell">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9mF-sb-0Mb" id="kj7-CA-aIa" userLabel="suicide">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="59"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Suicide Move" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ny0-AC-Sfc">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Suicide Move" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ny0-AC-Sfc" userLabel="label">
                                                     <rect key="frame" x="24" y="20" width="274" height="19"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SvW-mp-wlK">
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SvW-mp-wlK" userLabel="toggle">
                                                     <rect key="frame" x="306" y="14" width="51" height="31"/>
                                                     <connections>
                                                         <action selector="didTapToggleEmojiFeedback:" destination="U9f-XZ-pbt" eventType="valueChanged" id="UeN-WZ-WuC"/>
@@ -207,6 +207,39 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="59" id="HEO-aG-rAq">
+                                        <rect key="frame" x="0.0" y="168" width="375" height="59"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="HEO-aG-rAq" id="0JO-Ok-ate" userLabel="ko">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="59"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ko" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UGF-ra-5Dq" userLabel="label">
+                                                    <rect key="frame" x="24" y="20" width="274" height="19"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PfD-Ta-QiP" userLabel="toggle">
+                                                    <rect key="frame" x="306" y="14" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="didTapToggleEmojiFeedback:" destination="U9f-XZ-pbt" eventType="valueChanged" id="x8s-I6-HG7"/>
+                                                        <action selector="didTapToggleKo:" destination="U9f-XZ-pbt" eventType="valueChanged" id="Qqv-4W-Q1W"/>
+                                                        <action selector="didTapToggleSuicideDetection:" destination="U9f-XZ-pbt" eventType="valueChanged" id="Nb5-Jd-2QJ"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <color key="backgroundColor" name="Board"/>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="UGF-ra-5Dq" secondAttribute="bottom" priority="999" constant="20" symbolic="YES" id="1Ze-T5-uaD"/>
+                                                <constraint firstItem="UGF-ra-5Dq" firstAttribute="top" secondItem="0JO-Ok-ate" secondAttribute="top" constant="20" symbolic="YES" id="1sH-K7-OMv"/>
+                                                <constraint firstItem="UGF-ra-5Dq" firstAttribute="leading" secondItem="0JO-Ok-ate" secondAttribute="leading" constant="24" id="FRr-jF-cQO"/>
+                                                <constraint firstAttribute="trailing" secondItem="PfD-Ta-QiP" secondAttribute="trailing" constant="20" symbolic="YES" id="QRd-G8-dx8"/>
+                                                <constraint firstItem="PfD-Ta-QiP" firstAttribute="centerY" secondItem="UGF-ra-5Dq" secondAttribute="centerY" id="RaH-FL-eZf"/>
+                                                <constraint firstItem="PfD-Ta-QiP" firstAttribute="leading" secondItem="UGF-ra-5Dq" secondAttribute="trailing" constant="8" symbolic="YES" id="bbw-m3-ctY"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -218,6 +251,7 @@
                     <navigationItem key="navigationItem" title="Settings" id="hft-nf-3op"/>
                     <connections>
                         <outlet property="emojiFeedbackSwitch" destination="aGh-M2-1mG" id="YGn-c8-sSW"/>
+                        <outlet property="koSwitch" destination="PfD-Ta-QiP" id="4AN-fX-eVz"/>
                         <outlet property="suicideDetectionSwitch" destination="SvW-mp-wlK" id="ueB-G8-Z7x"/>
                     </connections>
                 </tableViewController>

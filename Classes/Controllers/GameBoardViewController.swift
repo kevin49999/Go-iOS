@@ -217,6 +217,8 @@ extension GameBoardViewController: UICollectionViewDelegate {
             switch error {
             case .attemptedSuicide:
                 playerAttemptedSuicide()
+            case .ko:
+                break // TODO: indicate ko with what
             case .positionTaken, .gameOver:
                 break
             case .impossiblePosition:

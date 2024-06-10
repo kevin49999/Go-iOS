@@ -13,7 +13,8 @@ class GoTests: XCTestCase {
     override func setUp() {
         super.setUp()
         Settings.configure(setting: .suicide, on: false)
-        Settings.configure(setting: .emojiFeedback, on: false)
+        Settings.configure(setting: .emojiFeedback, on: true)
+        Settings.configure(setting: .ko, on: true)
     }
 
     // https://www.britgo.org/intro/intro2.html - Diagram 1
@@ -190,5 +191,48 @@ class GoTests: XCTestCase {
         
         XCTAssertEqual(go.points[0].state, .captured(by: .black))
         XCTAssertEqual(go.points[5].state, .captured(by: .black))
+    }
+    
+    // https://www.pandanet.co.jp/English/learning_go/learning_go_8.html - diagram 1/2 on 5x5
+    func testKoOn() {
+        Settings.configure(setting: .ko, on: true)
+        let go = Go(board: .fiveXFive)
+        try? go.play(6)
+        try? go.play(7)
+        try? go.play(10)
+        try? go.play(13)
+        try? go.play(16)
+        try? go.play(17)
+        try? go.play(12)
+        try? go.play(11) // white captures
+        
+        do {
+            try go.play(12) // black not allowed to re-capture
+        } catch let error as PlayingError {
+            XCTAssertEqual(error, .ko)
+        } catch {
+            XCTFail()
+        }
+    }
+    
+    // ""
+    func testKoOff() {
+        Settings.configure(setting: .ko, on: false)
+        let go = Go(board: .fiveXFive)
+        try? go.play(6)
+        try? go.play(7)
+        try? go.play(10)
+        try? go.play(13)
+        try? go.play(16)
+        try? go.play(17)
+        try? go.play(12)
+        try? go.play(11) // white captures
+        
+        do {
+            try go.play(12)
+            // allowed to capture!
+        } catch {
+            XCTFail()
+        }
     }
 }

@@ -123,16 +123,21 @@ final class Go {
                 groupNeighbors: neighbors,
                 otherPlayerGroups: otherPlayerGroups
             )
-            // keep history
+            
+            // take position, captures
+            copy[position].state = .taken(by: currentPlayer)
+            detectCaptured(groups: otherPlayerGroups, board: &copy)
+            // only if suicide? already throw above^
+            // is there an order that could matter here
+            let updatedCurrentPlayerGroup = try createGroup(from: position, for: currentPlayer, board: copy)
+            detectCaptured(groups: [updatedCurrentPlayerGroup], board: &copy)
+            
+            // ko
+            try koDetected(board: copy, size: board, pastPoints: pastPoints)
+            
+            // move on
             pastPoints.append(points)
-            // update live board
-            points[position].state = .taken(by: currentPlayer)
-            // handle capture
-            processGroupsEndOfTurn(groups: otherPlayerGroups)
-            // only if suicide? already throw above though
-            let updatedCurrentPlayerGroup = try createGroup(from: position, for: currentPlayer, board: points)
-            processGroupsEndOfTurn(groups: [updatedCurrentPlayerGroup])
-            // toggle
+            points = copy
             togglePlayer()
             passedCount = 0
         } catch let error as PlayingError {
@@ -226,23 +231,40 @@ final class Go {
     private func suicideDetection(
         group: Group,
         groupNeighbors: Set<Int>,
-        otherPlayerGroups: Set<Group>
+        otherPlayerGroups: Set<Group>,
+        settingOn: Bool = Settings.suicide()
     ) throws {
-        if group.noLiberties, !otherPlayerGroups.contains(where: {
+        if !settingOn,
+           group.noLiberties,
+           !otherPlayerGroups.contains(where: {
             $0.noLiberties && $0.positions.containsElement(from: groupNeighbors)
         }) {
-            if !Settings.suicide() {
-                throw PlayingError.attemptedSuicide
-            }
+            throw PlayingError.attemptedSuicide
         }
     }
     
-    private func processGroupsEndOfTurn(groups: Set<Group>) {
+    private func koDetected(
+        board: [Point],
+        size: GoBoard,
+        pastPoints: [[Point]],
+        settingOn: Bool = Settings.ko()
+    ) throws {
+        guard settingOn, pastPoints.count >= 2 else { return }
+        
+        // checking last state this player was in, which is proxy for re-capture - if they went back to the exact same state
+        let checkIndex = pastPoints.endIndex - 1
+        if board.boardsVisuallyMatch(other: pastPoints[checkIndex], size: size) {
+            throw PlayingError.ko
+        }
+    }
+    
+    private func detectCaptured(groups: Set<Group>, board: inout [Point]) {
         for group in groups {
             switch group.libertiesCount {
             case 0:
-                handleGroupCaptured(group)
+                handleGroupCaptured(group, board: &board)
             case 1:
+                // TODO: maybe not for ko
                 delegate?.atariForPlayer(group.player)
             default:
                 continue
@@ -363,9 +385,9 @@ final class Go {
         currentPlayer = currentPlayer.opposite
     }
     
-    private func handleGroupCaptured(_ group: Group) {
+    private func handleGroupCaptured(_ group: Group, board: inout [Point]) {
         for p in group.positions {
-            points[p].state = .captured(by: group.player.opposite)
+            board[p].state = .captured(by: group.player.opposite)
         }
         delegate?.positionsCaptured(group.positions)
     }
@@ -424,5 +446,41 @@ extension Go: Codable {
         try container.encode(passedCount, forKey: .passedCount)
         try container.encode(isOver, forKey: .isOver)
         try container.encode(endGameResult, forKey: .endGameResult)
+    }
+}
+
+// MARK: - "Board"
+
+extension Array where Element == Point {
+    // not the fastest way, but fine
+    func boardsVisuallyMatch(other: [Point], size: GoBoard) -> Bool {
+        self.visual(size: size) == other.visual(size: size)
+    }
+    
+    /// "boowo"
+    /// "ooowb"
+    /// "oboow"
+    /// "ooooo"
+    /// "ooooo"
+    func visual(size: GoBoard) -> [String] {
+        var result = [String]()
+        var line = ""
+        var head = 0
+        while head < self.count {
+            for _ in 0..<size.rows {
+                switch self[head].state {
+                case .captured, .open:
+                    line.append("🟤")
+                case .taken(let player):
+                    line.append(player.string)
+                case .surrounded:
+                    break // do something else..?
+                }
+                head += 1
+            }
+            result.append(line)
+            line = ""
+        }
+        return result
     }
 }

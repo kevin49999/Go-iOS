@@ -13,4 +13,5 @@ enum GoPlayingError: Error {
     case gameOver
     case impossiblePosition
     case positionTaken
+    case ko
 }
