@@ -12,7 +12,8 @@ class Settings {
     enum Items: String {
         case emojiFeedback = "emoji-feedback"
         case suicide
-        // case ko, haptics
+        case ko // the ko
+        // case haptics
     }
 
     static func emojiFeedback(defaults: UserDefaults = .standard) -> Bool {
@@ -26,6 +27,14 @@ class Settings {
     static func suicide(defaults: UserDefaults = .standard) -> Bool {
         // defaults to false
         defaults.bool(forKey: Items.suicide.rawValue)
+    }
+    
+    static func ko(defaults: UserDefaults = .standard) -> Bool {
+        // ""
+        if let val = defaults.value(forKey: Items.ko.rawValue) as? Bool {
+            return val
+        }
+        return true
     }
 
     static func configure(setting: Items, on: Bool, defaults: UserDefaults = .standard) {
