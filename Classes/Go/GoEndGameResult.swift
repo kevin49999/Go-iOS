@@ -33,9 +33,10 @@ struct GoEndGameResult: Codable {
     }
     
     func gameOverDescription() -> String {
+        // TODO: move to label on board, too small
         if let winner = winner() {
             return String(
-                format: "%@ Wins 🏆 %@ %d %@ %d",
+                format: "%@ Wins %@ %d %@ %d",
                 winner.rawValue.capitalized,
                 GoPlayer.black.string,
                 blackScore,

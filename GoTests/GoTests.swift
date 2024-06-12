@@ -236,7 +236,7 @@ class GoTests: XCTestCase {
         }
     }
     
-    // https://www.pandanet.co.jp/English/learning_go/learning_go_7.html
+    // https://www.pandanet.co.jp/English/learning_go/learning_go_7.html - single eye
     func testSingleEyeCapture() {
         let go = Go(board: .nineXNine)
         try? go.play(22)

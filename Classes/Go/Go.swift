@@ -302,7 +302,6 @@ final class Go {
         }
         
         guard let player = surroundingPlayer else {
-            assertionFailure()
             return nil
         }
         return SurroundedTerritory(
