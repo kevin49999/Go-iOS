@@ -235,4 +235,40 @@ class GoTests: XCTestCase {
             XCTFail()
         }
     }
+    
+    // https://www.pandanet.co.jp/English/learning_go/learning_go_7.html
+    func testSingleEyeCapture() {
+        let go = Go(board: .nineXNine)
+        try? go.play(22)
+        try? go.play(31)
+        try? go.play(23)
+        try? go.play(32)
+        try? go.play(33)
+        try? go.play(41)
+        try? go.play(42)
+        try? go.play(49)
+        try? go.play(50)
+        try? go.play(48)
+        try? go.play(58)
+        try? go.play(39)
+        try? go.play(57)
+        try? go.play(30)
+        try? go.play(29)
+        try? go.play(0)
+        try? go.play(38)
+        try? go.play(9)
+        try? go.play(47)
+        try? go.play(18)
+        try? go.play(21)
+        try? go.play(27)
+        try? go.play(40) // black captures
+
+        go.passStone()
+        go.passStone()
+        
+        XCTAssertTrue(go.isOver)
+        let result = go.endGameResult
+        XCTAssertEqual(result?.blackScore, 7)
+        XCTAssertEqual(result?.whiteScore, 0)
+    }
 }
