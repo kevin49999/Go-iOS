@@ -14,6 +14,7 @@ enum GoBoard: Int, CaseIterable, Codable {
     case thirteenXThirteen = 13
     case nineteenXNineteen = 19
 }
+
 extension GoBoard {
     var rows: Int {
         return rawValue

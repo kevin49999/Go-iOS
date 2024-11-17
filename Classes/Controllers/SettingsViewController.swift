@@ -13,6 +13,8 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var suicideDetectionSwitch: UISwitch!
     @IBOutlet weak var koSwitch: UISwitch!
     
+    let githubUrl = URL(string: "https://github.com/kevin49999/Go-iOS")!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -31,5 +33,11 @@ class SettingsViewController: UITableViewController {
     
     @IBAction func didTapToggleKo(_ sender: UISwitch) {
         Settings.configure(setting: .ko, on: sender.isOn)
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == 3 {
+            UIApplication.shared.open(githubUrl)
+        }
     }
 }
