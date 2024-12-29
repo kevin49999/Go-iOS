@@ -12,6 +12,7 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var emojiFeedbackSwitch: UISwitch!
     @IBOutlet weak var suicideDetectionSwitch: UISwitch!
     @IBOutlet weak var koSwitch: UISwitch!
+    @IBOutlet weak var hapticsSwitch: UISwitch!
     
     let githubUrl = URL(string: "https://github.com/kevin49999/Go-iOS")!
     
@@ -21,6 +22,7 @@ class SettingsViewController: UITableViewController {
         emojiFeedbackSwitch.isOn = Settings.emojiFeedback()
         suicideDetectionSwitch.isOn = Settings.suicide()
         koSwitch.isOn = Settings.ko()
+        hapticsSwitch.isOn = Settings.haptics()
     }
     
     @IBAction func didTapToggleEmojiFeedback(_ sender: UISwitch) {
@@ -33,6 +35,10 @@ class SettingsViewController: UITableViewController {
     
     @IBAction func didTapToggleKo(_ sender: UISwitch) {
         Settings.configure(setting: .ko, on: sender.isOn)
+    }
+    
+    @IBAction func didTapToggleHaptics(_ sender: UISwitch) {
+        Settings.configure(setting: .haptics, on: sender.isOn)
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

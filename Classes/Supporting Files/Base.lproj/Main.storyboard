@@ -261,6 +261,9 @@
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mBg-uu-QWw" userLabel="toggle">
                                                     <rect key="frame" x="306" y="14" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="didTapToggleHaptics:" destination="U9f-XZ-pbt" eventType="valueChanged" id="1pR-8p-vaw"/>
+                                                    </connections>
                                                 </switch>
                                             </subviews>
                                             <color key="backgroundColor" name="Board"/>
@@ -308,6 +311,7 @@
                     <navigationItem key="navigationItem" title="Settings" id="hft-nf-3op"/>
                     <connections>
                         <outlet property="emojiFeedbackSwitch" destination="aGh-M2-1mG" id="YGn-c8-sSW"/>
+                        <outlet property="hapticsSwitch" destination="mBg-uu-QWw" id="jRd-9Q-gNF"/>
                         <outlet property="koSwitch" destination="PfD-Ta-QiP" id="4AN-fX-eVz"/>
                         <outlet property="suicideDetectionSwitch" destination="SvW-mp-wlK" id="ueB-G8-Z7x"/>
                     </connections>
