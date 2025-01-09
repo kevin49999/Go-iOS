@@ -8,17 +8,24 @@
 
 import UIKit
 
+fileprivate let githubUrl = URL(string: "https://github.com/kevin49999/Go-iOS")!
+
 class SettingsViewController: UITableViewController {
+    enum Rows: Int {
+        case emojiFeedback
+        case suicide
+        case ko
+        case haptics
+        case source
+    }
+    
     @IBOutlet weak var emojiFeedbackSwitch: UISwitch!
     @IBOutlet weak var suicideDetectionSwitch: UISwitch!
     @IBOutlet weak var koSwitch: UISwitch!
     @IBOutlet weak var hapticsSwitch: UISwitch!
-    
-    let githubUrl = URL(string: "https://github.com/kevin49999/Go-iOS")!
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
-
         emojiFeedbackSwitch.isOn = Settings.emojiFeedback()
         suicideDetectionSwitch.isOn = Settings.suicide()
         koSwitch.isOn = Settings.ko()
@@ -42,7 +49,7 @@ class SettingsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == 3 {
+        if let row = Rows(rawValue: indexPath.row), row == .source {
             UIApplication.shared.open(githubUrl)
         }
     }
