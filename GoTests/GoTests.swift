@@ -271,4 +271,24 @@ class GoTests: XCTestCase {
         XCTAssertEqual(result?.blackScore, 7)
         XCTAssertEqual(result?.whiteScore, 0)
     }
+    
+    func testBasicLibertyCounting() {
+        let go = Go(board: .nineXNine)
+        
+        // Place a single stone and verify it has 4 liberties
+        try? go.play(40) // Center stone
+        
+        let group = go.getGroup(at: 40, board: go.points)
+        XCTAssertEqual(group?.libertiesCount, 4, "Center stone should have 4 liberties")
+        
+        // Edge stone should have 3 liberties
+        try? go.play(36) // Left edge stone
+        let group2 = go.getGroup(at: 36, board: go.points)
+        XCTAssertEqual(group2?.libertiesCount, 3, "Edge stone should have 3 liberties")
+        
+        // Corner stone should have 2 liberties
+        try? go.play(0) // Corner stone
+        let group3 = go.getGroup(at: 0, board: go.points)
+        XCTAssertEqual(group3?.libertiesCount, 2, "Corner stone should have 2 liberties")
+    }
 }
