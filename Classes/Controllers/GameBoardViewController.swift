@@ -213,6 +213,7 @@ extension GameBoardViewController: UICollectionViewDelegate {
         do {
             try go.play(indexPath.row)
             if Settings.haptics() {  UIImpactFeedbackGenerator(style: .light).impactOccurred() }
+            debugPrint("played at:", indexPath.row)
         } catch let error as PlayingError {
             switch error {
             case .attemptedSuicide:

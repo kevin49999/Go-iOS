@@ -271,4 +271,19 @@ class GoTests: XCTestCase {
         XCTAssertEqual(result?.blackScore, 7)
         XCTAssertEqual(result?.whiteScore, 0)
     }
+    
+    func testGroupLiberties() {
+        let go = Go(board: .fiveXFive)
+        try? go.play(7) // black
+        go.passStone()
+        try? go.play(12) // black
+        
+        let group1 = go.getGroup(at: 7, points: go.points)
+        XCTAssertEqual(group1?.libertiesCount, 6) // 2 next to each other
+        
+        go.passStone()
+        try? go.play(8) // black
+        let group2 = go.getGroup(at: 7, points: go.points)
+        XCTAssertEqual(group2?.libertiesCount, 7) // 3 l-shape
+    }
 }
