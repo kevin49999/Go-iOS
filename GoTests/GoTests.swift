@@ -286,4 +286,84 @@ class GoTests: XCTestCase {
         let group2 = go.getGroup(at: 7, points: go.points)
         XCTAssertEqual(group2?.libertiesCount, 7) // 3 l-shape
     }
+    
+    func testIncompleteTerritorySurrounding() {
+        // Create a test board with a territory that isn't fully enclosed
+        let go = Go(board: .fiveXFive)
+        
+        // Set up the board with stones in specific positions
+        // Playing a pattern that creates an incomplete enclosure
+        try? go.play(1)  // Black at (0,1)
+        go.passStone()   // White passes
+        try? go.play(2)  // Black at (0,2)
+        go.passStone()
+        try? go.play(3)  // Black at (0,3)
+        go.passStone()
+        try? go.play(5)  // Black at (1,0)
+        go.passStone()
+        try? go.play(9)  // Black at (1,4)
+        go.passStone()
+        try? go.play(10) // Black at (2,0)
+        go.passStone()
+        try? go.play(14) // Black at (2,4)
+        go.passStone()
+        try? go.play(15) // Black at (3,0)
+        go.passStone()
+        try? go.play(21) // Black at (4,1)
+        go.passStone()
+        try? go.play(22) // Black at (4,2)
+        
+        // We've created a board like:
+        // - B B B -
+        // B - - - B
+        // B - - - B
+        // B - - - -
+        // - B B - -
+        
+        // The center position at (2,2) = 12 is not fully enclosed
+        // but current getSurroundTerritory will incorrectly report it as surrounded
+        
+        // Test territory detection - should return nil since there's an opening
+        let territory = go.getSurroundTerritory(at: 12)
+        
+        // Your current implementation would return a territory object here
+        // The correct behavior should return nil (not surrounded)
+        XCTAssertNil(territory, "Territory at position 12 should not be detected as surrounded")
+        
+        // Create a different board where territory IS fully enclosed for comparison
+        let completeGo = Go(board: .fiveXFive)
+        try? completeGo.play(1)  // Similar pattern but we'll close the opening
+        completeGo.passStone()
+        try? completeGo.play(2)
+        completeGo.passStone()
+        try? completeGo.play(3)
+        completeGo.passStone()
+        try? completeGo.play(5)
+        completeGo.passStone()
+        try? completeGo.play(9)
+        completeGo.passStone()
+        try? completeGo.play(10)
+        completeGo.passStone()
+        try? completeGo.play(14)
+        completeGo.passStone()
+        try? completeGo.play(15)
+        completeGo.passStone()
+        try? completeGo.play(19) // This closes the opening
+        completeGo.passStone()
+        try? completeGo.play(21)
+        completeGo.passStone()
+        try? completeGo.play(22)
+        
+        // Now we have:
+        // - B B B -
+        // B - - - B
+        // B - - - B
+        // B - - - B
+        // - B B B -
+        
+        // This territory IS surrounded and should be detected
+        let completeTerritory = completeGo.getSurroundTerritory(at: 12)
+        XCTAssertNotNil(completeTerritory, "Fully enclosed territory should be detected")
+        XCTAssertEqual(completeTerritory?.player, .black, "Territory should be surrounded by black")
+    }
 }
