@@ -47,7 +47,7 @@ final class Go {
             delegate?.canUndoChanged(canUndo)
         }
     }
-    private (set)var endGameResult: EndGameResult?
+    private(set)var endGameResult: EndGameResult?
     private var passedCount: Int = 0 {
         didSet {
             if passedCount == 2 {
@@ -99,23 +99,23 @@ final class Go {
     // MARK: - Public Functions
     
     func play(_ position: Int) throws {
-        guard !isOver else { throw PlayingError.gameOver }
+        if isOver {
+            throw PlayingError.gameOver
+        }
+        if case .taken = points[position].state {
+            throw PlayingError.positionTaken
+        }
         
         do {
             var copy = points
-            if case .taken = copy[position].state {
-                throw PlayingError.positionTaken
-            }
             copy[position].state = .taken(by: currentPlayer)
-            let currentPlayerGroup = try createGroup(
-                from: position,
-                for: currentPlayer,
-                board: copy
-            )
+            guard let currentPlayerGroup = getGroup(at: position, points: copy) else {
+                throw PlayingError.impossiblePosition
+            }
             let neighbors = getNeighbors(for: position)
             let otherPlayerGroups = getPlayerGroups(
                 player: currentPlayer.opposite,
-                board: copy,
+                points: copy,
                 positions: neighbors
             )
             try suicideDetection(
@@ -123,18 +123,15 @@ final class Go {
                 groupNeighbors: neighbors,
                 otherPlayerGroups: otherPlayerGroups
             )
-            
             // take position, captures
             copy[position].state = .taken(by: currentPlayer)
             detectCaptured(groups: otherPlayerGroups, board: &copy)
-            // only if suicide? already throw above^
-            // is there an order that could matter here
-            let updatedCurrentPlayerGroup = try createGroup(from: position, for: currentPlayer, board: copy)
+            guard let updatedCurrentPlayerGroup = getGroup(at: position, points: copy) else {
+                throw PlayingError.impossiblePosition
+            }
             detectCaptured(groups: [updatedCurrentPlayerGroup], board: &copy)
-            
             // ko
             try koDetected(board: copy, size: board, pastPoints: pastPoints)
-            
             // move on
             pastPoints.append(points)
             points = copy
@@ -167,44 +164,34 @@ final class Go {
         pastPoints.append(self.points)
     }
     
-    // MARK: - Private Functions
-    
-    private func getPlayerGroups(
-        player: Player,
-        board: [Point],
-        positions: Set<Int>
-    ) -> Set<Group> {
-        var result: Set<Group> = .init()
-        for position in positions {
-            if case .taken(let other) = board[position].state, other == player {
-                if let group = getGroup(startingAt: position, player: player, board: board) {
-                    result.insert(group)
-                }
-            }
+    func getGroup(at position: Int, points: [Point]) -> Group? {
+        let player: Player
+        switch points[position].state {
+        case .taken(let p):
+            player = p
+        default:
+            return nil
         }
-        return result
-    }
-    
-    private func getGroup(startingAt position: Int, player: Player, board: [Point]) -> Group? {
+        
         var queue: [Int] = [position]
         var positions: Set<Int> = []
         var visited = [Int: Bool]()
-        var libertiesCount = 0
+        var liberties: Set<Int> = []
         
         while let stone = queue.popLast() {
             if visited[stone] == true { continue }
 
             for neighbor in getNeighbors(for: stone) {
-                switch board[neighbor].state {
+                switch points[neighbor].state {
                 case .taken(let takenPlayer):
                     if takenPlayer == player, visited[neighbor] != true {
                         queue.append(neighbor)
                     }
                 case .open:
-                    libertiesCount += 1
+                    liberties.insert(neighbor)
                 case .captured(let capturedBy):
                     if capturedBy == player {
-                        libertiesCount += 1
+                        liberties.insert(neighbor)
                     }
                 case .surrounded:
                     continue
@@ -216,16 +203,27 @@ final class Go {
         return Group(
             player: player,
             positions: positions,
-            libertiesCount: libertiesCount
+            libertiesCount: liberties.count
         )
     }
     
-    private func createGroup(from position: Int, for player: Player, board: [Point]) throws -> Group {
-        if let group = getGroup(startingAt: position, player: player, board: board) {
-            return group
-        } else {
-            throw PlayingError.impossiblePosition
+    // MARK: - Private Functions
+    
+    private func getPlayerGroups(
+        player: Player,
+        points: [Point],
+        positions: Set<Int>
+    ) -> Set<Group> {
+        var result: Set<Group> = .init()
+        for position in positions {
+            if case .taken(let player2) = points[position].state,
+               player == player2,
+               let group = getGroup(at: position, points: points) {
+                // double checks .taken but okay
+                result.insert(group)
+            }
         }
+        return result
     }
     
     private func suicideDetection(
