@@ -9,6 +9,6 @@
 import Foundation
 
 struct GoSurroundedTerritory: Hashable {
-    let player: Player
+    let player: GoPlayer
     let positions: Set<Int>
 }

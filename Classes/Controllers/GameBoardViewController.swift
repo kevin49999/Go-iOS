@@ -111,7 +111,7 @@ class GameBoardViewController: UIViewController {
             )
             alert.addAction(passStone)
         }
-        for board in Board.allCases {
+        for board in GoBoard.allCases {
             let title = "New \(board.rows)x\(board.rows)"
             let new = UIAlertAction(
                 title: NSLocalizedString(title, comment: ""),
@@ -131,7 +131,7 @@ class GameBoardViewController: UIViewController {
         present(alert, animated: true)
     }
     
-    private func presentHandicapStoneSelection(for board: Board) {
+    private func presentHandicapStoneSelection(for board: GoBoard) {
         let alert = UIAlertController(
             title: NSLocalizedString("Handicap Stones", comment: ""),
             message: nil,
@@ -172,7 +172,7 @@ class GameBoardViewController: UIViewController {
 // MARK: - GoDelegate
 
 extension GameBoardViewController: GoDelegate {
-    func atariForPlayer(_ player: Player) {
+    func atariForPlayer(_ player: GoPlayer) {
         actionLabel.animateCallout("🎯")
     }
     
@@ -214,7 +214,7 @@ extension GameBoardViewController: UICollectionViewDelegate {
             try go.play(indexPath.row)
             if Settings.haptics() {  UIImpactFeedbackGenerator(style: .light).impactOccurred() }
             debugPrint("played at:", indexPath.row)
-        } catch let error as PlayingError {
+        } catch let error as GoPlayingError {
             switch error {
             case .attemptedSuicide:
                 playerAttemptedSuicide()

@@ -9,13 +9,9 @@
 import Foundation
 
 struct GoGroup: Hashable {
-    let player: Player
+    let player: GoPlayer
     let positions: Set<Int>
     let libertiesCount: Int
-}
-
-extension GoGroup {
-    var noLiberties: Bool {
-        return libertiesCount == 0
-    }
+    
+    var noLiberties: Bool { libertiesCount == 0 }
 }

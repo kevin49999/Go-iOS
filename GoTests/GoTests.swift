@@ -143,8 +143,8 @@ class GoTests: XCTestCase {
         do {
             try go.play(11)
             XCTFail()
-        } catch let error as PlayingError {
-            XCTAssertEqual(error, PlayingError.attemptedSuicide)
+        } catch let error as GoPlayingError {
+            XCTAssertEqual(error, .attemptedSuicide)
         } catch {
             XCTFail()
         }
@@ -167,8 +167,8 @@ class GoTests: XCTestCase {
         do {
             try go.play(0)
             XCTFail()
-        } catch let error as PlayingError {
-            XCTAssertEqual(error, PlayingError.attemptedSuicide)
+        } catch let error as GoPlayingError {
+            XCTAssertEqual(error, .attemptedSuicide)
         } catch {
             XCTFail()
         }
@@ -208,7 +208,7 @@ class GoTests: XCTestCase {
         
         do {
             try go.play(12) // black not allowed to re-capture
-        } catch let error as PlayingError {
+        } catch let error as GoPlayingError {
             XCTAssertEqual(error, .ko)
         } catch {
             XCTFail()

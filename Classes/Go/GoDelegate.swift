@@ -9,10 +9,10 @@
 import Foundation
 
 protocol GoDelegate: AnyObject {
-    func atariForPlayer(_ player: Player)
+    func atariForPlayer(_ player: GoPlayer)
     func canUndoChanged(_ canUndo: Bool)
-    func gameOver(result: EndGameResult)
+    func gameOver(result: GoEndGameResult)
     func positionsCaptured(_ positions: Set<Int>)
-    func switchedToPlayer(_ player: Player)
+    func switchedToPlayer(_ player: GoPlayer)
     func goPointsUpdated()
 }
