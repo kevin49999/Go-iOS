@@ -22,7 +22,7 @@ struct GoEndGameResult: Codable {
         return whiteCaptured + whiteSurrounded
     }
     
-    func winner() -> Player? {
+    func winner() -> GoPlayer? {
         guard blackScore != whiteScore else {
             return nil
         }

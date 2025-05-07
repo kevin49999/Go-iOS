@@ -14,17 +14,17 @@ final class Go {
     
     let board: GoBoard
     weak var delegate: GoDelegate?
-    private(set)var points: [Point] { // top left -> bottom right
+    private(set)var points: [GoPoint] { // top left -> bottom right
         didSet {
             delegate?.goPointsUpdated()
         }
     }
-    private(set) var pastPoints: [[Point]] {
+    private(set) var pastPoints: [[GoPoint]] {
         didSet {
             canUndo = !pastPoints.isEmpty
         }
     }
-    private(set) var currentPlayer: Player {
+    private(set) var currentPlayer: GoPlayer {
         didSet {
             guard oldValue != currentPlayer else {
                 return
@@ -47,7 +47,7 @@ final class Go {
             delegate?.canUndoChanged(canUndo)
         }
     }
-    private(set)var endGameResult: EndGameResult?
+    private(set)var endGameResult: GoEndGameResult?
     private var passedCount: Int = 0 {
         didSet {
             if passedCount == 2 {
@@ -62,7 +62,7 @@ final class Go {
         self.board = board
         self.pastPoints = []
         var currentPoints = (0..<board.cells)
-            .map { Point(index: $0, state: .open)
+            .map { GoPoint(index: $0, state: .open)
         }
         self.currentPlayer = .black
         if handicap > 0 {
@@ -78,13 +78,13 @@ final class Go {
     }
     
     init(
-        board: Board,
-        pastPoints: [[Point]] = [[]],
-        points: [Point] = [],
-        currentPlayer: Player = .black,
+        board: GoBoard,
+        pastPoints: [[GoPoint]] = [[]],
+        points: [GoPoint] = [],
+        currentPlayer: GoPlayer = .black,
         passedCount: Int = 0,
         isOver: Bool = false,
-        endGameResult: EndGameResult? = nil
+        endGameResult: GoEndGameResult? = nil
     ) {
         self.board = board
         self.pastPoints = pastPoints
@@ -100,17 +100,17 @@ final class Go {
     
     func play(_ position: Int) throws {
         if isOver {
-            throw PlayingError.gameOver
+            throw GoPlayingError.gameOver
         }
         if case .taken = points[position].state {
-            throw PlayingError.positionTaken
+            throw GoPlayingError.positionTaken
         }
         
         do {
             var copy = points
             copy[position].state = .taken(by: currentPlayer)
             guard let currentPlayerGroup = getGroup(at: position, points: copy) else {
-                throw PlayingError.impossiblePosition
+                throw GoPlayingError.impossiblePosition
             }
             let neighbors = getNeighbors(for: position)
             let otherPlayerGroups = getPlayerGroups(
@@ -127,7 +127,7 @@ final class Go {
             copy[position].state = .taken(by: currentPlayer)
             detectCaptured(groups: otherPlayerGroups, board: &copy)
             guard let updatedCurrentPlayerGroup = getGroup(at: position, points: copy) else {
-                throw PlayingError.impossiblePosition
+                throw GoPlayingError.impossiblePosition
             }
             detectCaptured(groups: [updatedCurrentPlayerGroup], board: &copy)
             // ko
@@ -137,7 +137,7 @@ final class Go {
             points = copy
             togglePlayer()
             passedCount = 0
-        } catch let error as PlayingError {
+        } catch let error as GoPlayingError {
             throw error
         } catch {
             assertionFailure()
@@ -164,8 +164,8 @@ final class Go {
         pastPoints.append(self.points)
     }
     
-    func getGroup(at position: Int, points: [Point]) -> Group? {
-        let player: Player
+    func getGroup(at position: Int, points: [GoPoint]) -> GoGroup? {
+        let player: GoPlayer
         switch points[position].state {
         case .taken(let p):
             player = p
@@ -200,7 +200,7 @@ final class Go {
             positions.insert(stone)
             visited[stone] = true
         }
-        return Group(
+        return GoGroup(
             player: player,
             positions: positions,
             libertiesCount: liberties.count
@@ -210,11 +210,11 @@ final class Go {
     // MARK: - Private Functions
     
     private func getPlayerGroups(
-        player: Player,
-        points: [Point],
+        player: GoPlayer,
+        points: [GoPoint],
         positions: Set<Int>
-    ) -> Set<Group> {
-        var result: Set<Group> = .init()
+    ) -> Set<GoGroup> {
+        var result: Set<GoGroup> = .init()
         for position in positions {
             if case .taken(let player2) = points[position].state,
                player == player2,
@@ -227,9 +227,9 @@ final class Go {
     }
     
     private func suicideDetection(
-        group: Group,
+        group: GoGroup,
         groupNeighbors: Set<Int>,
-        otherPlayerGroups: Set<Group>,
+        otherPlayerGroups: Set<GoGroup>,
         settingOn: Bool = Settings.suicide()
     ) throws {
         if !settingOn,
@@ -237,14 +237,14 @@ final class Go {
            !otherPlayerGroups.contains(where: {
             $0.noLiberties && $0.positions.containsElement(from: groupNeighbors)
         }) {
-            throw PlayingError.attemptedSuicide
+            throw GoPlayingError.attemptedSuicide
         }
     }
     
     private func koDetected(
-        board: [Point],
+        board: [GoPoint],
         size: GoBoard,
-        pastPoints: [[Point]],
+        pastPoints: [[GoPoint]],
         settingOn: Bool = Settings.ko()
     ) throws {
         guard settingOn, pastPoints.count >= 2 else { return }
@@ -252,11 +252,11 @@ final class Go {
         // checking last state this player was in, which is proxy for re-capture - if they went back to the exact same state
         let checkIndex = pastPoints.endIndex - 1
         if board.boardsVisuallyMatch(other: pastPoints[checkIndex], size: size) {
-            throw PlayingError.ko
+            throw GoPlayingError.ko
         }
     }
     
-    private func detectCaptured(groups: Set<Group>, board: inout [Point]) {
+    private func detectCaptured(groups: Set<GoGroup>, board: inout [GoPoint]) {
         for group in groups {
             switch group.libertiesCount {
             case 0:
@@ -270,7 +270,7 @@ final class Go {
         }
     }
     
-    private func getSurroundTerritory(startingAt position: Int) -> SurroundedTerritory? {
+    private func getSurroundTerritory(startingAt position: Int) -> GoSurroundedTerritory? {
         var queue: [Int] = [position]
         var positions: Set<Int> = []
         var visited = [Int: Bool]()
@@ -302,14 +302,14 @@ final class Go {
         guard let player = surroundingPlayer else {
             return nil
         }
-        return SurroundedTerritory(
+        return GoSurroundedTerritory(
             player: player,
             positions: positions
         )
     }
     
     private func endGame() {
-        var surroundedTerritories = Set<SurroundedTerritory>()
+        var surroundedTerritories = Set<GoSurroundedTerritory>()
         for (i, point) in points.enumerated() where point.state == .open {
             if let surrounded = getSurroundTerritory(startingAt: i) {
                 surroundedTerritories.insert(surrounded)
@@ -382,14 +382,14 @@ final class Go {
         currentPlayer = currentPlayer.opposite
     }
     
-    private func handleGroupCaptured(_ group: Group, board: inout [Point]) {
+    private func handleGroupCaptured(_ group: GoGroup, board: inout [GoPoint]) {
         for p in group.positions {
             board[p].state = .captured(by: group.player.opposite)
         }
         delegate?.positionsCaptured(group.positions)
     }
     
-    private func captures(for player: Player, past: [[Point]]) -> Int {
+    private func captures(for player: GoPlayer, past: [[GoPoint]]) -> Int {
         var positions = Set<Int>()
         for points in past {
             for (i, point) in points.enumerated() where point.state == .captured(by: player) {
@@ -417,8 +417,8 @@ extension Go: Codable {
     convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let board = try container.decode(GoBoard.self, forKey: .board)
-        let pastPoints = try container.decode([[Point]].self, forKey: .pastPoints)
-        let points = try container.decode([Point].self, forKey: .points)
+        let pastPoints = try container.decode([[GoPoint]].self, forKey: .pastPoints)
+        let points = try container.decode([GoPoint].self, forKey: .points)
         let currentPlayer = try container.decode(GoPlayer.self, forKey: .currentPlayer)
         let passedCount = try container.decode(Int.self, forKey: .passedCount)
         let isOver = try container.decode(Bool.self, forKey: .isOver)
@@ -448,9 +448,9 @@ extension Go: Codable {
 
 // MARK: - "Board"
 
-extension Array where Element == Point {
+extension Array where Element == GoPoint {
     // not the fastest way, but fine
-    func boardsVisuallyMatch(other: [Point], size: GoBoard) -> Bool {
+    func boardsVisuallyMatch(other: [GoPoint], size: GoBoard) -> Bool {
         self.visual(size: size) == other.visual(size: size)
     }
     

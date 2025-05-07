@@ -12,8 +12,8 @@ enum GoPlayer: String, Codable {
     case black
     case white
     
-    var opposite: Player {
-        return (self == .black) ? .white : .black
+    var opposite: Self {
+        (self == .black) ? .white : .black
     }
 }
 

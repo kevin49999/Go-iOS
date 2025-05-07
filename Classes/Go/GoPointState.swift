@@ -9,10 +9,10 @@
 import Foundation
 
 enum GoPointState: Codable, Hashable {
-    case taken(by: Player)
+    case taken(by: GoPlayer)
     case open
-    case captured(by: Player)
-    case surrounded(by: Player)
+    case captured(by: GoPlayer)
+    case surrounded(by: GoPlayer)
     
     enum CodingKeys: String, CodingKey {
         case index
@@ -27,15 +27,15 @@ enum GoPointState: Codable, Hashable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         if try container.decodeIfPresent(String.self, forKey: .taken) != nil,
             let playerString = try container.decodeIfPresent(String.self, forKey: .player),
-            let player = Player(rawValue: playerString) {
+            let player = GoPlayer(rawValue: playerString) {
             self = .taken(by: player)
         } else if try container.decodeIfPresent(String.self, forKey: .captured) != nil,
             let playerString = try container.decodeIfPresent(String.self, forKey: .player),
-            let player = Player(rawValue: playerString) {
+            let player = GoPlayer(rawValue: playerString) {
             self = .captured(by: player)
         } else if try container.decodeIfPresent(String.self, forKey: .surrounded) != nil,
             let playerString = try container.decodeIfPresent(String.self, forKey: .player),
-            let player = Player(rawValue: playerString) {
+            let player = GoPlayer(rawValue: playerString) {
             self = .surrounded(by: player)
         } else {
             _ = try container.decode(String.self, forKey: .open)
