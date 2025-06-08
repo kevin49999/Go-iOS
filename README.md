@@ -6,14 +6,14 @@ Play Go on your iPhone/iPad :iphone:
 
 ## Contributing
 
-Anyone is welcome to contribute 🤝
+Anyone is welcome to contribute and create issues
 
 ## Ideas
 
-- [ ] Save previous games for later study and walkthrough
+- [ ] Export games (support Smart Game Format)
+- [ ] Save previous games for later study (also relates to supporting Smart Game Format)
 - [ ] Localize in Chinese and other languages
 - [ ] Better zoom and features (ex: hold + drag to place stone) for playing a large board game on a small phone
-- [ ] Game Center setup for networked games
 - [ ] Improve design/board backgrounds (wood, marble, etc.)
 
 ## Credits
