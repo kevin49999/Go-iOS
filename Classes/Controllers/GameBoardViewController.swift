@@ -75,10 +75,14 @@ class GameBoardViewController: UIViewController {
             go: go,
             collectionView: boardCollectionView
         )
-        navigationItem.title = NSLocalizedString(
-            go.endGameResult?.gameOverDescription() ?? "Go \(go.currentPlayer.string)",
-            comment: ""
-        )
+        if let gameOverDesc = go.endGameResult?.gameOverDescription() {
+            actionLabel.text = gameOverDesc
+            actionLabel.alpha = 1.0
+        } else {
+            navigationItem.title = "Go \(go.currentPlayer.string)"
+            actionLabel.text = ""
+            actionLabel.alpha = 0.0
+        }
         var snapshot = NSDiffableDataSourceSnapshot<Section, GoPoint>()
         snapshot.appendSections([.main])
         snapshot.appendItems(go.points)
@@ -177,10 +181,8 @@ extension GameBoardViewController: GoDelegate {
     }
     
     func gameOver(result: GoEndGameResult) {
-        navigationItem.title = NSLocalizedString(
-            result.gameOverDescription(),
-            comment: ""
-        )
+        actionLabel.text = result.gameOverDescription()
+        actionLabel.alpha = 1.0
         undoBarButtonItem.isEnabled = false
         // request review
         SKStoreReviewController.requestReviewInWindow()
