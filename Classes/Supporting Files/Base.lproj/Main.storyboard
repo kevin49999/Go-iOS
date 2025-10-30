@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="WY6-Hy-Fuf">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24128" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="WY6-Hy-Fuf">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -15,7 +15,7 @@
             <objects>
                 <navigationController id="WY6-Hy-Fuf" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="mTG-Pe-rPj">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="375" height="54"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" systemColor="labelColor"/>
                     </navigationBar>
@@ -36,13 +36,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" maximumZoomScale="5" translatesAutoresizingMaskIntoConstraints="NO" id="1vJ-A6-cpn">
-                                <rect key="frame" x="8" y="154" width="359" height="359"/>
+                                <rect key="frame" x="12" y="158" width="351" height="351"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vTu-Qx-YG2" userLabel="Zoom View">
-                                        <rect key="frame" x="0.0" y="0.0" width="359" height="359"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="351" height="351"/>
                                         <subviews>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="vrr-Gh-4MH">
-                                                <rect key="frame" x="0.0" y="0.0" width="359" height="359"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="351" height="351"/>
                                                 <color key="backgroundColor" name="Board"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="vrr-Gh-4MH" secondAttribute="height" multiplier="1:1" id="M8w-zY-kUg"/>
@@ -81,7 +81,7 @@
                                 </connections>
                             </scrollView>
                             <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Action!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RV2-mQ-4yE">
-                                <rect key="frame" x="20" y="126.5" width="335" height="19.5"/>
+                                <rect key="frame" x="20" y="130.5" width="335" height="19.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -90,8 +90,8 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" name="Board"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="1vJ-A6-cpn" secondAttribute="trailing" constant="8" id="HsK-9c-FE3"/>
-                            <constraint firstItem="1vJ-A6-cpn" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="8" id="Ptx-8I-wnI"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="1vJ-A6-cpn" secondAttribute="trailing" constant="12" id="HsK-9c-FE3"/>
+                            <constraint firstItem="1vJ-A6-cpn" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="12" id="Ptx-8I-wnI"/>
                             <constraint firstItem="1vJ-A6-cpn" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="W6p-Vu-iIB"/>
                             <constraint firstItem="RV2-mQ-4yE" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="hTA-8B-gLz"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="RV2-mQ-4yE" secondAttribute="trailing" constant="20" id="iPC-aK-TmS"/>
@@ -152,13 +152,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Emoji Feedback 🎯" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pMN-8W-xbZ">
-                                                    <rect key="frame" x="24" y="20" width="274" height="20.5"/>
+                                                    <rect key="frame" x="24" y="20" width="262" height="20.5"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aGh-M2-1mG">
-                                                    <rect key="frame" x="306" y="15" width="51" height="31"/>
+                                                    <rect key="frame" x="294" y="16.5" width="63" height="28"/>
                                                     <connections>
                                                         <action selector="didTapToggleEmojiFeedback:" destination="U9f-XZ-pbt" eventType="valueChanged" id="yVA-xo-8J8"/>
                                                     </connections>
@@ -192,13 +192,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Suicide Move" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ny0-AC-Sfc" userLabel="label">
-                                                    <rect key="frame" x="24" y="20" width="274" height="19"/>
+                                                    <rect key="frame" x="24" y="20" width="262" height="19"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SvW-mp-wlK" userLabel="toggle">
-                                                    <rect key="frame" x="306" y="14" width="51" height="31"/>
+                                                    <rect key="frame" x="294" y="15.5" width="63" height="28"/>
                                                     <connections>
                                                         <action selector="didTapToggleSuicideDetection:" destination="U9f-XZ-pbt" eventType="valueChanged" id="bb0-cf-jr9"/>
                                                     </connections>
@@ -223,13 +223,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ko" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UGF-ra-5Dq" userLabel="label">
-                                                    <rect key="frame" x="24" y="20" width="274" height="19"/>
+                                                    <rect key="frame" x="24" y="20" width="262" height="19"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PfD-Ta-QiP" userLabel="toggle">
-                                                    <rect key="frame" x="306" y="14" width="51" height="31"/>
+                                                    <rect key="frame" x="294" y="15.5" width="63" height="28"/>
                                                     <connections>
                                                         <action selector="didTapToggleKo:" destination="U9f-XZ-pbt" eventType="valueChanged" id="Qqv-4W-Q1W"/>
                                                     </connections>
@@ -254,13 +254,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Haptics" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bx8-Z5-w0q" userLabel="label">
-                                                    <rect key="frame" x="24" y="20" width="274" height="19"/>
+                                                    <rect key="frame" x="24" y="20" width="262" height="19"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mBg-uu-QWw" userLabel="toggle">
-                                                    <rect key="frame" x="306" y="14" width="51" height="31"/>
+                                                    <rect key="frame" x="294" y="15.5" width="63" height="28"/>
                                                     <connections>
                                                         <action selector="didTapToggleHaptics:" destination="U9f-XZ-pbt" eventType="valueChanged" id="1pR-8p-vaw"/>
                                                     </connections>
