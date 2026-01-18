@@ -23,13 +23,15 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var suicideDetectionSwitch: UISwitch!
     @IBOutlet weak var koSwitch: UISwitch!
     @IBOutlet weak var hapticsSwitch: UISwitch!
-        
+    @IBOutlet weak var buildLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         emojiFeedbackSwitch.isOn = Settings.emojiFeedback()
         suicideDetectionSwitch.isOn = Settings.suicide()
         koSwitch.isOn = Settings.ko()
         hapticsSwitch.isOn = Settings.haptics()
+        buildLabel.text = Bundle.main.versionNumberString
     }
     
     @IBAction func didTapToggleEmojiFeedback(_ sender: UISwitch) {

@@ -28,6 +28,7 @@
 		0A88431122D57C7B00E5FF7B /* GoGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A88431022D57C7B00E5FF7B /* GoGroup.swift */; };
 		0A88431322D57C9F00E5FF7B /* GoSurroundedTerritory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A88431222D57C9F00E5FF7B /* GoSurroundedTerritory.swift */; };
 		0A88431522D57CAE00E5FF7B /* GoPlayingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A88431422D57CAE00E5FF7B /* GoPlayingError.swift */; };
+		0AE3184A2F1D993700AEFF4B /* Bundle+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE318492F1D993700AEFF4B /* Bundle+Extensions.swift */; };
 		0AF46461225AE50B00DE34EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46460225AE50B00DE34EA /* AppDelegate.swift */; };
 		0AF46463225AE50B00DE34EA /* GameBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46462225AE50B00DE34EA /* GameBoardViewController.swift */; };
 		0AF46466225AE50B00DE34EA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AF46464225AE50B00DE34EA /* Main.storyboard */; };
@@ -76,6 +77,7 @@
 		0A88431022D57C7B00E5FF7B /* GoGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoGroup.swift; sourceTree = "<group>"; };
 		0A88431222D57C9F00E5FF7B /* GoSurroundedTerritory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoSurroundedTerritory.swift; sourceTree = "<group>"; };
 		0A88431422D57CAE00E5FF7B /* GoPlayingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoPlayingError.swift; sourceTree = "<group>"; };
+		0AE318492F1D993700AEFF4B /* Bundle+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extensions.swift"; sourceTree = "<group>"; };
 		0AF4645D225AE50B00DE34EA /* Go.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Go.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0AF46460225AE50B00DE34EA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0AF46462225AE50B00DE34EA /* GameBoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBoardViewController.swift; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				0A88430A22D4444E00E5FF7B /* Set+Contains.swift */,
+				0AE318492F1D993700AEFF4B /* Bundle+Extensions.swift */,
 				52B209A528047D6F0084892C /* SKStoreReviewController+Extensions.swift */,
 				0A098551230B0D9D00BA1881 /* UIAlertAction+Defaults.swift */,
 				0A09854E230B0AB800BA1881 /* UIAlertController+AddActions.swift */,
@@ -360,6 +363,7 @@
 				0A634D0D22A8A4EA00FE10E0 /* UILabel+AnimateCallout.swift in Sources */,
 				0A88431322D57C9F00E5FF7B /* GoSurroundedTerritory.swift in Sources */,
 				0A098552230B0D9D00BA1881 /* UIAlertAction+Defaults.swift in Sources */,
+				0AE3184A2F1D993700AEFF4B /* Bundle+Extensions.swift in Sources */,
 				0AF4648E226B922400DE34EA /* Styles.swift in Sources */,
 				0A64ADEF22C5BC7D00989A9D /* GoEndGameResult.swift in Sources */,
 				0A6E0E6C22B72A300074E0CA /* GoPointState.swift in Sources */,
