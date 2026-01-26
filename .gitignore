@@ -68,6 +68,5 @@ fastlane/Preview.html
 fastlane/screenshots/**/*.png
 fastlane/test_output
 Classes/Supporting Files/GoogleService-Info.plist
-Prod.xcconfig
-Debug.xcconfig
+Config.xcconfig
 Classes/Supporting Files/AdMob.swift
