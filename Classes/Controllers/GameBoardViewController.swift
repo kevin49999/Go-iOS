@@ -9,6 +9,8 @@
 import StoreKit
 import UIKit
 
+import GoogleMobileAds
+
 class GameBoardViewController: UIViewController {
     
     // MARK: - Section
@@ -40,6 +42,7 @@ class GameBoardViewController: UIViewController {
         cell.configure(with: viewModel)
         return cell
     }
+    private let bannerView = BannerView()
     
     // MARK: - IBOutlet
     
@@ -64,6 +67,17 @@ class GameBoardViewController: UIViewController {
             name: UIApplication.willResignActiveNotification,
             object: nil
         )
+        
+        bannerView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(bannerView)
+        NSLayoutConstraint.activate([
+          bannerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+          bannerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+        ])
+        bannerView.adUnitID = AdMob.bannerUnitID
+        bannerView.adSize = currentOrientationAnchoredAdaptiveBanner(width: view.frame.width)
+        bannerView.load(Request())
+        bannerView.delegate = self
     }
     
     // MARK: - Game
@@ -254,5 +268,16 @@ extension GameBoardViewController: UIScrollViewDelegate {
             return nil
         }
         return boardZoomView
+    }
+}
+
+// MARK: - BannerViewDelegate
+
+extension GameBoardViewController: BannerViewDelegate {
+    func bannerViewDidReceiveAd(_ bannerView: BannerView) {
+      bannerView.alpha = 0
+      UIView.animate(withDuration: 1, animations: {
+        bannerView.alpha = 1
+      })
     }
 }
