@@ -47,6 +47,7 @@ class GameBoardViewController: UIViewController {
     // MARK: - IBOutlet
     
     @IBOutlet weak private var undoBarButtonItem: UIBarButtonItem!
+    @IBOutlet weak private var passBarButtonItem: UIBarButtonItem!
     @IBOutlet weak private var boardCollectionView: UICollectionView!
     @IBOutlet weak private var boardZoomView: UIView!
     @IBOutlet weak private var boardScrollView: UIScrollView!
@@ -80,11 +81,12 @@ class GameBoardViewController: UIViewController {
         bannerView.delegate = self
     }
     
-    // MARK: - Game
+    // MARK: - Functions
     
     private func goGameInitialized(_ go: Go) {
         go.delegate = self
         undoBarButtonItem.isEnabled = go.canUndo
+        passBarButtonItem.isEnabled = true
         viewModelFactory = GoCellViewModelFactory(
             go: go,
             collectionView: boardCollectionView
@@ -103,52 +105,11 @@ class GameBoardViewController: UIViewController {
         snapshot.reloadItems(go.points)
         dataSource.apply(snapshot, animatingDifferences: false)
     }
-    
-    // MARK: - Playing Actions
-    
+        
     func playerAttemptedSuicide() {
         actionLabel.animateCallout("☠️")
     }
-    
-    // MARK: - Alerts
-    
-    private func presentGameActionAlert() {
-        let alert = UIAlertController(
-            title: nil,
-            message: nil,
-            preferredStyle: .actionSheet
-        )
-        if !go.isOver {
-            let title = "Pass Stone \(go.currentPlayer.string)"
-            let passStone = UIAlertAction(
-                title: NSLocalizedString(title, comment: ""),
-                style: .destructive,
-                handler: { [weak self] _ in
-                    self?.go.passStone()
-                }
-            )
-            alert.addAction(passStone)
-        }
-        for board in GoBoard.allCases {
-            let title = "New \(board.rows)x\(board.rows)"
-            let new = UIAlertAction(
-                title: NSLocalizedString(title, comment: ""),
-                style: .default,
-                handler: { [weak self] _ in
-                    if board.canHandicap {
-                        self?.presentHandicapStoneSelection(for: board)
-                    } else {
-                        self?.go = Go(board: board)
-                    }
-                }
-            )
-            alert.addAction(new)
-        }
-        alert.addAction(UIAlertAction.cancel())
-        alert.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
-        present(alert, animated: true)
-    }
-    
+        
     private func presentHandicapStoneSelection(for board: GoBoard) {
         let alert = UIAlertController(
             title: NSLocalizedString("Handicap Stones", comment: ""),
@@ -176,8 +137,50 @@ class GameBoardViewController: UIViewController {
         go.undoLast()
     }
     
-    @IBAction func tappedAction(_ sender: Any) {
-        presentGameActionAlert()
+    @IBAction func tappedNew(_ sender: UIBarButtonItem) {
+        let alert = UIAlertController(
+            title: nil,
+            message: nil,
+            preferredStyle: .actionSheet
+        )
+        for board in GoBoard.allCases {
+            let title = "New \(board.rows)x\(board.rows)"
+            let new = UIAlertAction(
+                title: NSLocalizedString(title, comment: ""),
+                style: .default,
+                handler: { [weak self] _ in
+                    if board.canHandicap {
+                        self?.presentHandicapStoneSelection(for: board)
+                    } else {
+                        self?.go = Go(board: board)
+                    }
+                }
+            )
+            alert.addAction(new)
+        }
+        alert.addAction(UIAlertAction.cancel())
+        alert.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItems?[1]
+        present(alert, animated: true)
+    }
+    
+    @IBAction func tappedPass(_ sender: UIBarButtonItem) {
+        let alert = UIAlertController(
+            title: nil,
+            message: nil,
+            preferredStyle: .actionSheet
+        )
+        let title = "Pass Stone \(go.currentPlayer.string)"
+        let passStone = UIAlertAction(
+            title: NSLocalizedString(title, comment: ""),
+            style: .destructive,
+            handler: { [weak self] _ in
+                self?.go.passStone()
+            }
+        )
+        alert.addAction(passStone)
+        alert.addAction(UIAlertAction.cancel())
+        alert.popoverPresentationController?.barButtonItem = navigationItem.leftBarButtonItems?[1]
+        present(alert, animated: true)
     }
     
     // MARK: - Notifications
@@ -198,6 +201,7 @@ extension GameBoardViewController: GoDelegate {
         actionLabel.text = result.gameOverDescription()
         actionLabel.alpha = 1.0
         undoBarButtonItem.isEnabled = false
+        passBarButtonItem.isEnabled = false
         // request review
         SKStoreReviewController.requestReviewInWindow()
     }

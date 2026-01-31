@@ -100,23 +100,31 @@
                     </view>
                     <navigationItem key="navigationItem" title="Go" id="apy-4b-8xf">
                         <barButtonItem key="backBarButtonItem" title=" " id="Eyk-3t-WXU"/>
-                        <barButtonItem key="leftBarButtonItem" enabled="NO" systemItem="reply" id="3Jc-NA-MpC">
-                            <color key="tintColor" systemColor="labelColor"/>
-                            <connections>
-                                <action selector="tappedUndo:" destination="BYZ-38-t0r" id="EGS-CL-jog"/>
-                            </connections>
-                        </barButtonItem>
+                        <leftBarButtonItems>
+                            <barButtonItem enabled="NO" systemItem="reply" id="3Jc-NA-MpC" userLabel="undo">
+                                <color key="tintColor" systemColor="labelColor"/>
+                                <connections>
+                                    <action selector="tappedUndo:" destination="BYZ-38-t0r" id="EGS-CL-jog"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="pass" id="HHh-qo-QRR" userLabel="pass">
+                                <color key="tintColor" systemColor="labelColor"/>
+                                <connections>
+                                    <action selector="tappedPass:" destination="BYZ-38-t0r" id="rCS-Hl-Puf"/>
+                                </connections>
+                            </barButtonItem>
+                        </leftBarButtonItems>
                         <rightBarButtonItems>
-                            <barButtonItem title="Item" image="gear" catalog="system" id="Ilt-2I-kV9">
+                            <barButtonItem title="Item" image="gear" catalog="system" id="Ilt-2I-kV9" userLabel="gear">
                                 <color key="tintColor" systemColor="labelColor"/>
                                 <connections>
                                     <segue destination="U9f-XZ-pbt" kind="show" id="ER3-Ke-oHI"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem style="done" systemItem="action" id="mY1-4g-iTZ">
+                            <barButtonItem title="new" id="mY1-4g-iTZ">
                                 <color key="tintColor" systemColor="labelColor"/>
                                 <connections>
-                                    <action selector="tappedAction:" destination="BYZ-38-t0r" id="VzC-bY-lLY"/>
+                                    <action selector="tappedNew:" destination="BYZ-38-t0r" id="E2v-Lb-qHF"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
@@ -126,6 +134,7 @@
                         <outlet property="boardCollectionView" destination="vrr-Gh-4MH" id="8dQ-xm-j8J"/>
                         <outlet property="boardScrollView" destination="1vJ-A6-cpn" id="bWq-ZV-1OX"/>
                         <outlet property="boardZoomView" destination="vTu-Qx-YG2" id="eUv-OZ-kxB"/>
+                        <outlet property="passBarButtonItem" destination="HHh-qo-QRR" id="rbu-f6-yqR"/>
                         <outlet property="undoBarButtonItem" destination="3Jc-NA-MpC" id="bda-GT-Ap2"/>
                     </connections>
                 </viewController>
