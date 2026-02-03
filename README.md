@@ -22,3 +22,7 @@ Anyone is welcome to contribute and create issues
 - How to play: https://www.britgo.org/intro/intro2.html
 - Great open source iOS App: [GitHawk](https://github.com/GitHawkApp/GitHawk)
 - [Little Go](https://github.com/herzbube/littlego)
+
+## App Store
+
+Please feel free to copy and use any of the code in this project. Don't upload this to the App Store.
