@@ -25,4 +25,4 @@ Anyone is welcome to contribute and create issues
 
 ## App Store
 
-Please feel free to copy and use any of the code in this project. Don't upload this to the App Store.
+ Do not upload this to the App Store.
