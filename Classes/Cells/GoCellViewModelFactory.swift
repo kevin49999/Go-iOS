@@ -23,15 +23,19 @@ struct GoCellViewModelFactory {
         self.availableHandicapIndexes = go.board.availableHandicapIndexes
     }
     
-    func create(for point: GoPoint, isOver: Bool) -> GoCellViewModel {
+    func create(for point: GoPoint, isOver: Bool, isDead: Bool = false) -> GoCellViewModel {
         let showLabel: Bool
         let labelString: String?
         let labelSize: CGFloat
+        var labelAlpha: CGFloat = 1.0
         switch point.state {
         case .taken(let player):
             showLabel = true
             labelString = player.string
             labelSize = 100.0 // hacky way to ensure stone fills cell, so large it resizes to fit
+            if isDead {
+                labelAlpha = 0.35
+            }
         case .open:
             showLabel = false
             labelString = nil
@@ -55,6 +59,7 @@ struct GoCellViewModelFactory {
             showLabel: showLabel,
             labelString: labelString,
             labelSize: labelSize,
+            labelAlpha: labelAlpha,
             showHandicapDot: availableHandicapIndexes.contains(point.index),
             borderStyle: borderStyle(for: point.index)
         )

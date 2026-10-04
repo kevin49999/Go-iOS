@@ -37,7 +37,8 @@ class GameBoardViewController: UIViewController {
         let cell: GoCell = collectionView.dequeueReusableCell(for: indexPath)
         let viewModel = self.viewModelFactory.create(
             for: self.go.points[indexPath.row],
-            isOver: self.go.isOver
+            isOver: self.go.isOver,
+            isDead: self.go.deadStones.contains(indexPath.row)
         )
         cell.configure(with: viewModel)
         return cell
@@ -206,6 +207,10 @@ extension GameBoardViewController: GoDelegate {
         SKStoreReviewController.requestReviewInWindow()
     }
     
+    func endGameResultUpdated(_ result: GoEndGameResult) {
+        actionLabel.text = result.gameOverDescription()
+    }
+    
     func positionsCaptured(_ positions: Set<Int>) {
         actionLabel.animateCallout("⚔️")
     }
@@ -222,6 +227,13 @@ extension GameBoardViewController: GoDelegate {
         var snapshot = NSDiffableDataSourceSnapshot<Section, GoPoint>()
         snapshot.appendSections([.main])
         snapshot.appendItems(go.points)
+        if go.isOver {
+            // stones toggled dead don't change state, reload so they're redrawn
+            snapshot.reloadItems(go.points.filter {
+                if case .taken = $0.state { return true }
+                return false
+            })
+        }
         dataSource.apply(snapshot)
     }
 }
@@ -230,6 +242,10 @@ extension GameBoardViewController: GoDelegate {
 
 extension GameBoardViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if go.isOver {
+            go.toggleDeadGroup(at: indexPath.row)
+            return
+        }
         do {
             try go.play(indexPath.row)
             if Settings.haptics() {  UIImpactFeedbackGenerator(style: .light).impactOccurred() }

@@ -35,6 +35,7 @@ class GoCell: UICollectionViewCell {
         stoneLabel.font = Fonts.System.ofSize(viewModel.labelSize, weight: .semibold, textStyle: .body)
         stoneLabel.isHidden = !viewModel.showLabel
         stoneLabel.text = viewModel.labelString
+        stoneLabel.alpha = viewModel.labelAlpha
         centerDotView.isHidden = !viewModel.showHandicapDot
         configureBorder(style: viewModel.borderStyle)
     }

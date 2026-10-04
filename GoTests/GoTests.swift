@@ -309,4 +309,62 @@ class GoTests: XCTestCase {
         XCTAssertEqual(go.endGameResult?.whiteCaptured, 2)
         XCTAssertEqual(go.endGameResult?.blackCaptured, 1)
     }
+    
+    // black wall col 2, white wall col 3, lone black stone at 9 on white's side
+    private func deadStoneGame() -> Go {
+        let go = Go(board: .fiveXFive)
+        for position in [2, 3, 7, 8, 12, 13, 17, 18, 22, 23, 9] {
+            try? go.play(position)
+        }
+        return go
+    }
+    
+    func testMarkingDeadStonesOnlyWhenOver() {
+        let go = deadStoneGame()
+        go.toggleDeadGroup(at: 9)
+        XCTAssertTrue(go.deadStones.isEmpty)
+    }
+    
+    func testMarkingDeadStonesRescores() {
+        let go = deadStoneGame()
+        go.passStone()
+        go.passStone()
+        XCTAssertTrue(go.isOver)
+        XCTAssertEqual(go.endGameResult?.blackScore, 10)
+        XCTAssertEqual(go.endGameResult?.whiteScore, 0) // col 4 touches black stone, neutral
+        
+        go.toggleDeadGroup(at: 9)
+        XCTAssertEqual(go.deadStones, [9])
+        XCTAssertEqual(go.endGameResult?.blackScore, 10)
+        XCTAssertEqual(go.endGameResult?.whiteSurrounded, 5) // dead stone position counts as territory
+        XCTAssertEqual(go.endGameResult?.whiteCaptured, 1)
+        XCTAssertEqual(go.endGameResult?.whiteScore, 6)
+        XCTAssertEqual(go.points[4].state, .surrounded(by: .white))
+        XCTAssertEqual(go.points[9].state, .taken(by: .black))
+        
+        go.toggleDeadGroup(at: 9) // un-mark
+        XCTAssertTrue(go.deadStones.isEmpty)
+        XCTAssertEqual(go.endGameResult?.whiteScore, 0)
+        XCTAssertEqual(go.points[4].state, .open)
+    }
+    
+    func testMarkingDeadMarksWholeGroup() {
+        let go = deadStoneGame()
+        go.passStone()
+        go.passStone()
+        go.toggleDeadGroup(at: 3)
+        XCTAssertEqual(go.deadStones, [3, 8, 13, 18, 23])
+        XCTAssertEqual(go.endGameResult?.blackCaptured, 5)
+    }
+    
+    func testDeadStonesSaved() throws {
+        let go = deadStoneGame()
+        go.passStone()
+        go.passStone()
+        go.toggleDeadGroup(at: 9)
+        let data = try JSONEncoder().encode(go)
+        let decoded = try JSONDecoder().decode(Go.self, from: data)
+        XCTAssertEqual(decoded.deadStones, [9])
+        XCTAssertEqual(decoded.endGameResult?.whiteScore, 6)
+    }
 }
