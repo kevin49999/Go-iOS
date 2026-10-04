@@ -116,7 +116,7 @@ class GoTests: XCTestCase {
         }
     }
     
-    func testNoPlayingInCaptured() {
+    func testPlayingBackIntoCaptured() {
         let go = Go(board: .fiveXFive)
         try? go.play(4)
         try? go.play(9)
@@ -124,10 +124,13 @@ class GoTests: XCTestCase {
         try? go.play(14)
         try? go.play(13)
         try? go.play(20)
-        try? go.play(19)
-        try? go.play(14) // captured by black
-        try? go.play(9)  // ""
+        try? go.play(19) // black captures 9, 14
         XCTAssertEqual(go.points[9].state, .captured(by: .black))
+        XCTAssertEqual(go.points[14].state, .captured(by: .black))
+        
+        XCTAssertNoThrow(try go.play(14)) // white, has a liberty at 9
+        XCTAssertNoThrow(try go.play(9))  // black captures 14 again
+        XCTAssertEqual(go.points[9].state, .taken(by: .black))
         XCTAssertEqual(go.points[14].state, .captured(by: .black))
     }
     
@@ -308,5 +311,19 @@ class GoTests: XCTestCase {
         XCTAssertTrue(go.isOver)
         XCTAssertEqual(go.endGameResult?.whiteCaptured, 2)
         XCTAssertEqual(go.endGameResult?.blackCaptured, 1)
+    }
+    
+    // white captures black 1, 2 on the top edge, black playing back in at 1 has a liberty at 2
+    func testCapturedPositionIsLibertyForCapturedPlayer() {
+        let go = Go(board: .fiveXFive)
+        for position in [1, 0, 2, 3, 10, 6, 11, 7] {
+            try? go.play(position)
+        }
+        XCTAssertEqual(go.points[1].state, .captured(by: .white))
+        XCTAssertEqual(go.points[2].state, .captured(by: .white))
+        
+        XCTAssertNoThrow(try go.play(1))
+        XCTAssertEqual(go.points[1].state, .taken(by: .black))
+        XCTAssertEqual(go.getGroup(at: 1, points: go.points)?.libertiesCount, 1)
     }
 }
