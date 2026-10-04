@@ -286,4 +286,27 @@ class GoTests: XCTestCase {
         let group2 = go.getGroup(at: 7, points: go.points)
         XCTAssertEqual(group2?.libertiesCount, 7) // 3 l-shape
     }
+    
+    // same ko shape as testKoOff, white re-captures at the same point
+    func testRecaptureAtSamePositionCountsTwice() {
+        Settings.configure(setting: .ko, on: false)
+        let go = Go(board: .fiveXFive)
+        try? go.play(6)
+        try? go.play(7)
+        try? go.play(10)
+        try? go.play(13)
+        try? go.play(16)
+        try? go.play(17)
+        try? go.play(12)
+        try? go.play(11) // white captures 12
+        try? go.play(12) // black captures 11
+        try? go.play(11) // white captures 12 again
+        
+        go.passStone()
+        go.passStone()
+        
+        XCTAssertTrue(go.isOver)
+        XCTAssertEqual(go.endGameResult?.whiteCaptured, 2)
+        XCTAssertEqual(go.endGameResult?.blackCaptured, 1)
+    }
 }
