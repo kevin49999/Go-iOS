@@ -77,9 +77,10 @@ class GoTests: XCTestCase {
             
             XCTAssertTrue(go.isOver)
             let result = go.endGameResult
-            XCTAssertEqual(result?.blackSurrounded, 14)
+            // territory includes the position of the captured white stone, Black 16 vs White 17
+            XCTAssertEqual(result?.blackSurrounded, 15)
             XCTAssertEqual(result?.blackCaptured, 1)
-            XCTAssertEqual(result?.blackScore, 15)
+            XCTAssertEqual(result?.blackScore, 16)
             XCTAssertEqual(result?.whiteSurrounded, 17)
             XCTAssertEqual(result?.whiteCaptured, 0)
             XCTAssertEqual(result?.whiteScore, 17)
@@ -268,7 +269,9 @@ class GoTests: XCTestCase {
         
         XCTAssertTrue(go.isOver)
         let result = go.endGameResult
-        XCTAssertEqual(result?.blackScore, 7)
+        XCTAssertEqual(result?.blackCaptured, 7)
+        XCTAssertEqual(result?.blackSurrounded, 7) // captured positions inside black's wall
+        XCTAssertEqual(result?.blackScore, 14)
         XCTAssertEqual(result?.whiteScore, 0)
     }
     
