@@ -330,9 +330,9 @@ final class Go {
         }
         
         let result = GoEndGameResult(
-            blackCaptured: captures(for: .black, past: self.pastPoints),
+            blackCaptured: captures(for: .black, past: pastPoints + [points]),
             blackSurrounded: blackSurrounded,
-            whiteCaptured: captures(for: .white, past: self.pastPoints),
+            whiteCaptured: captures(for: .white, past: pastPoints + [points]),
             whiteSurrounded: whiteSurrounded
         )
         self.endGameResult = result
@@ -390,13 +390,16 @@ final class Go {
     }
     
     private func captures(for player: GoPlayer, past: [[GoPoint]]) -> Int {
-        var positions = Set<Int>()
-        for points in past {
-            for (i, point) in points.enumerated() where point.state == .captured(by: player) {
-                positions.insert(i)
+        // count each taken -> captured transition, so re-capturing at the same position (ko) counts again
+        var count = 0
+        for (before, after) in zip(past, past.dropFirst()) {
+            for (b, a) in zip(before, after) where a.state == .captured(by: player) {
+                if case .taken = b.state {
+                    count += 1
+                }
             }
         }
-        return positions.count
+        return count
     }
 }
 
