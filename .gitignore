@@ -70,3 +70,4 @@ fastlane/test_output
 Classes/Supporting Files/GoogleService-Info.plist
 Config.xcconfig
 Classes/Supporting Files/AdMob.swift
+buildServer.json
