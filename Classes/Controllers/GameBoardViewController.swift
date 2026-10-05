@@ -227,13 +227,6 @@ extension GameBoardViewController: GoDelegate {
         var snapshot = NSDiffableDataSourceSnapshot<Section, GoPoint>()
         snapshot.appendSections([.main])
         snapshot.appendItems(go.points)
-        if go.isOver {
-            // stones toggled dead don't change state, reload so they're redrawn
-            snapshot.reloadItems(go.points.filter {
-                if case .taken = $0.state { return true }
-                return false
-            })
-        }
         dataSource.apply(snapshot)
     }
 }
@@ -243,7 +236,16 @@ extension GameBoardViewController: GoDelegate {
 extension GameBoardViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if go.isOver {
-            go.toggleDeadGroup(at: indexPath.row)
+            let toggled = go.toggleDeadGroup(at: indexPath.row)
+            // dead stones don't change state, so the diff won't redraw them
+            var snapshot = dataSource.snapshot()
+            let items = toggled.map { go.points[$0] }
+            if #available(iOS 15.0, *) {
+                snapshot.reconfigureItems(items)
+            } else {
+                snapshot.reloadItems(items)
+            }
+            dataSource.apply(snapshot, animatingDifferences: false)
             return
         }
         do {
