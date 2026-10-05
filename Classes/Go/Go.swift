@@ -304,11 +304,12 @@ final class Go {
                         return nil
                     }
                     surroundingPlayer = player
-                case .open:
+                case .open, .captured:
+                    // captured positions are empty, so part of the territory
                     if visited[neighbor] != true {
                         queue.append(neighbor)
                     }
-                case .captured, .surrounded:
+                case .surrounded:
                     continue
                 }
             }
@@ -368,7 +369,13 @@ final class Go {
         }
         
         var surroundedTerritories = Set<GoSurroundedTerritory>()
-        for (i, point) in scoring.enumerated() where point.state == .open {
+        for (i, point) in scoring.enumerated() {
+            switch point.state {
+            case .open, .captured:
+                break
+            case .taken, .surrounded:
+                continue
+            }
             if let surrounded = getSurroundTerritory(startingAt: i, points: scoring) {
                 surroundedTerritories.insert(surrounded)
             }
@@ -376,8 +383,8 @@ final class Go {
         var blackSurrounded = 0
         var whiteSurrounded = 0
         for surrounded in surroundedTerritories {
-            // dead stones stay .taken so they're still shown (as dead)
-            surrounded.positions.subtracting(deadStones).forEach {
+            // dead stones stay .taken and captured stay .captured so they're still shown
+            surrounded.positions.filter { updated[$0].state == .open }.forEach {
                 updated[$0].state = .surrounded(by: surrounded.player)
             }
             switch surrounded.player {
