@@ -35,7 +35,8 @@ class GameBoardViewController: UIViewController {
         let cell: GoCell = collectionView.dequeueReusableCell(for: indexPath)
         let viewModel = self.viewModelFactory.create(
             for: self.go.points[indexPath.row],
-            isOver: self.go.isOver
+            isOver: self.go.isOver,
+            isDead: self.go.deadStones.contains(indexPath.row)
         )
         cell.configure(with: viewModel)
         return cell
@@ -192,6 +193,10 @@ extension GameBoardViewController: GoDelegate {
         SKStoreReviewController.requestReviewInWindow()
     }
     
+    func endGameResultUpdated(_ result: GoEndGameResult) {
+        actionLabel.text = result.gameOverDescription()
+    }
+    
     func positionsCaptured(_ positions: Set<Int>) {
         actionLabel.animateCallout("⚔️")
     }
@@ -216,6 +221,19 @@ extension GameBoardViewController: GoDelegate {
 
 extension GameBoardViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if go.isOver {
+            let toggled = go.toggleDeadGroup(at: indexPath.row)
+            // dead stones don't change state, so the diff won't redraw them
+            var snapshot = dataSource.snapshot()
+            let items = toggled.map { go.points[$0] }
+            if #available(iOS 15.0, *) {
+                snapshot.reconfigureItems(items)
+            } else {
+                snapshot.reloadItems(items)
+            }
+            dataSource.apply(snapshot, animatingDifferences: false)
+            return
+        }
         do {
             try go.play(indexPath.row)
             if Settings.haptics() {  UIImpactFeedbackGenerator(style: .light).impactOccurred() }
