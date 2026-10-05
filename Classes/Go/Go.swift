@@ -207,12 +207,9 @@ final class Go {
                     if takenPlayer == player, visited[neighbor] != true {
                         queue.append(neighbor)
                     }
-                case .open:
+                case .open, .captured:
+                    // captured positions are empty, a liberty for either player
                     liberties.insert(neighbor)
-                case .captured(let capturedBy):
-                    if capturedBy == player {
-                        liberties.insert(neighbor)
-                    }
                 case .surrounded:
                     continue
                 }
