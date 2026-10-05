@@ -168,9 +168,11 @@ final class Go {
     }
     
     /// After the game is over, mark/unmark the group at position as dead and re-score
-    func toggleDeadGroup(at position: Int) {
+    /// - Returns: positions toggled
+    @discardableResult
+    func toggleDeadGroup(at position: Int) -> Set<Int> {
         guard isOver, let group = getGroup(at: position, points: points) else {
-            return
+            return []
         }
         if group.positions.isSubset(of: deadStones) {
             deadStones.subtract(group.positions)
@@ -179,6 +181,7 @@ final class Go {
         }
         let result = score()
         delegate?.endGameResultUpdated(result)
+        return group.positions
     }
     
     func getGroup(at position: Int, points: [GoPoint]) -> GoGroup? {
