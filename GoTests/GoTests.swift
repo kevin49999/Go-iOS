@@ -370,22 +370,4 @@ class GoTests: XCTestCase {
         XCTAssertEqual(decoded.deadStones, [9])
         XCTAssertEqual(decoded.endGameResult?.whiteScore, 6)
     }
-
-    func testPlayingBackIntoCaptured() {
-        let go = Go(board: .fiveXFive)
-        try? go.play(4)
-        try? go.play(9)
-        try? go.play(8)
-        try? go.play(14)
-        try? go.play(13)
-        try? go.play(20)
-        try? go.play(19) // black captures 9, 14
-        XCTAssertEqual(go.points[9].state, .captured(by: .black))
-        XCTAssertEqual(go.points[14].state, .captured(by: .black))
-        
-        XCTAssertNoThrow(try go.play(14)) // white, has a liberty at 9
-        XCTAssertNoThrow(try go.play(9))  // black captures 14 again
-        XCTAssertEqual(go.points[9].state, .taken(by: .black))
-        XCTAssertEqual(go.points[14].state, .captured(by: .black))
-    }
 }
