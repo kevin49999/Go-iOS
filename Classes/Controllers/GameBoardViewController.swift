@@ -9,8 +9,6 @@
 import StoreKit
 import UIKit
 
-import GoogleMobileAds
-
 class GameBoardViewController: UIViewController {
     
     // MARK: - Section
@@ -37,12 +35,12 @@ class GameBoardViewController: UIViewController {
         let cell: GoCell = collectionView.dequeueReusableCell(for: indexPath)
         let viewModel = self.viewModelFactory.create(
             for: self.go.points[indexPath.row],
-            isOver: self.go.isOver
+            isOver: self.go.isOver,
+            isDead: self.go.deadStones.contains(indexPath.row)
         )
         cell.configure(with: viewModel)
         return cell
     }
-    private let bannerView = BannerView()
     
     // MARK: - IBOutlet
     
@@ -68,17 +66,6 @@ class GameBoardViewController: UIViewController {
             name: UIApplication.willResignActiveNotification,
             object: nil
         )
-        
-        bannerView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(bannerView)
-        NSLayoutConstraint.activate([
-          bannerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-          bannerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-        ])
-        bannerView.adUnitID = AdMob.bannerUnitID
-        bannerView.adSize = currentOrientationAnchoredAdaptiveBanner(width: view.frame.width)
-        bannerView.load(Request())
-        bannerView.delegate = self
     }
     
     // MARK: - Functions
@@ -206,6 +193,10 @@ extension GameBoardViewController: GoDelegate {
         SKStoreReviewController.requestReviewInWindow()
     }
     
+    func endGameResultUpdated(_ result: GoEndGameResult) {
+        actionLabel.text = result.gameOverDescription()
+    }
+    
     func positionsCaptured(_ positions: Set<Int>) {
         actionLabel.animateCallout("⚔️")
     }
@@ -230,6 +221,19 @@ extension GameBoardViewController: GoDelegate {
 
 extension GameBoardViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if go.isOver {
+            let toggled = go.toggleDeadGroup(at: indexPath.row)
+            // dead stones don't change state, so the diff won't redraw them
+            var snapshot = dataSource.snapshot()
+            let items = toggled.map { go.points[$0] }
+            if #available(iOS 15.0, *) {
+                snapshot.reconfigureItems(items)
+            } else {
+                snapshot.reloadItems(items)
+            }
+            dataSource.apply(snapshot, animatingDifferences: false)
+            return
+        }
         do {
             try go.play(indexPath.row)
             if Settings.haptics() {  UIImpactFeedbackGenerator(style: .light).impactOccurred() }
@@ -272,16 +276,5 @@ extension GameBoardViewController: UIScrollViewDelegate {
             return nil
         }
         return boardZoomView
-    }
-}
-
-// MARK: - BannerViewDelegate
-
-extension GameBoardViewController: BannerViewDelegate {
-    func bannerViewDidReceiveAd(_ bannerView: BannerView) {
-      bannerView.alpha = 0
-      UIView.animate(withDuration: 1, animations: {
-        bannerView.alpha = 1
-      })
     }
 }

@@ -48,6 +48,7 @@ final class Go {
         }
     }
     private(set)var endGameResult: GoEndGameResult?
+    private(set) var deadStones: Set<Int> = []
     private var passedCount: Int = 0 {
         didSet {
             if passedCount == 2 {
@@ -84,7 +85,8 @@ final class Go {
         currentPlayer: GoPlayer = .black,
         passedCount: Int = 0,
         isOver: Bool = false,
-        endGameResult: GoEndGameResult? = nil
+        endGameResult: GoEndGameResult? = nil,
+        deadStones: Set<Int> = []
     ) {
         self.board = board
         self.pastPoints = pastPoints
@@ -94,6 +96,7 @@ final class Go {
         self.passedCount = passedCount
         self.isOver = isOver
         self.endGameResult = endGameResult
+        self.deadStones = deadStones
     }
     
     // MARK: - Public Functions
@@ -162,6 +165,23 @@ final class Go {
         togglePlayer()
         passedCount += 1
         pastPoints.append(self.points)
+    }
+    
+    /// After the game is over, mark/unmark the group at position as dead and re-score
+    /// - Returns: positions toggled
+    @discardableResult
+    func toggleDeadGroup(at position: Int) -> Set<Int> {
+        guard isOver, let group = getGroup(at: position, points: points) else {
+            return []
+        }
+        if group.positions.isSubset(of: deadStones) {
+            deadStones.subtract(group.positions)
+        } else {
+            deadStones.formUnion(group.positions)
+        }
+        let result = score()
+        delegate?.endGameResultUpdated(result)
+        return group.positions
     }
     
     func getGroup(at position: Int, points: [GoPoint]) -> GoGroup? {
@@ -267,7 +287,7 @@ final class Go {
         }
     }
     
-    private func getSurroundTerritory(startingAt position: Int) -> GoSurroundedTerritory? {
+    private func getSurroundTerritory(startingAt position: Int, points: [GoPoint]) -> GoSurroundedTerritory? {
         var queue: [Int] = [position]
         var positions: Set<Int> = []
         var visited = [Int: Bool]()
@@ -306,33 +326,7 @@ final class Go {
     }
     
     private func endGame() {
-        var surroundedTerritories = Set<GoSurroundedTerritory>()
-        for (i, point) in points.enumerated() where point.state == .open {
-            if let surrounded = getSurroundTerritory(startingAt: i) {
-                surroundedTerritories.insert(surrounded)
-            }
-        }
-        var blackSurrounded = 0
-        var whiteSurrounded = 0
-        for surrounded in surroundedTerritories {
-            surrounded.positions.forEach {
-                points[$0].state = .surrounded(by: surrounded.player)
-            }
-            switch surrounded.player {
-            case .black:
-                blackSurrounded += surrounded.positions.count
-            case .white:
-                whiteSurrounded += surrounded.positions.count
-            }
-        }
-        
-        let result = GoEndGameResult(
-            blackCaptured: captures(for: .black, past: pastPoints + [points]),
-            blackSurrounded: blackSurrounded,
-            whiteCaptured: captures(for: .white, past: pastPoints + [points]),
-            whiteSurrounded: whiteSurrounded
-        )
-        self.endGameResult = result
+        let result = score()
         
         let final = self.points
         var beforeFinal = self.points
@@ -346,6 +340,63 @@ final class Go {
         self.points = beforeFinal
         self.points = final
         delegate?.gameOver(result: result)
+    }
+    
+    /// Territory + captures, with dead stones counted as captured and their positions as open
+    @discardableResult
+    private func score() -> GoEndGameResult {
+        // re-scoring after toggling dead stones, so start over from no surrounded territory
+        var updated = points
+        for (i, point) in updated.enumerated() {
+            if case .surrounded = point.state {
+                updated[i].state = .open
+            }
+        }
+        var blackDead = 0
+        var whiteDead = 0
+        var scoring = updated
+        for i in deadStones {
+            if case .taken(let player) = scoring[i].state {
+                switch player {
+                case .black:
+                    blackDead += 1
+                case .white:
+                    whiteDead += 1
+                }
+            }
+            scoring[i].state = .open
+        }
+        
+        var surroundedTerritories = Set<GoSurroundedTerritory>()
+        for (i, point) in scoring.enumerated() where point.state == .open {
+            if let surrounded = getSurroundTerritory(startingAt: i, points: scoring) {
+                surroundedTerritories.insert(surrounded)
+            }
+        }
+        var blackSurrounded = 0
+        var whiteSurrounded = 0
+        for surrounded in surroundedTerritories {
+            // dead stones stay .taken so they're still shown (as dead)
+            surrounded.positions.subtracting(deadStones).forEach {
+                updated[$0].state = .surrounded(by: surrounded.player)
+            }
+            switch surrounded.player {
+            case .black:
+                blackSurrounded += surrounded.positions.count
+            case .white:
+                whiteSurrounded += surrounded.positions.count
+            }
+        }
+        
+        let result = GoEndGameResult(
+            blackCaptured: captures(for: .black, past: pastPoints + [points]) + whiteDead,
+            blackSurrounded: blackSurrounded,
+            whiteCaptured: captures(for: .white, past: pastPoints + [points]) + blackDead,
+            whiteSurrounded: whiteSurrounded
+        )
+        self.endGameResult = result
+        self.points = updated
+        return result
     }
     
     private func getNeighbors(for position: Int) -> Set<Int> {
@@ -412,6 +463,7 @@ extension Go: Codable {
         case passedCount
         case isOver
         case endGameResult
+        case deadStones
     }
     
     convenience init(from decoder: Decoder) throws {
@@ -423,6 +475,7 @@ extension Go: Codable {
         let passedCount = try container.decode(Int.self, forKey: .passedCount)
         let isOver = try container.decode(Bool.self, forKey: .isOver)
         let endGameResult = try? container.decode(GoEndGameResult.self, forKey: .endGameResult)
+        let deadStones = try container.decodeIfPresent(Set<Int>.self, forKey: .deadStones) ?? []
         self.init(
             board: board,
             pastPoints: pastPoints,
@@ -430,7 +483,8 @@ extension Go: Codable {
             currentPlayer: currentPlayer,
             passedCount: passedCount,
             isOver: isOver,
-            endGameResult: endGameResult
+            endGameResult: endGameResult,
+            deadStones: deadStones
         )
     }
     
@@ -443,6 +497,7 @@ extension Go: Codable {
         try container.encode(passedCount, forKey: .passedCount)
         try container.encode(isOver, forKey: .isOver)
         try container.encode(endGameResult, forKey: .endGameResult)
+        try container.encode(deadStones, forKey: .deadStones)
     }
 }
 

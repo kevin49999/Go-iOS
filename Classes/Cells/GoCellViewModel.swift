@@ -25,6 +25,7 @@ struct GoCellViewModel {
     let showLabel: Bool
     let labelString: String?
     let labelSize: CGFloat
+    let labelAlpha: CGFloat
     let showHandicapDot: Bool
     let handicapDotColor: UIColor
     let borderStyle: BorderStyle
@@ -33,6 +34,7 @@ struct GoCellViewModel {
         showLabel: Bool = false,
         labelString: String? = nil,
         labelSize: CGFloat = 24.0,
+        labelAlpha: CGFloat = 1.0,
         showHandicapDot: Bool = false,
         handicapDotColor: UIColor = .black,
         borderStyle: BorderStyle = .default
@@ -40,6 +42,7 @@ struct GoCellViewModel {
         self.showLabel = showLabel
         self.labelString = labelString
         self.labelSize = labelSize
+        self.labelAlpha = labelAlpha
         self.showHandicapDot = showHandicapDot
         self.handicapDotColor = handicapDotColor
         self.borderStyle = borderStyle

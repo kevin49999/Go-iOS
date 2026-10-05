@@ -18,8 +18,6 @@ import GoogleMobileAds
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    var window: UIWindow?
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         FirebaseApp.configure()
@@ -28,4 +26,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         return true
     }
+}
+
+// MARK: - SceneDelegate
+
+// window created from Main storyboard, set in Info.plist scene manifest
+class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+    var window: UIWindow?
 }

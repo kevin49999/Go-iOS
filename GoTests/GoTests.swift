@@ -313,17 +313,79 @@ class GoTests: XCTestCase {
         XCTAssertEqual(go.endGameResult?.blackCaptured, 1)
     }
     
-    // white captures black 1, 2 on the top edge, black playing back in at 1 has a liberty at 2
-    func testCapturedPositionIsLibertyForCapturedPlayer() {
+    // black wall col 2, white wall col 3, lone black stone at 9 on white's side
+    private func deadStoneGame() -> Go {
         let go = Go(board: .fiveXFive)
-        for position in [1, 0, 2, 3, 10, 6, 11, 7] {
+        for position in [2, 3, 7, 8, 12, 13, 17, 18, 22, 23, 9] {
             try? go.play(position)
         }
-        XCTAssertEqual(go.points[1].state, .captured(by: .white))
-        XCTAssertEqual(go.points[2].state, .captured(by: .white))
+        return go
+    }
+    
+    func testMarkingDeadStonesOnlyWhenOver() {
+        let go = deadStoneGame()
+        go.toggleDeadGroup(at: 9)
+        XCTAssertTrue(go.deadStones.isEmpty)
+    }
+    
+    func testMarkingDeadStonesRescores() {
+        let go = deadStoneGame()
+        go.passStone()
+        go.passStone()
+        XCTAssertTrue(go.isOver)
+        XCTAssertEqual(go.endGameResult?.blackScore, 10)
+        XCTAssertEqual(go.endGameResult?.whiteScore, 0) // col 4 touches black stone, neutral
         
-        XCTAssertNoThrow(try go.play(1))
-        XCTAssertEqual(go.points[1].state, .taken(by: .black))
-        XCTAssertEqual(go.getGroup(at: 1, points: go.points)?.libertiesCount, 1)
+        go.toggleDeadGroup(at: 9)
+        XCTAssertEqual(go.deadStones, [9])
+        XCTAssertEqual(go.endGameResult?.blackScore, 10)
+        XCTAssertEqual(go.endGameResult?.whiteSurrounded, 5) // dead stone position counts as territory
+        XCTAssertEqual(go.endGameResult?.whiteCaptured, 1)
+        XCTAssertEqual(go.endGameResult?.whiteScore, 6)
+        XCTAssertEqual(go.points[4].state, .surrounded(by: .white))
+        XCTAssertEqual(go.points[9].state, .taken(by: .black))
+        
+        go.toggleDeadGroup(at: 9) // un-mark
+        XCTAssertTrue(go.deadStones.isEmpty)
+        XCTAssertEqual(go.endGameResult?.whiteScore, 0)
+        XCTAssertEqual(go.points[4].state, .open)
+    }
+    
+    func testMarkingDeadMarksWholeGroup() {
+        let go = deadStoneGame()
+        go.passStone()
+        go.passStone()
+        go.toggleDeadGroup(at: 3)
+        XCTAssertEqual(go.deadStones, [3, 8, 13, 18, 23])
+        XCTAssertEqual(go.endGameResult?.blackCaptured, 5)
+    }
+    
+    func testDeadStonesSaved() throws {
+        let go = deadStoneGame()
+        go.passStone()
+        go.passStone()
+        go.toggleDeadGroup(at: 9)
+        let data = try JSONEncoder().encode(go)
+        let decoded = try JSONDecoder().decode(Go.self, from: data)
+        XCTAssertEqual(decoded.deadStones, [9])
+        XCTAssertEqual(decoded.endGameResult?.whiteScore, 6)
+    }
+
+    func testPlayingBackIntoCaptured() {
+        let go = Go(board: .fiveXFive)
+        try? go.play(4)
+        try? go.play(9)
+        try? go.play(8)
+        try? go.play(14)
+        try? go.play(13)
+        try? go.play(20)
+        try? go.play(19) // black captures 9, 14
+        XCTAssertEqual(go.points[9].state, .captured(by: .black))
+        XCTAssertEqual(go.points[14].state, .captured(by: .black))
+        
+        XCTAssertNoThrow(try go.play(14)) // white, has a liberty at 9
+        XCTAssertNoThrow(try go.play(9))  // black captures 14 again
+        XCTAssertEqual(go.points[9].state, .taken(by: .black))
+        XCTAssertEqual(go.points[14].state, .captured(by: .black))
     }
 }
