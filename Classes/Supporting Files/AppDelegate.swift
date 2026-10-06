@@ -12,8 +12,6 @@ import UIKit
 import FirebaseCore
 import FirebaseAnalytics
 import FirebaseCrashlytics
-import GoogleMobileAds
-
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -22,8 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FirebaseApp.configure()
         
-        MobileAds.shared.start(completionHandler: nil)
-
         return true
     }
 }
