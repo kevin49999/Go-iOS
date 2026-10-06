@@ -46,6 +46,40 @@
 		523FBF4425E49FCB00D4EC83 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 523FBF4325E49FCB00D4EC83 /* README.md */; };
 		523FBF9025E4A20B00D4EC83 /* GoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523FBF8F25E4A20B00D4EC83 /* GoCell.swift */; };
 		52B209A628047D6F0084892C /* SKStoreReviewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B209A528047D6F0084892C /* SKStoreReviewController+Extensions.swift */; };
+		AA0F1B000000000000000001 /* UIAlertController+AddActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A09854E230B0AB800BA1881 /* UIAlertController+AddActions.swift */; };
+		AA0F1B000000000000000002 /* GameBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46462225AE50B00DE34EA /* GameBoardViewController.swift */; };
+		AA0F1B000000000000000003 /* UILabel+AnimateCallout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A634D0C22A8A4EA00FE10E0 /* UILabel+AnimateCallout.swift */; };
+		AA0F1B000000000000000004 /* GoSurroundedTerritory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A88431222D57C9F00E5FF7B /* GoSurroundedTerritory.swift */; };
+		AA0F1B000000000000000005 /* UIAlertAction+Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A098551230B0D9D00BA1881 /* UIAlertAction+Defaults.swift */; };
+		AA0F1B000000000000000006 /* Bundle+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE318492F1D993700AEFF4B /* Bundle+Extensions.swift */; };
+		AA0F1B000000000000000007 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF4648D226B922400DE34EA /* Styles.swift */; };
+		AA0F1B000000000000000008 /* GoEndGameResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A64ADEE22C5BC7D00989A9D /* GoEndGameResult.swift */; };
+		AA0F1B000000000000000009 /* GoPointState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6E0E6B22B72A300074E0CA /* GoPointState.swift */; };
+		AA0F1B00000000000000000A /* GoCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A21BFBD226C144D004C54B9 /* GoCellViewModel.swift */; };
+		AA0F1B00000000000000000B /* GoGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A88431022D57C7B00E5FF7B /* GoGroup.swift */; };
+		AA0F1B00000000000000000C /* Set+Contains.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A88430A22D4444E00E5FF7B /* Set+Contains.swift */; };
+		AA0F1B00000000000000000D /* GoPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A634D1122ADF5C600FE10E0 /* GoPoint.swift */; };
+		AA0F1B00000000000000000E /* GoDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A70A5A722DD617400F8BD34 /* GoDelegate.swift */; };
+		AA0F1B00000000000000000F /* SKStoreReviewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B209A528047D6F0084892C /* SKStoreReviewController+Extensions.swift */; };
+		AA0F1B000000000000000010 /* Go.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46480225AF04900DE34EA /* Go.swift */; };
+		AA0F1B000000000000000011 /* GoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF4648F226C01E200DE34EA /* GoPlayer.swift */; };
+		AA0F1B000000000000000012 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46460225AE50B00DE34EA /* AppDelegate.swift */; };
+		AA0F1B000000000000000013 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46493226C05A600DE34EA /* Fonts.swift */; };
+		AA0F1B000000000000000014 /* UICollectionView+Generic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF4648B226B8FB900DE34EA /* UICollectionView+Generic.swift */; };
+		AA0F1B000000000000000015 /* GoCellViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A21BFBF226C1574004C54B9 /* GoCellViewModelFactory.swift */; };
+		AA0F1B000000000000000016 /* GoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523FBF8F25E4A20B00D4EC83 /* GoCell.swift */; };
+		AA0F1B000000000000000017 /* GoPlayingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A88431422D57CAE00E5FF7B /* GoPlayingError.swift */; };
+		AA0F1B000000000000000018 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2074E62B08315300C28A62 /* Settings.swift */; };
+		AA0F1B000000000000000019 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2074E02B082C0E00C28A62 /* SettingsViewController.swift */; };
+		AA0F1B00000000000000001A /* UIView+IBInspectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A21BFB8226C134C004C54B9 /* UIView+IBInspectable.swift */; };
+		AA0F1B00000000000000001B /* StoryboardIdentifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46489226B8F9B00DE34EA /* StoryboardIdentifiable.swift */; };
+		AA0F1B00000000000000001C /* GoBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF46491226C01F800DE34EA /* GoBoard.swift */; };
+		AA0F1B00000000000000001D /* GoSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6E0E6922B6C1490074E0CA /* GoSaver.swift */; };
+		AA0F1B00000000000000001E /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 523FBF4325E49FCB00D4EC83 /* README.md */; };
+		AA0F1B00000000000000001F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AF46469225AE50F00DE34EA /* LaunchScreen.storyboard */; };
+		AA0F1B000000000000000020 /* GoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0AF46485226A79B900DE34EA /* GoCell.xib */; };
+		AA0F1B000000000000000021 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0AF46467225AE50F00DE34EA /* Assets.xcassets */; };
+		AA0F1B000000000000000022 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AF46464225AE50B00DE34EA /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,6 +133,7 @@
 		523FBF4325E49FCB00D4EC83 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		523FBF8F25E4A20B00D4EC83 /* GoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoCell.swift; sourceTree = "<group>"; };
 		52B209A528047D6F0084892C /* SKStoreReviewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SKStoreReviewController+Extensions.swift"; sourceTree = "<group>"; };
+		AA0F1B000000000000000024 /* [DEV] Go.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "[DEV] Go.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +148,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		0AF4646E225AE50F00DE34EA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA0F1B000000000000000026 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -173,6 +215,7 @@
 			children = (
 				0AF4645D225AE50B00DE34EA /* Go.app */,
 				0AF46471225AE50F00DE34EA /* GoTests.xctest */,
+				AA0F1B000000000000000024 /* [DEV] Go.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -286,6 +329,23 @@
 			productReference = 0AF46471225AE50F00DE34EA /* GoTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		AA0F1B000000000000000023 /* [DEV] Go */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA0F1B000000000000000028 /* Build configuration list for PBXNativeTarget "[DEV] Go" */;
+			buildPhases = (
+				AA0F1B000000000000000025 /* Sources */,
+				AA0F1B000000000000000026 /* Frameworks */,
+				AA0F1B000000000000000027 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "[DEV] Go";
+			productName = Go;
+			productReference = AA0F1B000000000000000024 /* [DEV] Go.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -305,6 +365,9 @@
 						CreatedOnToolsVersion = 10.1;
 						LastSwiftMigration = 1020;
 						TestTargetID = 0AF4645C225AE50B00DE34EA;
+					};
+					AA0F1B000000000000000023 = {
+						CreatedOnToolsVersion = 27.0;
 					};
 				};
 			};
@@ -326,6 +389,7 @@
 			targets = (
 				0AF4645C225AE50B00DE34EA /* Go */,
 				0AF46470225AE50F00DE34EA /* GoTests */,
+				AA0F1B000000000000000023 /* [DEV] Go */,
 			);
 		};
 /* End PBXProject section */
@@ -348,6 +412,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA0F1B000000000000000027 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA0F1B00000000000000001E /* README.md in Resources */,
+				AA0F1B00000000000000001F /* LaunchScreen.storyboard in Resources */,
+				AA0F1B000000000000000020 /* GoCell.xib in Resources */,
+				AA0F1B000000000000000021 /* Assets.xcassets in Resources */,
+				AA0F1B000000000000000022 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -395,6 +471,42 @@
 			buildActionMask = 2147483647;
 			files = (
 				0AF46476225AE50F00DE34EA /* GoTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA0F1B000000000000000025 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA0F1B000000000000000001 /* UIAlertController+AddActions.swift in Sources */,
+				AA0F1B000000000000000002 /* GameBoardViewController.swift in Sources */,
+				AA0F1B000000000000000003 /* UILabel+AnimateCallout.swift in Sources */,
+				AA0F1B000000000000000004 /* GoSurroundedTerritory.swift in Sources */,
+				AA0F1B000000000000000005 /* UIAlertAction+Defaults.swift in Sources */,
+				AA0F1B000000000000000006 /* Bundle+Extensions.swift in Sources */,
+				AA0F1B000000000000000007 /* Styles.swift in Sources */,
+				AA0F1B000000000000000008 /* GoEndGameResult.swift in Sources */,
+				AA0F1B000000000000000009 /* GoPointState.swift in Sources */,
+				AA0F1B00000000000000000A /* GoCellViewModel.swift in Sources */,
+				AA0F1B00000000000000000B /* GoGroup.swift in Sources */,
+				AA0F1B00000000000000000C /* Set+Contains.swift in Sources */,
+				AA0F1B00000000000000000D /* GoPoint.swift in Sources */,
+				AA0F1B00000000000000000E /* GoDelegate.swift in Sources */,
+				AA0F1B00000000000000000F /* SKStoreReviewController+Extensions.swift in Sources */,
+				AA0F1B000000000000000010 /* Go.swift in Sources */,
+				AA0F1B000000000000000011 /* GoPlayer.swift in Sources */,
+				AA0F1B000000000000000012 /* AppDelegate.swift in Sources */,
+				AA0F1B000000000000000013 /* Fonts.swift in Sources */,
+				AA0F1B000000000000000014 /* UICollectionView+Generic.swift in Sources */,
+				AA0F1B000000000000000015 /* GoCellViewModelFactory.swift in Sources */,
+				AA0F1B000000000000000016 /* GoCell.swift in Sources */,
+				AA0F1B000000000000000017 /* GoPlayingError.swift in Sources */,
+				AA0F1B000000000000000018 /* Settings.swift in Sources */,
+				AA0F1B000000000000000019 /* SettingsViewController.swift in Sources */,
+				AA0F1B00000000000000001A /* UIView+IBInspectable.swift in Sources */,
+				AA0F1B00000000000000001B /* StoryboardIdentifiable.swift in Sources */,
+				AA0F1B00000000000000001C /* GoBoard.swift in Sources */,
+				AA0F1B00000000000000001D /* GoSaver.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -638,6 +750,52 @@
 			};
 			name = Release;
 		};
+		AA0F1B000000000000000029 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				INFOPLIST_FILE = "$(SRCROOT)/Classes/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.1.7;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ffr.go.dev;
+				PRODUCT_MODULE_NAME = Go;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEV";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AA0F1B00000000000000002A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				INFOPLIST_FILE = "$(SRCROOT)/Classes/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.1.7;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ffr.go.dev;
+				PRODUCT_MODULE_NAME = Go;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEV";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -664,6 +822,15 @@
 			buildConfigurations = (
 				0AF4647E225AE50F00DE34EA /* Debug */,
 				0AF4647F225AE50F00DE34EA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AA0F1B000000000000000028 /* Build configuration list for PBXNativeTarget "[DEV] Go" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA0F1B000000000000000029 /* Debug */,
+				AA0F1B00000000000000002A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
