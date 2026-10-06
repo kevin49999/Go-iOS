@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		0A09854F230B0AB800BA1881 /* UIAlertController+AddActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A09854E230B0AB800BA1881 /* UIAlertController+AddActions.swift */; };
 		0A098552230B0D9D00BA1881 /* UIAlertAction+Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A098551230B0D9D00BA1881 /* UIAlertAction+Defaults.swift */; };
-		0A175C762F27A12D004D7A7D /* AdMob.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A175C752F27A12D004D7A7D /* AdMob.swift */; };
 		0A2074E12B082C0E00C28A62 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2074E02B082C0E00C28A62 /* SettingsViewController.swift */; };
 		0A2074E72B08315300C28A62 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2074E62B08315300C28A62 /* Settings.swift */; };
 		0A21BFB9226C134C004C54B9 /* UIView+IBInspectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A21BFB8226C134C004C54B9 /* UIView+IBInspectable.swift */; };
@@ -62,7 +61,6 @@
 /* Begin PBXFileReference section */
 		0A09854E230B0AB800BA1881 /* UIAlertController+AddActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+AddActions.swift"; sourceTree = "<group>"; };
 		0A098551230B0D9D00BA1881 /* UIAlertAction+Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertAction+Defaults.swift"; sourceTree = "<group>"; };
-		0A175C752F27A12D004D7A7D /* AdMob.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdMob.swift; sourceTree = "<group>"; };
 		0A2074E02B082C0E00C28A62 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		0A2074E62B08315300C28A62 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		0A21BFB8226C134C004C54B9 /* UIView+IBInspectable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+IBInspectable.swift"; sourceTree = "<group>"; };
@@ -237,7 +235,6 @@
 				0AF4646C225AE50F00DE34EA /* Info.plist */,
 				0AF46469225AE50F00DE34EA /* LaunchScreen.storyboard */,
 				0AF46464225AE50B00DE34EA /* Main.storyboard */,
-				0A175C752F27A12D004D7A7D /* AdMob.swift */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -374,7 +371,6 @@
 				0A88431122D57C7B00E5FF7B /* GoGroup.swift in Sources */,
 				0A88430B22D4444E00E5FF7B /* Set+Contains.swift in Sources */,
 				0A634D1222ADF5C600FE10E0 /* GoPoint.swift in Sources */,
-				0A175C762F27A12D004D7A7D /* AdMob.swift in Sources */,
 				0A70A5A822DD617400F8BD34 /* GoDelegate.swift in Sources */,
 				52B209A628047D6F0084892C /* SKStoreReviewController+Extensions.swift in Sources */,
 				0AF46481225AF04900DE34EA /* Go.swift in Sources */,
