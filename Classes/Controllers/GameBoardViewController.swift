@@ -226,11 +226,7 @@ extension GameBoardViewController: UICollectionViewDelegate {
             // dead stones don't change state, so the diff won't redraw them
             var snapshot = dataSource.snapshot()
             let items = toggled.map { go.points[$0] }
-            if #available(iOS 15.0, *) {
-                snapshot.reconfigureItems(items)
-            } else {
-                snapshot.reloadItems(items)
-            }
+            snapshot.reconfigureItems(items)
             dataSource.apply(snapshot, animatingDifferences: false)
             return
         }
