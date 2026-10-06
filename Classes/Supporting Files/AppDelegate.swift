@@ -9,17 +9,21 @@
 import AdSupport
 import UIKit
 
+#if !DEV
 import FirebaseCore
 import FirebaseAnalytics
 import FirebaseCrashlytics
+#endif
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
+
+        #if !DEV
         FirebaseApp.configure()
-        
+        #endif
+
         return true
     }
 }
