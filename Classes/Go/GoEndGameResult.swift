@@ -40,8 +40,7 @@ struct GoEndGameResult: Codable {
         switch winner {
         case .black:
             return String(
-                format: "%@ Wins\n%@ %d %@ %d",
-                winner.rawValue.capitalized,
+                format: "%@ %d %@ %d",
                 GoPlayer.black.string,
                 blackScore,
                 GoPlayer.white.string,
@@ -49,8 +48,7 @@ struct GoEndGameResult: Codable {
             )
         case .white:
             return String(
-                format: "%@ Wins\n%@ %d %@ %d",
-                winner.rawValue.capitalized,
+                format: "%@ %d %@ %d",
                 GoPlayer.white.string,
                 whiteScore,
                 GoPlayer.black.string,
